@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bee Arena - Quản lý kho</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-bee"></i>
+                <span>Bee Arena</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active"><i class="fas fa-home"></i> Trang chủ</a>
+                <a href="#" class="nav-link"><i class="fas fa-box"></i> Sản phẩm</a>
+                <a href="#" class="nav-link"><i class="fas fa-truck"></i> Nhập kho</a>
+                <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Xuất kho</a>
+                <a href="#" class="nav-link"><i class="fas fa-history"></i> Lịch sử</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Cards -->
+        <div class="dashboard-grid">
+            <div class="card glow-effect">
+                <i class="fas fa-box-open"></i>
+                <h3>Tổng sản phẩm</h3>
+                <p class="number">1,234</p>
+            </div>
+            
+            <div class="card glow-effect">
+                <i class="fas fa-truck-loading"></i>
+                <h3>Đơn nhập hàng</h3>
+                <p class="number">56</p>
+            </div>
+            
+            <div class="card glow-effect">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Đơn xuất hàng</h3>
+                <p class="number">89</p>
+            </div>
+            
+            <div class="card glow-effect">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Sản phẩm sắp hết</h3>
+                <p class="number">12</p>
+            </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="card">
+            <h2><i class="fas fa-history"></i> Hoạt động gần đây</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Hoạt động</th>
+                        <th>Người thực hiện</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-03-20 15:30</td>
+                        <td>Nhập kho sản phẩm A</td>
+                        <td>Nguyễn Văn A</td>
+                        <td><span class="status-active">Hoàn thành</span></td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-20 14:20</td>
+                        <td>Xuất kho sản phẩm B</td>
+                        <td>Trần Thị B</td>
+                        <td><span class="status-active">Hoàn thành</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> Tạo phiếu nhập
+            </button>
+            <button class="btn btn-success">
+                <i class="fas fa-file-export"></i> Tạo phiếu xuất
+            </button>
+            <button class="btn btn-danger">
+                <i class="fas fa-exclamation-circle"></i> Kiểm tra tồn kho
+            </button>
+        </div>
+    </main>
+
+    <style>
+        /* Additional styles for index page */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-grid .card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .dashboard-grid .card i {
+            font-size: 2rem;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+        }
+
+        .dashboard-grid .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--neon-purple);
+            margin: 10px 0;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .quick-actions .btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-active {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(0, 255, 102, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-link {
+                text-align: center;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html> 

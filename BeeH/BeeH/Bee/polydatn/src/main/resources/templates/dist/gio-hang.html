@@ -29,11 +29,19 @@
         .cart-summary .total-value { font-size: 1.3em; font-weight: 700; color: #e53935; }
         .cart-summary .btn-checkout { font-size: 1.1em; font-weight: 700; padding: 12px 0; border-radius: 10px; }
         @media (max-width: 900px) { .cart-container { padding: 18px 4px; } }
+        .header-link, .footer-link, .header-link:visited {
+            color: #637381 !important;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .header-link:hover, .footer-link:hover {
+            color: #4a90e2 !important;
+        }
     </style>
 </head>
 <body>
     <!-- Header bar trên cùng -->
-    <div class="header-top py-1" style="background:var(--bg-navy); color:var(--neon-blue); font-size:0.98rem; font-weight:500; border-bottom:1px solid rgba(0,255,255,0.08);">
+    <div class="header-top py-1" style="background:#f4f6f8; color:#212b36; font-size:0.98rem; font-weight:500; border-bottom:1px solid #dfe3e8;">
         <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap">
             <div class="d-flex align-items-center flex-wrap">
                 <span class="badge me-2 d-flex align-items-center" style="border-radius:16px; font-weight:500; background:rgba(0,255,255,0.08); color:var(--neon-blue);">

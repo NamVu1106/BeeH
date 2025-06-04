@@ -40,518 +40,222 @@
             font-size: 1.5rem;
             color: var(--primary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
         }
-        .logo:hover { color: var(--secondary-color); }
-        .nav-link {
-            color: var(--text-color) !important;
-            font-weight: 500;
-            padding: 0.5rem 1rem !important;
-            transition: color 0.3s ease;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-color) !important;
-        }
-        .btn-icon-navbar {
-            color: var(--text-light);
-            background: transparent;
-            border: none;
-            font-size: 1.3rem;
-            margin: 0 0.5rem;
-            transition: color 0.2s;
-        }
-        .btn-icon-navbar:hover { color: var(--primary-color); }
-        #toggle-darkmode {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.3rem;
-            margin-left: 0.5rem;
-            transition: color 0.2s;
-        }
-        #toggle-darkmode:hover { color: var(--primary-color); }
-        .hero-title {
-            color: #fff;
-            font-weight: 700;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-        .hero-desc {
-            color: #f4f6f8;
-            font-weight: 500;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.10);
-        }
-        .card {
+        .cart-container {
+            max-width: 900px;
+            margin: 40px auto;
             background: var(--white);
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-radius: 18px;
+            box-shadow: 0 1px 6px rgba(44,62,80,0.08);
             border: 1px solid var(--border-color);
-            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 32px 28px;
         }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .card-title {
-            color: var(--text-color);
-            font-weight: 600;
-        }
-        .card-img-top {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 0.5rem 0.5rem 0 0;
-        }
-        .badge.bg-danger { background: var(--danger-color) !important; }
-        .badge.bg-warning { background: var(--warning-color) !important; color: var(--text-color) !important; }
-        .badge.bg-success { background: var(--success-color) !important; }
-        .footer {
-            background: var(--light-bg);
-            color: var(--text-color);
-            border-top: 1px solid var(--border-color);
-        }
-        .footer h5 { color: var(--text-color); font-weight: 600; }
-        .footer-link, .footer a { color: var(--text-light); text-decoration: none; transition: color 0.2s; }
-        .footer-link:hover, .footer a:hover { color: var(--primary-color); }
-        .status-active { color: var(--success-color); font-weight: 600; }
-        .dark-mode {
-            background: #1a1f36 !important;
-            color: var(--white) !important;
-        }
-        .dark-mode .navbar, .dark-mode .footer { 
-            background: #1a1f36 !important;
-            color: var(--white) !important;
-            border-color: #2c3444;
-        }
-        .dark-mode .card { 
-            background: #2c3444 !important;
-            color: var(--white) !important;
-            border-color: #2c3444;
-        }
-        .dark-mode .card-title { color: var(--white) !important; }
-        .dark-mode .logo { color: var(--white) !important; }
-        .dark-mode .nav-link { color: var(--white) !important; }
-        .dark-mode .nav-link:hover { color: var(--primary-color) !important; }
-        .category-menu-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 32px;
-            justify-content: center;
+        .cart-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
             margin-bottom: 24px;
         }
-        .category-menu-card {
-            width: 220px;
-            height: 160px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color);
-            text-decoration: none;
-            margin-bottom: 0;
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .category-menu-card:hover {
-            box-shadow: 0 4px 12px rgba(44,62,80,0.08);
-            transform: translateY(-4px);
-        }
-        .category-menu-card i {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-bottom: 12px;
-        }
-        .category-menu-card h5 {
+        .cart-table th, .cart-table td {
+            vertical-align: middle;
+            text-align: center;
             color: var(--text-color);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 0;
         }
-        @media (max-width: 900px) {
-            .category-menu-row {
-                gap: 16px;
-            }
-            .category-menu-card {
-                width: 48vw;
-                min-width: 160px;
-                max-width: 260px;
-                margin-bottom: 12px;
+        .cart-table th {
+            background: var(--light-bg);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-table td {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-table img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .cart-table .product-name {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .cart-table .product-code {
+            color: var(--text-light);
+            font-size: 0.97em;
+        }
+        .cart-table .btn { min-width: 32px; }
+        .cart-table .btn-remove, .btn-remove {
+            color: var(--danger-color) !important;
+            background: none !important;
+            border: none !important;
+            font-size: 1.2em;
+        }
+        .cart-table .btn-remove:hover, .btn-remove:hover {
+            color: #b71c1c !important;
+            background: none !important;
+        }
+        .cart-summary {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 24px 18px;
+            margin-top: 32px;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .cart-summary h5 {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 18px;
+        }
+        .cart-summary label {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .cart-summary input, .cart-summary textarea, .cart-summary select {
+            border-radius: 8px;
+            color: var(--text-color);
+            background: var(--white);
+            border: 1px solid var(--border-color);
+        }
+        .cart-summary .form-control:focus {
+            box-shadow: 0 0 0 2px rgba(74,144,226,0.15);
+            border-color: var(--primary-color);
+        }
+        .cart-summary .voucher-group { display: flex; gap: 8px; margin-bottom: 12px; }
+        .cart-summary .voucher-group input { flex: 1; }
+        .cart-summary .voucher-group button { white-space: nowrap; }
+        .cart-summary .total-label { font-weight: 600; color: var(--primary-color); }
+        .cart-summary .total-value { font-size: 1.3em; font-weight: 700; color: var(--danger-color); }
+        .cart-summary .btn-checkout { font-size: 1.1em; font-weight: 700; padding: 12px 0; border-radius: 10px; }
+        @media (max-width: 900px) { .cart-container { padding: 18px 4px; } }
+        .header-link, .footer-link, .header-link:visited {
+            color: var(--text-color) !important;
+            text-decoration: none;
+            transition: none;
+        }
+        .header-link:hover, .footer-link:hover {
+            color: var(--primary-color) !important;
+            background: none !important;
+        }
+        /* Nút mặc định: chữ đen, nền trắng, viền xanh, không hiệu ứng */
+        .btn, .btn:focus, .btn:active {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border: 1.5px solid var(--primary-color) !important;
+            box-shadow: none !important;
+            font-weight: 600;
+            transition: none !important;
+        }
+        .btn:hover {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border: 1.5px solid var(--primary-color) !important;
+        }
+        /* Nút xóa sản phẩm giữ màu đỏ */
+        .btn-remove, .btn-remove:focus, .btn-remove:active {
+            color: var(--danger-color) !important;
+            background: none !important;
+            border: none !important;
+        }
+        .btn-remove:hover {
+            color: #b71c1c !important;
+            background: none !important;
+        }
+        /* Dropdown menu */
+        .dropdown-menu {
+            background: var(--white);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .dropdown-item {
+            color: var(--text-color);
+            background: var(--white);
+            transition: none;
+        }
+        .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active {
+            color: var(--primary-color);
+            background: var(--white);
+        }
+        /* Loại bỏ hoàn toàn hiệu ứng hover cho mọi thành phần */
+        .btn:hover, .btn:focus, .btn:active,
+        .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active,
+        .header-link:hover, .footer-link:hover,
+        a:hover, a:focus {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
+            outline: none !important;
+        }
+        /* Chỉ hero section chữ trắng */
+        .hero-title, .hero-desc {
+            color: #fff !important;
+        }
+        .hero-section .btn, .hero-section .btn:visited {
+            color: #fff !important;
+        }
+        /* Điều chỉnh kích thước sản phẩm cho phần Chuột bán chạy */
+        .best-seller-block .row.g-3 > div[class^='col-'] {
+            flex: 0 0 25%;
+            max-width: 25%;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        .best-seller-block .card.product-card {
+            padding: 10px 6px 16px 6px;
+            margin-bottom: 0;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(44,62,80,0.06);
+            min-width: 0;
+        }
+        .best-seller-block .card-img-top {
+            height: 160px;
+            object-fit: contain;
+            margin-top: 8px;
+            margin-bottom: 4px;
+            width: 100%;
+        }
+        .best-seller-block .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .best-seller-block .product-meta {
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+        .best-seller-block .product-price {
+            font-size: 0.97rem;
+            margin-bottom: 2px;
+        }
+        .best-seller-block .btn {
+            font-size: 0.97rem;
+            padding: 6px 0;
+            border-radius: 8px;
+        }
+        @media (max-width: 992px) {
+            .best-seller-block .row.g-3 > div[class^='col-'] {
+                flex: 0 0 50%;
+                max-width: 50%;
             }
         }
         @media (max-width: 600px) {
-            .category-menu-row {
-                flex-direction: column;
-                align-items: center;
-            }
-            .category-menu-card {
-                width: 90vw;
-                margin-bottom: 16px;
-            }
-        }
-        .btn-primary {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        .btn-primary:hover {
-            background: var(--secondary-color);
-            border-color: var(--secondary-color);
-        }
-        .header-top {
-            background: var(--light-bg);
-            color: var(--text-light);
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .header-top a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .header-top a:hover {
-            color: var(--primary-color);
-        }
-        .header-top .badge {
-            background: var(--white);
-            color: var(--text-light);
-            border: 1px solid var(--border-color);
-        }
-        .btn-outline-primary {
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        .btn-outline-primary:hover {
-            background: var(--primary-color);
-            color: var(--white);
-        }
-        .text-muted {
-            color: var(--text-light) !important;
-        }
-        .bg-light {
-            background-color: var(--light-bg) !important;
-        }
-        .border {
-            border-color: var(--border-color) !important;
-        }
-        .search-bar .input-group-text {
-            background: var(--white);
-            border: 1px solid var(--border-color);
-            border-right: none;
-            color: var(--text-light);
-            border-radius: 24px 0 0 24px;
-            padding-left: 18px;
-            padding-right: 10px;
-            font-size: 1.1rem;
-        }
-        .search-bar .form-control {
-            border: 1px solid var(--border-color);
-            border-left: none;
-            border-radius: 0 24px 24px 0;
-            background: var(--light-bg);
-            color: var(--text-color);
-            font-size: 1rem;
-            padding: 0.6rem 1rem;
-            box-shadow: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .search-bar .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(74,144,226,0.15);
-            background: var(--white);
-            outline: none;
-        }
-        .search-bar .form-control::placeholder {
-            color: var(--text-light);
-            opacity: 1;
-        }
-        .category-block {
-            background: var(--white) !important;
-            border-radius: 18px;
-            box-shadow: 0 1px 4px rgba(44,62,80,0.06);
-            margin-bottom: 28px;
-            padding: 18px 12px 12px 12px;
-        }
-        .category-block h4 {
-            color: var(--primary-color);
-            font-family: 'Inter', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 18px;
-        }
-        .best-seller-block {
-            background: #f7fafd;
-            border-radius: 18px;
-            padding: 24px 18px;
-            margin-bottom: 32px;
-            box-shadow: 0 1px 6px rgba(44,62,80,0.06);
-            padding-left: 24px;
-            padding-right: 24px;
-        }
-        .section-title {
-            font-size: 1.5rem;
-            color: #212b36;
-            font-weight: 700;
-        }
-        .brand-tabs {
-            display: flex;
-            gap: 12px;
-        }
-        .brand-tab {
-            color: #637381;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 2px 10px;
-            border-radius: 8px;
-            transition: background 0.2s, color 0.2s;
-        }
-        .brand-tab.active, .brand-tab:hover {
-            background: #e3f0ff;
-            color: #357ab8;
-        }
-        .product-card {
-            border-radius: 12px;
-            border: 1px solid #e3e8ee;
-            box-shadow: 0 1px 4px rgba(44,62,80,0.04);
-            transition: box-shadow 0.2s;
-            min-height: 440px;
-            min-width: 240px;
-            max-width: 280px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: stretch;
-            background: #fff;
-            margin: 0;
-        }
-        .product-card .card-img-top {
-            height: 200px;
-            object-fit: contain;
-            margin-top: 18px;
-            margin-bottom: 8px;
-            display: block;
-            width: 100%;
-        }
-        .card-body {
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            width: 100%;
-            padding-bottom: 18px;
-        }
-        .product-card .card-title {
-            font-size: 1.05em;
-            font-weight: 600;
-            min-height: 44px;
-            margin-bottom: 4px;
-            text-align: center;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: normal;
-            line-height: 1.25;
-            max-height: 2.5em;
-        }
-        .product-meta {
-            min-height: 28px;
-            text-align: center;
-        }
-        .product-price {
-            min-height: 32px;
-            text-align: center;
-        }
-        .product-rating {
-            min-height: 24px;
-            text-align: center;
-        }
-        .product-card:hover {
-            box-shadow: 0 4px 16px rgba(44,62,80,0.10);
-        }
-        .badge-hot {
-            position: absolute;
-            top: 10px; left: 10px;
-            background: #ff3d00;
-            color: #fff;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 0.2em 0.7em;
-            z-index: 2;
-        }
-        .badge-sale {
-            position: absolute;
-            top: 10px; right: 10px;
-            background: #e53935;
-            color: #fff;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 0.2em 0.7em;
-            z-index: 2;
-        }
-        .price-old {
-            text-decoration: line-through;
-            color: #b0b0b0;
-            font-size: 0.95rem;
-            margin-right: 6px;
-        }
-        .price-sale {
-            color: #e53935;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-right: 6px;
-        }
-        .product-meta {
-            font-size: 0.92rem;
-            color: #637381;
-            margin-bottom: 4px;
-        }
-        .meta-item {
-            margin-right: 10px;
-        }
-        .product-rating {
-            font-size: 0.95rem;
-        }
-        .carousel-control-prev, .carousel-control-next {
-            width: 48px;
-            height: 48px;
-            top: 40%;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(44,62,80,0.10);
-            border: 1px solid #e3e8ee;
-            opacity: 1;
-            transition: background 0.2s;
-        }
-        .carousel-control-prev-icon, .carousel-control-next-icon {
-            filter: invert(0.5);
-        }
-        @media (max-width: 900px) {
-            .product-card {
-                min-width: 160px;
+            .best-seller-block .row.g-3 > div[class^='col-'] {
+                flex: 0 0 100%;
                 max-width: 100%;
-                min-height: 320px;
             }
-            .product-card .card-img-top {
+            .best-seller-block .card-img-top {
                 height: 120px;
             }
         }
-        .meta-chip {
-            background: #f1f3f6;
-            color: #637381;
-            font-size: 0.93em;
-            border-radius: 8px;
-            padding: 2px 10px;
-            margin: 0 3px 3px 0;
-            display: inline-block;
-            line-height: 1.5;
-        }
-        .badge-hot {
-            background: #ff5630 !important;
-            color: #fff !important;
-            font-size: 0.95em;
-            font-weight: 600;
-            border-radius: 16px;
-            padding: 0.3em 1em;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: none;
-        }
-        .badge-sale {
-            background: #00c853 !important;
-            color: #fff !important;
-            font-size: 0.95em;
-            font-weight: 600;
-            border-radius: 12px;
-            padding: 0.3em 0.9em;
-            margin-left: 2px;
-            display: inline-block;
-            box-shadow: none;
-        }
-        .price-old {
-            text-decoration: line-through;
-            color: #b0b0b0;
-            font-size: 0.98em;
-            margin-right: 6px;
-        }
-        .price-sale {
-            color: #e53935;
-            font-weight: 700;
-            font-size: 1.1em;
-            margin-right: 6px;
-        }
-        .product-card .card-title {
-            font-size: 1.05em;
-            font-weight: 600;
-            min-height: 44px;
-            margin-bottom: 4px;
-            text-align: center;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: normal;
-            line-height: 1.25;
-            max-height: 2.5em;
-        }
-        .product-meta {
-            min-height: 28px;
-            text-align: center;
-            margin-bottom: 6px;
-        }
-        .product-rating {
-            min-height: 24px;
-            text-align: center;
-            font-size: 1em;
-        }
         @media (min-width: 1200px) {
-            .col-lg-5th {
+            .col-xl-5th {
                 flex: 0 0 20%;
                 max-width: 20%;
             }
-        }
-        .specs-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-        .specs-list .spec-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .specs-list .spec-item i {
-            color: var(--primary-color);
-            width: 20px;
-        }
-        .product-desc {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: var(--text-light);
-        }
-        .version-btn {
-            padding: 8px 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--white);
-            color: var(--text-color);
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        .version-btn:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-        .version-btn.active {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-            color: var(--white);
         }
     </style>
 </head>
@@ -575,26 +279,25 @@
             </div>
             <div class="d-flex align-items-center flex-wrap">
                 <a href="#" class="header-link me-3 d-flex align-items-center"><i class="fas fa-bullhorn me-1"></i> Tin tức</a>
-                <!-- Đã xóa Đăng ký / Đăng nhập -->
             </div>
         </div>
     </div>
 
     <!-- Navbar mới -->
-    <nav class="navbar py-3" style="background:rgba(18,18,18,0.95); box-shadow:0 2px 8px rgba(0,255,255,0.08); border-bottom:1px solid rgba(0,255,255,0.08);">
+    <nav class="navbar py-3">
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <!-- Logo -->
             <div class="d-flex align-items-center me-3">
-                <div style="text-align:center;">
+                <a href="/" style="text-align:center;display:block;text-decoration:none;">
                     <div style="font-size:2.2rem;line-height:1;">
                         <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
                     </div>
                     <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
-                </div>
+                </a>
             </div>
             <!-- Danh mục -->
             <div class="dropdown me-2">
-                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-list me-2"></i> DANH MỤC
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
@@ -625,7 +328,7 @@
                 <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
             </div>
             <!-- Giỏ hàng -->
-            <a href="/cart" class="btn d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+            <a href="/cart" class="btn btn-cart-custom d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;">
                 <span class="position-relative me-2">
                     <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;" th:text="${cart != null ? cart.items.size() : 0}">0</span>
@@ -638,9 +341,8 @@
             </button>
         </div>
     </nav>
-
     <!-- Hero Section -->
-    <section class="d-flex align-items-center justify-content-center" style="background: linear-gradient(rgba(18,18,18,0.8), rgba(18,18,18,0.8)), url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat; min-height: 350px; text-align: center;">
+    <section class="d-flex align-items-center justify-content-center" style="background: linear-gradient(rgb(255, 255, 255), rgba(18, 18, 18, 0.182)), url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat; min-height: 350px; text-align: center;">
         <div class="container py-5">
             <h1 class="display-4 fw-bold mb-3 hero-title">Phụ Kiện Công Nghệ Chất Lượng</h1>
             <p class="lead mb-4 hero-desc">Khám phá ngay những sản phẩm công nghệ mới nhất với giá tốt nhất</p>
@@ -794,7 +496,7 @@
                 const col = document.createElement('div');
                 col.className = 'col-12 col-sm-6 col-lg-4 col-xl-2 d-flex';
                 col.innerHTML = `
-                    <div class='card-sale w-100 position-relative d-flex flex-column'>
+                    <div class='card-sale w-100 position-relative d-flex flex-column' style="cursor:pointer;">
                         <span class='badge-sale'>-${p.discountPercent}%</span>
                         <img src='${p.img}' class='card-sale-img' alt='${p.name}'>
                         <div class='px-3 pb-3 flex-grow-1 d-flex flex-column justify-content-between'>
@@ -802,9 +504,13 @@
                             <div class='product-name'>${p.name}</div>
                             <div class='mb-2'><span class='product-price-old'>${p.originalPrice ? p.originalPrice.toLocaleString('vi-VN') + 'đ' : ''}</span> <span class='product-price-sale'>${p.salePrice ? p.salePrice.toLocaleString('vi-VN') + 'đ' : ''}</span></div>
                         </div>
-                        <button class='cart-btn btn btn-primary mt-2' onclick='addToCartDirectly(${JSON.stringify(p)}, event)'><i class='fas fa-cart-plus'></i> Thêm vào giỏ hàng</button>
+                        <button class='cart-btn btn btn-primary mt-2' onclick='addToCartDirectly(${JSON.stringify(p)}, event); event.stopPropagation();'><i class='fas fa-cart-plus'></i> Thêm vào giỏ hàng</button>
                     </div>
                 `;
+                // Thêm sự kiện click để xem chi tiết sản phẩm
+                col.querySelector('.card-sale').onclick = function() {
+                    showProductModal(p);
+                };
                 discountRow.appendChild(col);
             });
         }
@@ -823,7 +529,10 @@
                 const header = document.createElement('div');
                 header.className = 'd-flex align-items-center mb-3 flex-wrap';
                 header.innerHTML = `
-                    <h3 class='section-title mb-0'><i class='fas fa-mouse'></i> ${cat.name} bán chạy</h3>
+                    <h3 class='section-title mb-0'>
+                      <i class='fas '
+                        + (cat.key === 'banphim' ? 'fa-keyboard' : (cat.key === 'chuot' ? 'fa-mouse' : (cat.key === 'tainghe' ? 'fa-headphones' : 'fa-cubes')))
+                        + ""></i> ${cat.name} bán chạy</h3>
                     <span class='ms-3 text-danger fw-bold'><i class='fas fa-truck'></i> Giao hàng toàn quốc</span>
                     <div class='brand-tabs ms-auto'>
                         ${brands.map((b, i) => `<a href='#' class='brand-tab${i===0?' active':''}'>${b}</a>`).join('')}
@@ -861,7 +570,7 @@
                         ];
                         const meta = metaArr.map(m => `<span class='meta-chip'>${m}</span>`).join('');
                         row.innerHTML += `
-                        <div class='col-12 col-sm-6 col-md-4 col-lg-5th'>
+                        <div class='col-12 col-sm-6 col-md-4 col-lg-5 col-xl-5th'>
                           <div class='card product-card h-100' style="cursor:pointer;">
                             <div class='position-relative d-flex flex-column align-items-center'>
                               <img src='${p.img}' class='card-img-top' alt='${p.name}'>
@@ -894,23 +603,17 @@
                 // Carousel controls nếu có nhiều hơn 5 sản phẩm
                 if (catProducts.length > 5) {
                     const prevBtn = document.createElement('button');
-                    prevBtn.className = 'carousel-control-prev';
+                    prevBtn.className = 'carousel-control-prev custom-carousel-btn';
                     prevBtn.type = 'button';
                     prevBtn.setAttribute('data-bs-target', `#${carouselId}`);
                     prevBtn.setAttribute('data-bs-slide', 'prev');
-                    prevBtn.innerHTML = `
-                        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                        <span class='visually-hidden'>Previous</span>
-                    `;
+                    prevBtn.innerHTML = `<span style="font-size:2.2rem;font-weight:900;color:#357ab8;">&#60;</span>`;
                     const nextBtn = document.createElement('button');
-                    nextBtn.className = 'carousel-control-next';
+                    nextBtn.className = 'carousel-control-next custom-carousel-btn';
                     nextBtn.type = 'button';
                     nextBtn.setAttribute('data-bs-target', `#${carouselId}`);
                     nextBtn.setAttribute('data-bs-slide', 'next');
-                    nextBtn.innerHTML = `
-                        <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                        <span class='visually-hidden'>Next</span>
-                    `;
+                    nextBtn.innerHTML = `<span style="font-size:2.2rem;font-weight:900;color:#357ab8;">&#62;</span>`;
                     carousel.appendChild(prevBtn);
                     carousel.appendChild(nextBtn);
                 }
@@ -1045,15 +748,18 @@
             alert('Đã thêm vào sản phẩm yêu thích!');
         }
 
-        // Gắn sự kiện click cho card sản phẩm
+        // Đảm bảo click vào card luôn mở modal, không trigger chuyển slide
         setTimeout(()=>{
-            document.querySelectorAll('.card').forEach((card,idx)=>{
-                card.style.cursor = 'pointer';
-                card.onclick = function() {
-                    showProductModal(products[idx]);
+            document.querySelectorAll('.carousel .card.product-card').forEach(card=>{
+                card.onclick = function(e) {
+                    e.stopPropagation();
+                    // Lấy dữ liệu sản phẩm từ thuộc tính hoặc tìm theo tên
+                    const name = card.querySelector('.card-title')?.innerText || '';
+                    const prod = products.find(p=>p.name===name);
+                    if(prod) showProductModal(prod);
                 };
             });
-        }, 500);
+        }, 800);
 
         // Xử lý submit form thêm vào giỏ hàng (có thể reload hoặc alert)
         document.getElementById('addToCartForm')?.addEventListener('submit', function(e) {
@@ -1099,176 +805,30 @@
     <section class="py-5">
         <div class="container">
             <h2 class="text-center mb-4" style="font-family: 'Orbitron', sans-serif; color: var(--neon-blue);">Danh Mục Sản Phẩm</h2>
-            <div class="category-menu-row">
-                <a href="/ban-phim" class="category-menu-card">
-                    <i class="fas fa-keyboard"></i>
-                    <h5>Bàn phím</h5>
+            <div class="category-menu-row d-flex justify-content-center gap-3 flex-wrap my-4">
+                <a href="/ban-phim" class="category-menu-card d-flex flex-column align-items-center justify-content-center px-4 py-3" style="border:2px solid #4a90e2; border-radius:18px; min-width:120px; background:#fff; box-shadow:0 1px 4px #4a90e210; transition:box-shadow .2s;">
+                    <i class="fas fa-keyboard mb-2" style="font-size:2rem;color:#4a90e2;"></i>
+                    <h5 class="mb-0" style="font-size:1.1rem; font-weight:600; color:#357ab8;">Bàn phím</h5>
                 </a>
-                <a href="/chuot" class="category-menu-card">
-                    <i class="fas fa-mouse"></i>
-                    <h5>Chuột</h5>
+                <a href="/chuot" class="category-menu-card d-flex flex-column align-items-center justify-content-center px-4 py-3" style="border:2px solid #4a90e2; border-radius:18px; min-width:120px; background:#fff; box-shadow:0 1px 4px #4a90e210; transition:box-shadow .2s;">
+                    <i class="fas fa-mouse mb-2" style="font-size:2rem;color:#4a90e2;"></i>
+                    <h5 class="mb-0" style="font-size:1.1rem; font-weight:600; color:#357ab8;">Chuột</h5>
                 </a>
-                <a href="/tai-nghe" class="category-menu-card">
-                    <i class="fas fa-headphones"></i>
-                    <h5>Tai nghe</h5>
+                <a href="/tai-nghe" class="category-menu-card d-flex flex-column align-items-center justify-content-center px-4 py-3" style="border:2px solid #4a90e2; border-radius:18px; min-width:120px; background:#fff; box-shadow:0 1px 4px #4a90e210; transition:box-shadow .2s;">
+                    <i class="fas fa-headphones mb-2" style="font-size:2rem;color:#4a90e2;"></i>
+                    <h5 class="mb-0" style="font-size:1.1rem; font-weight:600; color:#357ab8;">Tai nghe</h5>
                 </a>
-                <a href="/mo-hinh" class="category-menu-card">
-                    <i class="fas fa-cubes"></i>
-                    <h5>Mô hình</h5>
+                <a href="/mo-hinh" class="category-menu-card d-flex flex-column align-items-center justify-content-center px-4 py-3" style="border:2px solid #4a90e2; border-radius:18px; min-width:120px; background:#fff; box-shadow:0 1px 4px #4a90e210; transition:box-shadow .2s;">
+                    <i class="fas fa-cubes mb-2" style="font-size:2rem;color:#4a90e2;"></i>
+                    <h5 class="mb-0" style="font-size:1.1rem; font-weight:600; color:#357ab8;">Mô hình</h5>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Chuột bán chạy dạng slide chuyên nghiệp -->
-    <div class="best-seller-block my-5">
-        <div class="d-flex align-items-center mb-3 flex-wrap">
-            <h3 class="section-title mb-0"><i class="fas fa-mouse"></i> Chuột bán chạy</h3>
-            <span class="ms-3 text-danger fw-bold"><i class="fas fa-truck"></i> Giao hàng toàn quốc</span>
-            <div class="brand-tabs ms-auto">
-                <a href="#" class="brand-tab active">Logitech</a>
-                <a href="#" class="brand-tab">Razer</a>
-                <a href="#" class="brand-tab">Asus</a>
-                <a href="#" class="brand-tab">Corsair</a>
-                <a href="#" class="brand-tab">Dare-U</a>
-                <a href="#" class="brand-tab">Rapoo</a>
-                <a href="#" class="brand-tab text-primary">Xem tất cả</a>
-            </div>
-        </div>
-        <div id="bestSellerCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row g-3">
-                        <!-- Sản phẩm 1 -->
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-5th">
-                            <div class="card product-card h-100">
-                                <div class="position-relative">
-                                    <img src="https://m.media-amazon.com/images/I/61UxfXTUyvL._AC_SL1500_.jpg" class="card-img-top" alt="...">
-                                    <span class="badge badge-hot"><i class="fas fa-fire"></i> Bán chạy</span>
-                                    <span class="badge badge-sale">-40%</span>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Chuột không dây Rapoo M20</h6>
-                                    <div class="product-meta mb-2">
-                                        <span class="meta-item"><i class="fas fa-battery-full"></i> Không dây</span>
-                                        <span class="meta-item"><i class="fas fa-bullseye"></i> 1000 DPI</span>
-                                    </div>
-                                    <div class="product-price mb-1">
-                                        <span class="price-old">150.000đ</span>
-                                        <span class="price-sale">90.000đ</span>
-                                        <span class="badge badge-sale">-40%</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <span class="text-warning">0.0 <i class="fas fa-star"></i></span>
-                                        <span class="text-muted">(0 đánh giá)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Sản phẩm 2 -->
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-5th">
-                            <div class="card product-card h-100">
-                                <div class="position-relative">
-                                    <img src="https://m.media-amazon.com/images/I/61UxfXTUyvL._AC_SL1500_.jpg" class="card-img-top" alt="...">
-                                    <span class="badge badge-sale">-60%</span>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Chuột không dây MonsGeek D1 Pink</h6>
-                                    <div class="product-meta mb-2">
-                                        <span class="meta-item"><i class="fas fa-battery-full"></i> Pin sạc</span>
-                                        <span class="meta-item"><i class="fas fa-usb"></i> Có dây</span>
-                                    </div>
-                                    <div class="product-price mb-1">
-                                        <span class="price-old">299.000đ</span>
-                                        <span class="price-sale">120.000đ</span>
-                                        <span class="badge badge-sale">-60%</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <span class="text-warning">0.0 <i class="fas fa-star"></i></span>
-                                        <span class="text-muted">(0 đánh giá)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Sản phẩm 3 -->
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-5th">
-                            <div class="card product-card h-100">
-                                <div class="position-relative">
-                                    <img src="https://m.media-amazon.com/images/I/61UxfXTUyvL._AC_SL1500_.jpg" class="card-img-top" alt="...">
-                                    <span class="badge badge-hot"><i class="fas fa-fire"></i> Bán chạy</span>
-                                    <span class="badge badge-sale">-11%</span>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Chuột Razer DeathAdder V3 Pro White Wireless</h6>
-                                    <div class="product-meta mb-2">
-                                        <span class="meta-item"><i class="fas fa-battery-full"></i> Pin sạc</span>
-                                        <span class="meta-item"><i class="fas fa-bolt"></i> Không dây</span>
-                                    </div>
-                                    <div class="product-price mb-1">
-                                        <span class="price-old">3.590.000đ</span>
-                                        <span class="price-sale">3.190.000đ</span>
-                                        <span class="badge badge-sale">-11%</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <span class="text-warning">0.0 <i class="fas fa-star"></i></span>
-                                        <span class="text-muted">(0 đánh giá)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Sản phẩm 4 -->
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-5th">
-                            <div class="card product-card h-100">
-                                <div class="position-relative">
-                                    <img src="https://m.media-amazon.com/images/I/61UxfXTUyvL._AC_SL1500_.jpg" class="card-img-top" alt="...">
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Chuột Steelseries Rival 3</h6>
-                                    <div class="product-meta mb-2">
-                                        <span class="meta-item"><i class="fas fa-usb"></i> Có dây</span>
-                                        <span class="meta-item"><i class="fas fa-lightbulb"></i> Led RGB</span>
-                                    </div>
-                                    <div class="product-price mb-1">
-                                        <span class="price-old">990.000đ</span>
-                                        <span class="price-sale">750.000đ</span>
-                                        <span class="badge badge-sale">-24%</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <span class="text-warning">0.0 <i class="fas fa-star"></i></span>
-                                        <span class="text-muted">(0 đánh giá)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Sản phẩm 5 -->
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-5th">
-                            <div class="card product-card h-100">
-                                <div class="position-relative">
-                                    <img src="https://m.media-amazon.com/images/I/61UxfXTUyvL._AC_SL1500_.jpg" class="card-img-top" alt="...">
-                                    <span class="badge badge-hot"><i class="fas fa-fire"></i> Bán chạy</span>
-                                    <span class="badge badge-sale">-31%</span>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Chuột Logitech G102 LightSync White</h6>
-                                    <div class="product-meta mb-2">
-                                        <span class="meta-item"><i class="fas fa-usb"></i> Có dây</span>
-                                        <span class="meta-item"><i class="fas fa-lightbulb"></i> Led RGB</span>
-                                    </div>
-                                    <div class="product-price mb-1">
-                                        <span class="price-old">599.000đ</span>
-                                        <span class="price-sale">415.000đ</span>
-                                        <span class="badge badge-sale">-31%</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <span class="text-warning">0.0 <i class="fas fa-star"></i></span>
-                                        <span class="text-muted">(0 đánh giá)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Thêm các carousel-item khác nếu nhiều sản phẩm -->
+                <!-- Sản phẩm sẽ được render động bằng JS -->
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#bestSellerCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

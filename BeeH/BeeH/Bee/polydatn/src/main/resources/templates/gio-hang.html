@@ -5,43 +5,192 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+
     <style>
-        body { background: #f7fafd; }
-        .cart-container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 32px #0001; padding: 32px 28px; }
-        .cart-title { font-size: 2rem; font-weight: 700; color: #1a237e; margin-bottom: 24px; }
-        .cart-table th, .cart-table td { vertical-align: middle; text-align: center; }
-        .cart-table th { background: #f1f3f6; color: #1a237e; font-weight: 600; }
-        .cart-table img { width: 72px; height: 72px; object-fit: cover; border-radius: 12px; }
-        .cart-table .product-name { font-weight: 600; color: #212b36; }
-        .cart-table .product-code { color: #888; font-size: 0.97em; }
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #5c6ac4;
+            --accent-color: #50b83c;
+            --text-color: #212b36;
+            --text-light: #637381;
+            --light-bg: #f4f6f8;
+            --white: #ffffff;
+            --border-color: #dfe3e8;
+            --success-color: #50b83c;
+            --warning-color: #ffb82e;
+            --danger-color: #de3618;
+        }
+        body {
+            background: var(--white);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: var(--white) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .cart-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--white);
+            border-radius: 18px;
+            box-shadow: 0 1px 6px rgba(44,62,80,0.08);
+            border: 1px solid var(--border-color);
+            padding: 32px 28px;
+        }
+        .cart-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 24px;
+        }
+        .cart-table th, .cart-table td {
+            vertical-align: middle;
+            text-align: center;
+            color: var(--text-color);
+        }
+        .cart-table th {
+            background: var(--light-bg);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-table td {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-table img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .cart-table .product-name {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .cart-table .product-code {
+            color: var(--text-light);
+            font-size: 0.97em;
+        }
         .cart-table .btn { min-width: 32px; }
-        .cart-table .btn-remove { color: #e53935; background: none; border: none; font-size: 1.2em; }
-        .cart-table .btn-remove:hover { color: #b71c1c; }
-        .cart-summary { background: #f9fafb; border-radius: 12px; padding: 24px 18px; margin-top: 32px; }
-        .cart-summary h5 { font-weight: 700; color: #1a237e; margin-bottom: 18px; }
-        .cart-summary label { font-weight: 500; }
-        .cart-summary input, .cart-summary textarea, .cart-summary select { border-radius: 8px; }
-        .cart-summary .form-control:focus { box-shadow: 0 0 0 2px #90caf9; border-color: #42a5f5; }
+        .cart-table .btn-remove, .btn-remove {
+            color: var(--danger-color) !important;
+            background: none !important;
+            border: none !important;
+            font-size: 1.2em;
+        }
+        .cart-table .btn-remove:hover, .btn-remove:hover {
+            color: #b71c1c !important;
+            background: none !important;
+        }
+        .cart-summary {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 24px 18px;
+            margin-top: 32px;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .cart-summary h5 {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 18px;
+        }
+        .cart-summary label {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .cart-summary input, .cart-summary textarea, .cart-summary select {
+            border-radius: 8px;
+            color: var(--text-color);
+            background: var(--white);
+            border: 1px solid var(--border-color);
+        }
+        .cart-summary .form-control:focus {
+            box-shadow: 0 0 0 2px rgba(74,144,226,0.15);
+            border-color: var(--primary-color);
+        }
         .cart-summary .voucher-group { display: flex; gap: 8px; margin-bottom: 12px; }
         .cart-summary .voucher-group input { flex: 1; }
         .cart-summary .voucher-group button { white-space: nowrap; }
-        .cart-summary .total-label { font-weight: 600; color: #1a237e; }
-        .cart-summary .total-value { font-size: 1.3em; font-weight: 700; color: #e53935; }
+        .cart-summary .total-label { font-weight: 600; color: var(--primary-color); }
+        .cart-summary .total-value { font-size: 1.3em; font-weight: 700; color: var(--danger-color); }
         .cart-summary .btn-checkout { font-size: 1.1em; font-weight: 700; padding: 12px 0; border-radius: 10px; }
         @media (max-width: 900px) { .cart-container { padding: 18px 4px; } }
         .header-link, .footer-link, .header-link:visited {
-            color: #637381 !important;
+            color: var(--text-color) !important;
             text-decoration: none;
-            transition: color 0.2s;
+            transition: none;
         }
         .header-link:hover, .footer-link:hover {
-            color: #4a90e2 !important;
+            color: var(--primary-color) !important;
+            background: none !important;
+        }
+        /* Nút mặc định: chữ đen, nền trắng, viền xanh, không hiệu ứng */
+        .btn, .btn:focus, .btn:active {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border: 1.5px solid var(--primary-color) !important;
+            box-shadow: none !important;
+            font-weight: 600;
+            transition: none !important;
+        }
+        .btn:hover {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border: 1.5px solid var(--primary-color) !important;
+        }
+        /* Nút xóa sản phẩm giữ màu đỏ */
+        .btn-remove, .btn-remove:focus, .btn-remove:active {
+            color: var(--danger-color) !important;
+            background: none !important;
+            border: none !important;
+        }
+        .btn-remove:hover {
+            color: #b71c1c !important;
+            background: none !important;
+        }
+        /* Dropdown menu */
+        .dropdown-menu {
+            background: var(--white);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .dropdown-item {
+            color: var(--text-color);
+            background: var(--white);
+            transition: none;
+        }
+        .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active {
+            color: var(--primary-color);
+            background: var(--white);
+        }
+        /* Loại bỏ hoàn toàn hiệu ứng hover cho mọi thành phần */
+        .btn:hover, .btn:focus, .btn:active,
+        .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active,
+        .header-link:hover, .footer-link:hover,
+        a:hover, a:focus {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
+            outline: none !important;
         }
     </style>
 </head>
 <body>
     <!-- Header bar trên cùng -->
-    <div class="header-top py-1" style="background:#f4f6f8; color:#212b36; font-size:0.98rem; font-weight:500; border-bottom:1px solid #dfe3e8;">
+    <div class="header-top py-1" style="background:var(--bg-navy); color:var(--neon-blue); font-size:0.98rem; font-weight:500; border-bottom:1px solid rgba(0,255,255,0.08);">
         <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap">
             <div class="d-flex align-items-center flex-wrap">
                 <span class="badge me-2 d-flex align-items-center" style="border-radius:16px; font-weight:500; background:rgba(0,255,255,0.08); color:var(--neon-blue);">
@@ -59,26 +208,25 @@
             </div>
             <div class="d-flex align-items-center flex-wrap">
                 <a href="#" class="header-link me-3 d-flex align-items-center"><i class="fas fa-bullhorn me-1"></i> Tin tức</a>
-                <!-- Đã xóa Đăng ký / Đăng nhập -->
             </div>
         </div>
     </div>
 
     <!-- Navbar mới -->
-    <nav class="navbar py-3" style="background:#fff !important; box-shadow:0 1px 3px rgba(0,0,0,0.05); border-bottom:1px solid #dfe3e8;">
+    <nav class="navbar py-3">
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <!-- Logo -->
             <div class="d-flex align-items-center me-3">
-                <div style="text-align:center;">
+                <a href="/" style="text-align:center;display:block;text-decoration:none;">
                     <div style="font-size:2.2rem;line-height:1;">
                         <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
                     </div>
                     <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
-                </div>
+                </a>
             </div>
             <!-- Danh mục -->
             <div class="dropdown me-2">
-                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-list me-2"></i> DANH MỤC
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
@@ -109,7 +257,7 @@
                 <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
             </div>
             <!-- Giỏ hàng -->
-            <a href="/cart" class="btn d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+            <a href="/cart" class="btn btn-cart-custom d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;">
                 <span class="position-relative me-2">
                     <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;" th:text="${cart != null ? cart.items.size() : 0}">0</span>
@@ -226,5 +374,57 @@
 </div>
 <!-- Font Awesome -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<!-- Modal đăng nhập/đăng ký mới -->
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4" style="border-radius:18px;box-shadow:0 4px 32px #0002;max-width:400px;margin:auto;">
+      <div class="modal-header border-0 pb-0">
+        <h4 class="modal-title w-100 text-center fw-bold" id="authModalLabel">ĐĂNG NHẬP HOẶC TẠO TÀI KHOẢN</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body pt-2">
+        <form autocomplete="off">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="Nhập email">
+            <div class="form-text text-end"><a href="#" style="font-size:0.97em;">Đăng nhập bằng số điện thoại</a></div>
+          </div>
+          <div class="mb-2 position-relative">
+            <label for="loginPassword" class="form-label">Mật khẩu</label>
+            <input type="password" class="form-control pe-5" id="loginPassword" placeholder="Nhập mật khẩu">
+            <span class="position-absolute top-50 end-0 translate-middle-y me-3" style="cursor:pointer;" onclick="togglePassword()"><i class="fas fa-eye-slash" id="togglePassIcon"></i></span>
+          </div>
+          <div class="mb-2 text-end">
+            <a href="#" style="font-size:0.97em;">Quên mật khẩu email?</a>
+          </div>
+          <button type="submit" class="btn btn-danger w-100 py-2 fw-bold mb-2" style="font-size:1.1rem;border-radius:8px;">ĐĂNG NHẬP</button>
+          <div class="text-center my-2 text-muted" style="font-size:0.98em;">hoặc đăng nhập bằng</div>
+          <div class="d-flex gap-2 mb-3">
+            <button type="button" class="btn btn-light flex-fill border" style="border-radius:8px;"><i class="fab fa-google text-danger me-2"></i> Google</button>
+            <button type="button" class="btn btn-light flex-fill border" style="border-radius:8px;"><i class="fab fa-facebook text-primary me-2"></i> Facebook</button>
+          </div>
+          <div class="text-center" style="font-size:0.98em;">Bạn chưa có tài khoản? <a href="#" class="fw-bold text-primary">Đăng ký ngay!</a></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function togglePassword() {
+  const input = document.getElementById('loginPassword');
+  const icon = document.getElementById('togglePassIcon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  } else {
+    input.type = 'password';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  }
+}
+</script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html> 

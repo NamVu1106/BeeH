@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css" />
     <style>
         :root {
             --neon-blue: #2d2dff;
@@ -92,27 +93,61 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg sticky-top" style="background: transparent; box-shadow: none; border: none;">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center neon-text" href="/" style="font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 700;">
-                <i class="fas fa-bee me-2 neon-glow"></i> Bee Arena
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link neon-link" href="/"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link neon-link" href="/san-pham"><i class="fas fa-shopping-bag me-1"></i>Sản phẩm</a></li>
-                    <li class="nav-item"><a class="nav-link neon-link" href="/gio-hang"><i class="fas fa-shopping-cart me-1"></i>Giỏ hàng</a></li>
-                    <li class="nav-item"><a class="nav-link neon-link" href="/don-hang"><i class="fas fa-box me-1"></i>Đơn hàng</a></li>
-                    <li class="nav-item"><a class="nav-link neon-link" href="/lich-su"><i class="fas fa-history me-1"></i>Lịch sử</a></li>
-                    <li class="nav-item"><a class="nav-link neon-link" href="/tai-khoan"><i class="fas fa-user me-1"></i>Tài khoản</a></li>
+    <!-- Navbar mới -->
+    <nav class="navbar py-3">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <div class="d-flex align-items-center me-3">
+                <div style="text-align:center;">
+                    <div style="font-size:2.2rem;line-height:1;">
+                        <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
+                    </div>
+                    <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
+                </div>
+            </div>
+            <!-- Danh mục -->
+            <div class="dropdown me-2">
+                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-list me-2"></i> DANH MỤC
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
+                    <li><a class="dropdown-item" href="/chuot">Chuột</a></li>
+                    <li><a class="dropdown-item" href="/ban-phim">Bàn phím</a></li>
+                    <li><a class="dropdown-item" href="/tai-nghe">Tai nghe</a></li>
+                    <li><a class="dropdown-item" href="/mo-hinh">Mô hình</a></li>
                 </ul>
             </div>
-            <!-- Nút đổi dark/light mode -->
-            <button id="toggle-darkmode" class="btn d-flex align-items-center" style="border-radius:8px;background:var(--bg-dark);color:var(--neon-blue);border:1px solid var(--neon-blue);" title="Chuyển chế độ sáng/tối">
-                <i class="fas fa-moon"></i>
+            <!-- Tìm kiếm -->
+            <form class="d-flex flex-grow-1 mx-2" style="max-width:420px;">
+                <div class="input-group search-bar">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input class="form-control" type="search" placeholder="Bạn cần tìm gì?">
+                </div>
+            </form>
+            <!-- Hotline -->
+            <div class="d-flex align-items-center ms-2 me-3">
+                <i class="fas fa-phone-alt me-1" style="color:var(--neon-green);font-size:1.2rem;"></i>
+                <div style="font-size:0.9rem;line-height:1.1;">
+                    <span style="color:var(--text-secondary);">Hotline</span><br>
+                    <span style="color:var(--neon-green);font-weight:600;">0349.296.461</span>
+                </div>
+            </div>
+            <!-- Tư vấn trực tiếp -->
+            <div class="d-flex align-items-center me-3">
+                <i class="fas fa-bolt me-1" style="color:var(--neon-pink);font-size:1.2rem;"></i>
+                <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
+            </div>
+            <!-- Giỏ hàng -->
+            <a href="/cart" class="btn d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+                <span class="position-relative me-2">
+                    <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;" th:text="${cart != null ? cart.items.size() : 0}">0</span>
+                </span>
+                Giỏ hàng
+            </a>
+            <!-- Nút đăng nhập trên navbar -->
+            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
+              <i class="fas fa-user"></i> Đăng nhập
             </button>
         </div>
     </nav>

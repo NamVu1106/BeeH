@@ -9,136 +9,184 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #5c6ac4;
+            --accent-color: #50b83c;
+            --text-color: #212b36;
+            --text-light: #637381;
+            --light-bg: #f4f6f8;
+            --white: #ffffff;
+            --border-color: #dfe3e8;
+            --success-color: #50b83c;
+            --warning-color: #ffb82e;
+            --danger-color: #de3618;
+        }
         body {
-            background: #fff;
-            color: #232347;
+            background: var(--white);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
         }
         .navbar {
-            background: #fff;
-            box-shadow: 0 2px 12px rgba(44,44,255,0.06);
+            background: var(--white) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
         }
-        .navbar .navbar-brand {
+        .logo {
             font-weight: 700;
-            color: #2d2dff !important;
             font-size: 1.5rem;
-        }
-        .navbar .nav-link {
-            color: #2d2dff !important;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: background 0.2s, color 0.2s;
-        }
-        .navbar .nav-link.active, .navbar .nav-link:hover {
-            background: #e0e7ff;
-            color: #fff !important;
-        }
-        .card {
-            background: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 2px 12px rgba(44,44,255,0.06);
-            border: 1px solid #e0e7ff;
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .card:hover {
-            box-shadow: 0 8px 32px #2d2dff22, 0 0 8px #fff3;
-            transform: translateY(-4px) scale(1.02);
-        }
-        .card-title {
-            color: #2d2dff;
-            font-weight: 600;
-        }
-        .price {
-            color: #ff0033;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        .footer {
-            background: #e0e7ff;
-            color: #232347;
-            border-top: 1px solid #d1d5fa;
-            padding: 3rem 0 2rem;
-        }
-        .footer h5 {
-            color: #2d2dff;
-            font-weight: 600;
-        }
-        .footer-link {
-            color: #2d2dff;
+            color: var(--primary-color);
             text-decoration: none;
-            transition: color 0.2s;
         }
-        .footer-link:hover {
-            color: #00bfff;
+        .cart-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--white);
+            border-radius: 18px;
+            box-shadow: 0 1px 6px rgba(44,62,80,0.08);
+            border: 1px solid var(--border-color);
+            padding: 32px 28px;
         }
-        @media (max-width: 768px) {
-            .card-title { font-size: 1rem; }
+        .cart-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 24px;
         }
-        .card-img-top, .card-product img, .card img {
-            width: 100%;
-            height: 220px;
+        .cart-table th, .cart-table td {
+            vertical-align: middle;
+            text-align: center;
+            color: var(--text-color);
+        }
+        .cart-table th {
+            background: var(--light-bg);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-table td {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-table img {
+            width: 72px;
+            height: 72px;
             object-fit: cover;
-            display: block;
-            border-radius: 1rem 1rem 0 0 !important;
-            background: #181a20;
-            margin: 0 auto;
-            aspect-ratio: 1/1;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
-        /* Filter section styles */
-        .filter-section {
-            background: #fff;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 12px rgba(44,44,255,0.06);
+        .cart-table .product-name {
+            font-weight: 600;
+            color: var(--text-color);
         }
-        .filter-section h5 {
-            color: #2d2dff;
-            margin-bottom: 1rem;
+        .cart-table .product-code {
+            color: var(--text-light);
+            font-size: 0.97em;
         }
-        .form-check-label {
-            color: #232347;
+        .cart-table .btn { min-width: 32px; }
+        .cart-table .btn-remove, .btn-remove {
+            color: var(--danger-color) !important;
+            background: none !important;
+            border: none !important;
+            font-size: 1.2em;
         }
-        .form-check-input:checked {
-            background-color: #2d2dff;
-            border-color: #2d2dff;
+        .cart-table .btn-remove:hover, .btn-remove:hover {
+            color: #b71c1c !important;
+            background: none !important;
         }
-        .specs-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            font-size: 0.9rem;
+        .cart-summary {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 24px 18px;
+            margin-top: 32px;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
         }
-        .specs-list .spec-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .cart-summary h5 {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 18px;
         }
-        .specs-list .spec-item i {
-            color: #4a90e2;
-            width: 20px;
-        }
-        .product-desc {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #637381;
-        }
-        .version-btn {
-            padding: 8px 16px;
-            border: 2px solid #dfe3e8;
-            border-radius: 8px;
-            background: #fff;
-            color: #212b36;
+        .cart-summary label {
             font-weight: 500;
-            transition: all 0.2s;
+            color: var(--text-color);
         }
-        .version-btn:hover {
-            border-color: #4a90e2;
-            color: #4a90e2;
+        .cart-summary input, .cart-summary textarea, .cart-summary select {
+            border-radius: 8px;
+            color: var(--text-color);
+            background: var(--white);
+            border: 1px solid var(--border-color);
         }
-        .version-btn.active {
-            background: #4a90e2;
-            border-color: #4a90e2;
-            color: #fff;
+        .cart-summary .form-control:focus {
+            box-shadow: 0 0 0 2px rgba(74,144,226,0.15);
+            border-color: var(--primary-color);
+        }
+        .cart-summary .voucher-group { display: flex; gap: 8px; margin-bottom: 12px; }
+        .cart-summary .voucher-group input { flex: 1; }
+        .cart-summary .voucher-group button { white-space: nowrap; }
+        .cart-summary .total-label { font-weight: 600; color: var(--primary-color); }
+        .cart-summary .total-value { font-size: 1.3em; font-weight: 700; color: var(--danger-color); }
+        .cart-summary .btn-checkout { font-size: 1.1em; font-weight: 700; padding: 12px 0; border-radius: 10px; }
+        @media (max-width: 900px) { .cart-container { padding: 18px 4px; } }
+        .header-link, .footer-link, .header-link:visited {
+            color: var(--text-color) !important;
+            text-decoration: none;
+            transition: none;
+        }
+        .header-link:hover, .footer-link:hover {
+            color: var(--primary-color) !important;
+            background: none !important;
+        }
+        /* Nút mặc định: chữ đen, nền trắng, viền xanh, không hiệu ứng */
+        .btn, .btn:focus, .btn:active {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border: 1.5px solid var(--primary-color) !important;
+            box-shadow: none !important;
+            font-weight: 600;
+            transition: none !important;
+        }
+        .btn:hover {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border: 1.5px solid var(--primary-color) !important;
+        }
+        /* Nút xóa sản phẩm giữ màu đỏ */
+        .btn-remove, .btn-remove:focus, .btn-remove:active {
+            color: var(--danger-color) !important;
+            background: none !important;
+            border: none !important;
+        }
+        .btn-remove:hover {
+            color: #b71c1c !important;
+            background: none !important;
+        }
+        /* Dropdown menu */
+        .dropdown-menu {
+            background: var(--white);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .dropdown-item {
+            color: var(--text-color);
+            background: var(--white);
+            transition: none;
+        }
+        .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active {
+            color: var(--primary-color);
+            background: var(--white);
+        }
+        /* Loại bỏ hoàn toàn hiệu ứng hover cho mọi thành phần */
+        .btn:hover, .btn:focus, .btn:active,
+        .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active,
+        .header-link:hover, .footer-link:hover,
+        a:hover, a:focus {
+            background: var(--white) !important;
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
+            outline: none !important;
         }
     </style>
 </head>
@@ -166,61 +214,64 @@
         </div>
     </div>
 
-    <!-- Navbar CHUẨN MẪU -->
-    <nav class="navbar py-3" style="background:#fff; box-shadow:0 2px 8px rgba(44,62,80,0.06); border-bottom:1px solid #e0e7ff;">
-      <div class="container-fluid d-flex align-items-center justify-content-between">
-        <!-- Logo -->
-        <a href="/" class="d-flex align-items-center text-decoration-none me-3">
-          <img src="/static/logo.svg" alt="Bee Arena" style="height:38px;width:38px;object-fit:contain;margin-right:10px;">
-          <span style="font-family:'Inter',sans-serif;font-weight:700;font-size:1.5rem;color:#232347;">BEE-ARENA</span>
-        </a>
-        <!-- Danh mục -->
-        <div class="dropdown me-2">
-          <button class="btn dropdown-toggle d-flex align-items-center px-3 py-2" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:24px;font-weight:500;background:#f5f6fa;color:#232347;border:1px solid #e0e7ff;box-shadow:0 1px 3px rgba(44,62,80,0.04);">
-            <i class="fas fa-list me-2"></i> DANH MỤC
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
-            <li><a class="dropdown-item" href="/chuot">Chuột</a></li>
-            <li><a class="dropdown-item" href="/ban-phim">Bàn phím</a></li>
-            <li><a class="dropdown-item" href="/tai-nghe">Tai nghe</a></li>
-            <li><a class="dropdown-item" href="/mo-hinh">Mô hình</a></li>
-          </ul>
+    <!-- Navbar mới -->
+    <nav class="navbar py-3">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <div class="d-flex align-items-center me-3">
+                <a href="/" style="text-align:center;display:block;text-decoration:none;">
+                    <div style="font-size:2.2rem;line-height:1;">
+                        <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
+                    </div>
+                    <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
+                </a>
+            </div>
+            <!-- Danh mục -->
+            <div class="dropdown me-2">
+                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-list me-2"></i> DANH MỤC
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
+                    <li><a class="dropdown-item" href="/chuot">Chuột</a></li>
+                    <li><a class="dropdown-item" href="/ban-phim">Bàn phím</a></li>
+                    <li><a class="dropdown-item" href="/tai-nghe">Tai nghe</a></li>
+                    <li><a class="dropdown-item" href="/mo-hinh">Mô hình</a></li>
+                </ul>
+            </div>
+            <!-- Tìm kiếm -->
+            <form class="d-flex flex-grow-1 mx-2" style="max-width:420px;">
+                <div class="input-group search-bar">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input class="form-control" type="search" placeholder="Bạn cần tìm gì?">
+                </div>
+            </form>
+            <!-- Hotline -->
+            <div class="d-flex align-items-center ms-2 me-3">
+                <i class="fas fa-phone-alt me-1" style="color:var(--neon-green);font-size:1.2rem;"></i>
+                <div style="font-size:0.9rem;line-height:1.1;">
+                    <span style="color:var(--text-secondary);">Hotline</span><br>
+                    <span style="color:var(--neon-green);font-weight:600;">0349.296.461</span>
+                </div>
+            </div>
+            <!-- Tư vấn trực tiếp -->
+            <div class="d-flex align-items-center me-3">
+                <i class="fas fa-bolt me-1" style="color:var(--neon-pink);font-size:1.2rem;"></i>
+                <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
+            </div>
+            <!-- Giỏ hàng -->
+            <a href="/cart" class="btn btn-cart-custom d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;">
+                <span class="position-relative me-2">
+                    <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;" th:text="${cart != null ? cart.items.size() : 0}">0</span>
+                </span>
+                Giỏ hàng
+            </a>
+            <!-- Nút đăng nhập trên navbar -->
+            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
+              <i class="fas fa-user"></i> Đăng nhập
+            </button>
         </div>
-        <!-- Tìm kiếm -->
-        <form class="d-flex flex-grow-1 mx-2" style="max-width:480px;">
-          <div class="input-group w-100" style="border-radius:24px;overflow:hidden;background:#f5f6fa;box-shadow:0 1px 3px rgba(44,62,80,0.04);border:1px solid #e0e7ff;">
-            <span class="input-group-text bg-transparent border-0" style="color:#637381;"><i class="fas fa-search"></i></span>
-            <input class="form-control border-0 bg-transparent" type="search" placeholder="Bạn cần tìm gì?" style="color:#232347;font-size:1rem;">
-          </div>
-        </form>
-        <!-- Hotline -->
-        <div class="d-flex align-items-center ms-2 me-3" style="color:#232347;font-size:1rem;">
-          <i class="fas fa-phone-alt me-1" style="font-size:1.2rem;"></i>
-          <div style="line-height:1.1;">
-            <span style="font-size:0.95rem;">Hotline</span><br>
-            <span style="font-weight:600;">0349.296.461</span>
-          </div>
-        </div>
-        <!-- Tư vấn trực tiếp -->
-        <div class="d-flex align-items-center me-3" style="color:#232347;font-size:1rem;">
-          <i class="fas fa-bolt me-1" style="font-size:1.2rem;"></i>
-          <span style="font-weight:500;">Tư vấn trực tiếp</span>
-        </div>
-        <!-- Giỏ hàng -->
-        <button class="btn d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:24px;font-weight:500;background:#f5f6fa;color:#232347;border:1px solid #e0e7ff;box-shadow:0 1px 3px rgba(44,62,80,0.04);">
-          <span class="position-relative me-2">
-            <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:#232347;color:#fff;">1</span>
-          </span>
-          Giỏ hàng
-        </button>
-        <!-- Nút đăng nhập trên navbar -->
-        <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
-          <i class="fas fa-user"></i> Đăng nhập
-        </button>
-      </div>
     </nav>
-    <!-- END Navbar CHUẨN MẪU -->
 
     <!-- Main Content -->
     <div class="container py-4">

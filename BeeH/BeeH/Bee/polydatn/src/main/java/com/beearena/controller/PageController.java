@@ -36,10 +36,6 @@ public class PageController {
     public String sanPham() {
         return "san-pham";
     }
-    @GetMapping({"/", "/index"})
-    public String index() {
-        return "index";
-    }
     @GetMapping("/tin-tuc")
     public String tinTuc() {
         return "tin-tuc";

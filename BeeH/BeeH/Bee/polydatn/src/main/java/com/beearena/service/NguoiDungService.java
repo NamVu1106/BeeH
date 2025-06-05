@@ -39,4 +39,12 @@ public class NguoiDungService {
     public void xoaNguoiDung(Long id) {
         nguoiDungRepository.deleteById(id);
     }
+
+    public Optional<NguoiDung> dangNhap(String email, String matKhau) {
+        Optional<NguoiDung> userOpt = nguoiDungRepository.findByEmail(email);
+        if (userOpt.isPresent() && userOpt.get().getMatKhau().equals(matKhau)) {
+            return userOpt;
+        }
+        return Optional.empty();
+    }
 } 

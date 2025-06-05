@@ -1109,11 +1109,17 @@
         const data = await res.json();
         if (data.success && data.user) {
           localStorage.setItem('user', JSON.stringify(data.user));
-          alert('Đăng nhập thành công!');
+          alert(data.message);
           var authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
           if (authModal) authModal.hide();
-          showUserName();
-          location.reload();
+          
+          // Kiểm tra nếu là admin thì chuyển hướng đến trang admin
+          if (data.isAdmin) {
+            window.location.href = '/admin';
+          } else {
+            showUserName();
+            location.reload();
+          }
         } else {
           alert(data.message || 'Đăng nhập thất bại!');
         }

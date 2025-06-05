@@ -305,7 +305,7 @@
         </div>
     </div>
 
-    <!-- Navbar mới -->
+    <!-- Navbar mới (copy từ index.html, đã có profile dropdown, modal đăng nhập/đăng ký/chỉnh sửa thông tin cá nhân) -->
     <nav class="navbar py-3">
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <!-- Logo -->
@@ -357,10 +357,15 @@
                 </span>
                 Giỏ hàng
             </a>
-            <!-- Nút đăng nhập trên navbar -->
-            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
-              <i class="fas fa-user"></i> Đăng nhập
-            </button>
+            <!-- Thay toàn bộ nút đăng nhập/đăng xuất/tên người dùng bằng icon profile dropdown -->
+            <div class="dropdown ms-2">
+              <button id="profileBtn" class="btn btn-outline-primary d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:50%;width:44px;height:44px;padding:0;justify-content:center;">
+                <i class="fas fa-user-circle fa-2x"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
+                <!-- Nội dung sẽ được JS render tùy trạng thái đăng nhập -->
+              </ul>
+            </div>
         </div>
     </nav>
     <!-- nội dung -->
@@ -371,41 +376,41 @@
                 <div class="filter-section">
                     <h5>HÃNG SẢN XUẤT</h5>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="bandai">
-                        <label class="form-check-label" for="bandai">Bandai</label>
+                        <input class="form-check-input" type="checkbox" id="dareu">
+                        <label class="form-check-label" for="dareu">DareU</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="banpresto">
-                        <label class="form-check-label" for="banpresto">Banpresto</label>
+                        <input class="form-check-input" type="checkbox" id="edra">
+                        <label class="form-check-label" for="edra">E-Dra</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="marvel">
-                        <label class="form-check-label" for="marvel">Marvel</label>
+                        <input class="form-check-input" type="checkbox" id="logitech">
+                        <label class="form-check-label" for="logitech">Logitech</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="dc">
-                        <label class="form-check-label" for="dc">DC</label>
+                        <input class="form-check-input" type="checkbox" id="razer">
+                        <label class="form-check-label" for="razer">Razer</label>
                     </div>
                     <hr style="border-color: rgba(44,44,255,0.1);">
                     <h5>KHOẢNG GIÁ</h5>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="price1">
-                        <label class="form-check-label" for="price1">Dưới 200.000đ</label>
+                        <label class="form-check-label" for="price1">Dưới 100.000đ</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="price2">
-                        <label class="form-check-label" for="price2">200.000đ - 500.000đ</label>
+                        <label class="form-check-label" for="price2">100.000đ - 200.000đ</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="price3">
-                        <label class="form-check-label" for="price3">500.000đ - 1.000.000đ</label>
+                        <label class="form-check-label" for="price3">200.000đ - 500.000đ</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="price4">
-                        <label class="form-check-label" for="price4">Trên 1.000.000đ</label>
+                        <label class="form-check-label" for="price4">Trên 500.000đ</label>
                     </div>
                     <hr style="border-color: rgba(44,44,255,0.1);">
-                    <h5>KÍCH THƯỚC MÔ HÌNH</h5>
+                    <h5>KÍCH THƯỚC CHUỘT</h5>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="size1">
                         <label class="form-check-label" for="size1">Nhỏ</label>
@@ -422,15 +427,15 @@
                     <h5>CHỦ ĐỀ</h5>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="theme1">
-                        <label class="form-check-label" for="theme1">Anime</label>
+                        <label class="form-check-label" for="theme1">Gaming</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="theme2">
-                        <label class="form-check-label" for="theme2">Marvel</label>
+                        <label class="form-check-label" for="theme2">Văn phòng</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="theme3">
-                        <label class="form-check-label" for="theme3">DC</label>
+                        <label class="form-check-label" for="theme3">Thiết kế</label>
                     </div>
                     <hr style="border-color: rgba(44,44,255,0.1);">
                     <h5>DANH MỤC KHÁC</h5>
@@ -447,15 +452,15 @@
             <!-- Main Content -->
             <main class="col-md-9">
                 <div class="d-flex align-items-center mb-4">
-                    <h1 class="me-3" style="font-family: 'Orbitron', sans-serif; color: #2d2dff;">MÔ HÌNH</h1>
+                    <h1 class="me-3" style="font-family: 'Orbitron', sans-serif; color: #2d2dff;">Mô hình</h1>
                 </div>
-                <div class="row g-4" id="modelProducts">
+                <div class="row g-4" id="mouseProducts">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                         <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
-                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Mô hình Gundam RX-78-2">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Chuột Gaming DareU EM901">
                             <div class="card-body">
-                                <h6 class="card-title mb-2">Mô hình Gundam RX-78-2</h6>
-                                <p class="card-text price mb-2">499,000₫</p>
+                                <h6 class="card-title mb-2">Chuột Gaming DareU EM901</h6>
+                                <p class="card-text price mb-2">899,000₫</p>
                                 <span class="badge bg-danger mb-2">Giảm giá</span>
                                 <span class="badge bg-warning text-dark mb-2">Yêu thích</span>
                                 <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
@@ -464,9 +469,41 @@
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                         <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
-                            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Mô hình Iron Man Mark 85">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Chuột Gaming Logitech G502">
                             <div class="card-body">
-                                <h6 class="card-title mb-2">Mô hình Iron Man Mark 85</h6>
+                                <h6 class="card-title mb-2">Chuột Gaming Logitech G502</h6>
+                                <p class="card-text price mb-2">1,499,000₫</p>
+                                <span class="badge bg-danger mb-2">Giảm giá</span>
+                                <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Chuột Gaming Razer DeathAdder">
+                            <div class="card-body">
+                                <h6 class="card-title mb-2">Chuột Gaming Razer DeathAdder</h6>
+                                <p class="card-text price mb-2">1,299,000₫</p>
+                                <span class="badge bg-warning text-dark mb-2">Yêu thích</span>
+                                <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Chuột Gaming E-Dra E3">
+                            <div class="card-body">
+                                <h6 class="card-title mb-2">Chuột Gaming E-Dra E3</h6>
+                                <p class="card-text price mb-2">499,000₫</p>
+                                <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Chuột Gaming DareU A950">
+                            <div class="card-body">
+                                <h6 class="card-title mb-2">Chuột Gaming DareU A950</h6>
                                 <p class="card-text price mb-2">799,000₫</p>
                                 <span class="badge bg-danger mb-2">Giảm giá</span>
                                 <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
@@ -475,21 +512,11 @@
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                         <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
-                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Mô hình Luffy Gear 5">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Chuột Gaming Logitech G Pro">
                             <div class="card-body">
-                                <h6 class="card-title mb-2">Mô hình Luffy Gear 5</h6>
-                                <p class="card-text price mb-2">599,000₫</p>
+                                <h6 class="card-title mb-2">Chuột Gaming Logitech G Pro</h6>
+                                <p class="card-text price mb-2">1,999,000₫</p>
                                 <span class="badge bg-warning text-dark mb-2">Yêu thích</span>
-                                <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                        <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
-                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top-4" alt="Mô hình Batman DC">
-                            <div class="card-body">
-                                <h6 class="card-title mb-2">Mô hình Batman DC</h6>
-                                <p class="card-text price mb-2">699,000₫</p>
                                 <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
                             </div>
                         </div>
@@ -559,14 +586,14 @@
         });
         // Thông số kỹ thuật
         const specs = product.specs || {
-            'Chất liệu': 'PVC cao cấp',
-            'Chiều cao': '15-20cm',
-            'Thương hiệu': 'Bandai / Banpresto / Marvel / DC',
-            'Màu sắc': 'Nhiều màu',
-            'Khớp cử động': 'Có',
-            'Phụ kiện đi kèm': 'Đế, vũ khí',
-            'Đóng gói': 'Hộp màu',
-            'Bảo hành': '12 tháng'
+            'Kết nối': 'USB / Không dây',
+            'DPI': '16000 DPI',
+            'Tốc độ phản hồi': '1ms',
+            'Led': 'RGB 16.8 triệu màu',
+            'Pin': '70 giờ',
+            'Kích thước': '120 x 65 x 40mm',
+            'Trọng lượng': '89g',
+            'Bảo hành': '24 tháng'
         };
         const specsContainer = document.getElementById('modalProductSpecs');
         specsContainer.innerHTML = '';
@@ -667,6 +694,47 @@
         const input = document.getElementById('productQuantity');
         input.value = parseInt(input.value) + 1;
     }
+    // Hiển thị tên user và các lựa chọn trong dropdown profile
+    function showUserName() {
+      const user = localStorage.getItem('user');
+      const profileDropdown = document.getElementById('profileDropdown');
+      if (profileDropdown) {
+        if (user) {
+          const userObj = JSON.parse(user);
+          profileDropdown.innerHTML = `
+            <li><span class="dropdown-item-text fw-bold text-primary">Xin chào, ${userObj.name || userObj.email}!</span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="showAccountInfo()"><i class="fas fa-id-card me-2"></i>Thông tin tài khoản</a></li>
+            <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a></li>
+          `;
+        } else {
+          profileDropdown.innerHTML = `
+            <li><a class="dropdown-item" href="#" onclick="showLoginModal()"><i class="fas fa-sign-in-alt me-2"></i>Đăng nhập</a></li>
+          `;
+        }
+      }
+    }
+    function logoutUser() {
+      localStorage.removeItem('user');
+      showUserName();
+      location.reload();
+    }
+    function showAccountInfo() {
+      const user = localStorage.getItem('user');
+      if (!user) return;
+      const userObj = JSON.parse(user);
+      if(document.getElementById('editName')) document.getElementById('editName').value = userObj.name || '';
+      if(document.getElementById('editEmail')) document.getElementById('editEmail').value = userObj.email || '';
+      if(document.getElementById('editProfileModal')) {
+        const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+        modal.show();
+      }
+    }
+    function showLoginModal() {
+      const modal = new bootstrap.Modal(document.getElementById('authModal'));
+      modal.show();
+    }
+    document.addEventListener('DOMContentLoaded', showUserName);
     </script>
 
     <!-- Modal hiển thị chi tiết sản phẩm -->

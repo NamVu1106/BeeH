@@ -50,7 +50,7 @@ public class PageController {
     }
     @GetMapping("/ban-phim")
     public String banPhim() {
-        return "banphim";
+        return "ban-phim";
     }
     @GetMapping("/chuot")
     public String chuot() {
@@ -62,7 +62,7 @@ public class PageController {
     }
     @GetMapping("/mo-hinh")
     public String moHinh() {
-        return "mohinh";
+        return "mo-hinh";
     }
     @GetMapping("/san-pham/{id}")
     public String chiTietSanPham(@org.springframework.web.bind.annotation.PathVariable Integer id, Model model) {

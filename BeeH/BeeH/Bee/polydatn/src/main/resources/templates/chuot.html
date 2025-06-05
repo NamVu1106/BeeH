@@ -305,7 +305,7 @@
         </div>
     </div>
 
-    <!-- Navbar mới -->
+    <!-- Navbar mới (copy từ index.html, đã có profile dropdown, modal đăng nhập/đăng ký/chỉnh sửa thông tin cá nhân) -->
     <nav class="navbar py-3">
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <!-- Logo -->
@@ -357,10 +357,15 @@
                 </span>
                 Giỏ hàng
             </a>
-            <!-- Nút đăng nhập trên navbar -->
-            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
-              <i class="fas fa-user"></i> Đăng nhập
-            </button>
+            <!-- Thay toàn bộ nút đăng nhập/đăng xuất/tên người dùng bằng icon profile dropdown -->
+            <div class="dropdown ms-2">
+              <button id="profileBtn" class="btn btn-outline-primary d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:50%;width:44px;height:44px;padding:0;justify-content:center;">
+                <i class="fas fa-user-circle fa-2x"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
+                <!-- Nội dung sẽ được JS render tùy trạng thái đăng nhập -->
+              </ul>
+            </div>
         </div>
     </nav>
     <!-- nội dung -->
@@ -689,6 +694,47 @@
         const input = document.getElementById('productQuantity');
         input.value = parseInt(input.value) + 1;
     }
+    // Hiển thị tên user và các lựa chọn trong dropdown profile
+    function showUserName() {
+      const user = localStorage.getItem('user');
+      const profileDropdown = document.getElementById('profileDropdown');
+      if (profileDropdown) {
+        if (user) {
+          const userObj = JSON.parse(user);
+          profileDropdown.innerHTML = `
+            <li><span class="dropdown-item-text fw-bold text-primary">Xin chào, ${userObj.name || userObj.email}!</span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="showAccountInfo()"><i class="fas fa-id-card me-2"></i>Thông tin tài khoản</a></li>
+            <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a></li>
+          `;
+        } else {
+          profileDropdown.innerHTML = `
+            <li><a class="dropdown-item" href="#" onclick="showLoginModal()"><i class="fas fa-sign-in-alt me-2"></i>Đăng nhập</a></li>
+          `;
+        }
+      }
+    }
+    function logoutUser() {
+      localStorage.removeItem('user');
+      showUserName();
+      location.reload();
+    }
+    function showAccountInfo() {
+      const user = localStorage.getItem('user');
+      if (!user) return;
+      const userObj = JSON.parse(user);
+      if(document.getElementById('editName')) document.getElementById('editName').value = userObj.name || '';
+      if(document.getElementById('editEmail')) document.getElementById('editEmail').value = userObj.email || '';
+      if(document.getElementById('editProfileModal')) {
+        const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+        modal.show();
+      }
+    }
+    function showLoginModal() {
+      const modal = new bootstrap.Modal(document.getElementById('authModal'));
+      modal.show();
+    }
+    document.addEventListener('DOMContentLoaded', showUserName);
     </script>
 
     <!-- Modal hiển thị chi tiết sản phẩm -->

@@ -257,6 +257,34 @@
                 max-width: 20%;
             }
         }
+        .card.product-card {
+            border: 1.5px solid #e0e7ef !important;
+            border-radius: 16px !important;
+            box-shadow: 0 2px 12px 0 rgba(44,62,80,0.07) !important;
+            background: #fff !important;
+            transition: box-shadow 0.2s, border-color 0.2s !important;
+            cursor: pointer;
+        }
+        .card.product-card:hover {
+            border-color: #4a90e2 !important;
+            box-shadow: 0 4px 24px 0 rgba(74,144,226,0.13) !important;
+        }
+        .card-sale {
+            border: 1.5px solid #e0e7ef !important;
+            border-radius: 16px !important;
+            box-shadow: 0 2px 12px 0 rgba(44,62,80,0.07) !important;
+            background: #fff !important;
+            transition: box-shadow 0.2s, border-color 0.2s !important;
+            cursor: pointer;
+        }
+        .card-sale:hover {
+            border-color: #4a90e2 !important;
+            box-shadow: 0 4px 24px 0 rgba(74,144,226,0.13) !important;
+        }
+        /* Sửa màu nền thanh tìm kiếm */
+        .search-bar .form-control {
+            background: #fff !important;
+        }
     </style>
 </head>
 <body>
@@ -336,11 +364,12 @@
                 Giỏ hàng
             </a>
             <!-- Nút đăng nhập trên navbar -->
-            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
+            <button type="button" class="btn btn-outline-primary ms-2" onclick="showLoginModal()">
               <i class="fas fa-user"></i> Đăng nhập
             </button>
         </div>
     </nav>
+
     <!-- Hero Section -->
     <section class="d-flex align-items-center justify-content-center" style="background: linear-gradient(rgb(255, 255, 255), rgba(18, 18, 18, 0.182)), url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat; min-height: 350px; text-align: center;">
         <div class="container py-5">
@@ -451,12 +480,12 @@
             mohinh: ['Gundam', 'Marvel', 'DC', 'One Piece', 'Naruto', 'Dragon Ball']
         };
 
-        const products = Array.from({length: 50}, (_, i) => {
+        const products = Array.from({length: 100}, (_, i) => {
             let cat, catIdx, brand;
-            if (i < 15) { cat = 'banphim'; catIdx = i; }
-            else if (i < 25) { cat = 'chuot'; catIdx = i - 15; }
-            else if (i < 35) { cat = 'tainghe'; catIdx = i - 25; }
-            else { cat = 'mohinh'; catIdx = i - 35; }
+            if (i < 30) { cat = 'banphim'; catIdx = i; }
+            else if (i < 50) { cat = 'chuot'; catIdx = i - 30; }
+            else if (i < 70) { cat = 'tainghe'; catIdx = i - 50; }
+            else { cat = 'mohinh'; catIdx = i - 70; }
             // Lấy brand theo chỉ số
             brand = brandsByCategory[cat][catIdx % brandsByCategory[cat].length];
             let discountPercent = 0, originalPrice = 0, salePrice = 0;
@@ -466,8 +495,8 @@
                 salePrice = Math.floor(originalPrice * (1 - discountPercent/100));
             }
             return {
-                id: 1000 + i, // Thêm id duy nhất cho mỗi sản phẩm
-                name: `${cat === 'mohinh' ? 'Mô hình' : (cat === 'banphim' ? 'Bàn phím' : (cat === 'chuot' ? 'Chuột' : 'Tai nghe'))} ${brand}`,
+                id: 1000 + i,
+                name: `${cat === 'mohinh' ? 'Mô hình' : (cat === 'banphim' ? 'Bàn phím' : (cat === 'chuot' ? 'Chuột' : 'Tai nghe'))} ${brand} ${catIdx + 1}`,
                 price: `${(Math.random()*2000+500).toFixed(0)}.000đ`,
                 img: "https://m.media-amazon.com/images/I/61UxfXTUyvL._AC_SL1500_.jpg",
                 category: cat,
@@ -482,181 +511,29 @@
             renderProductsByCategory();
         });
 
-        // Hiển thị 6 sản phẩm ưu đãi đẹp như mẫu
-        function renderDiscountProducts() {
-            const discountRow = document.getElementById('discountProductsRow');
-            discountRow.innerHTML = '';
-            // Lấy 6 sản phẩm ưu đãi (ưu tiên mỗi danh mục 1-2 sản phẩm)
-            let saleProducts = [];
-            categories.forEach(cat => {
-                saleProducts = saleProducts.concat(products.filter(p => p.category === cat.key && p.discountPercent >= 20 && p.discountPercent <= 60).slice(0, 2));
-            });
-            saleProducts = saleProducts.slice(0, 6);
-            saleProducts.forEach((p, idx) => {
-                const col = document.createElement('div');
-                col.className = 'col-12 col-sm-6 col-lg-4 col-xl-2 d-flex';
-                col.innerHTML = `
-                    <div class='card-sale w-100 position-relative d-flex flex-column' style="cursor:pointer;">
-                        <span class='badge-sale'>-${p.discountPercent}%</span>
-                        <img src='${p.img}' class='card-sale-img' alt='${p.name}'>
-                        <div class='px-3 pb-3 flex-grow-1 d-flex flex-column justify-content-between'>
-                            <div class='mb-1'><span class='product-code'>Mã: SP${1000+idx}</span> <span class='product-status'>Còn hàng</span></div>
-                            <div class='product-name'>${p.name}</div>
-                            <div class='mb-2'><span class='product-price-old'>${p.originalPrice ? p.originalPrice.toLocaleString('vi-VN') + 'đ' : ''}</span> <span class='product-price-sale'>${p.salePrice ? p.salePrice.toLocaleString('vi-VN') + 'đ' : ''}</span></div>
-                        </div>
-                        <button class='cart-btn btn btn-primary mt-2' onclick='addToCartDirectly(${JSON.stringify(p)}, event); event.stopPropagation();'><i class='fas fa-cart-plus'></i> Thêm vào giỏ hàng</button>
-                    </div>
-                `;
-                // Thêm sự kiện click để xem chi tiết sản phẩm
-                col.querySelector('.card-sale').onclick = function() {
-                    showProductModal(p);
-                };
-                discountRow.appendChild(col);
-            });
-        }
-
-        function renderProductsByCategory() {
-            const container = document.getElementById('productCategories');
-            container.innerHTML = '';
-            const brands = ['Logitech', 'Razer', 'Asus', 'Corsair', 'Dare-U', 'Rapoo'];
-            categories.forEach((cat, idx) => {
-                const catProducts = products.filter(p => p.category === cat.key);
-                if (catProducts.length === 0) return;
-                // Block danh mục
-                const block = document.createElement('div');
-                block.className = 'best-seller-block my-5';
-                // Tiêu đề + tab thương hiệu
-                const header = document.createElement('div');
-                header.className = 'd-flex align-items-center mb-3 flex-wrap';
-                header.innerHTML = `
-                    <h3 class='section-title mb-0'>
-                      <i class='fas '
-                        + (cat.key === 'banphim' ? 'fa-keyboard' : (cat.key === 'chuot' ? 'fa-mouse' : (cat.key === 'tainghe' ? 'fa-headphones' : 'fa-cubes')))
-                        + ""></i> ${cat.name} bán chạy</h3>
-                    <span class='ms-3 text-danger fw-bold'><i class='fas fa-truck'></i> Giao hàng toàn quốc</span>
-                    <div class='brand-tabs ms-auto'>
-                        ${brands.map((b, i) => `<a href='#' class='brand-tab${i===0?' active':''}'>${b}</a>`).join('')}
-                        <a href='#' class='brand-tab text-primary'>Xem tất cả</a>
-                                    </div>
-                `;
-                block.appendChild(header);
-                // Carousel
-                const carouselId = `carousel-${cat.key}`;
-                const carousel = document.createElement('div');
-                carousel.id = carouselId;
-                carousel.className = 'carousel slide';
-                carousel.setAttribute('data-bs-ride', 'carousel');
-                // Carousel inner
-                const carouselInner = document.createElement('div');
-                carouselInner.className = 'carousel-inner';
-                // Chia sản phẩm thành các slide, mỗi slide 5 sản phẩm
-                for (let i = 0; i < catProducts.length; i += 5) {
-                    const slide = document.createElement('div');
-                    slide.className = 'carousel-item' + (i === 0 ? ' active' : '');
-                    const row = document.createElement('div');
-                    row.className = 'row g-5 mx-0';
-                    catProducts.slice(i, i + 5).forEach((p, pi) => {
-                        // Giả lập dữ liệu tag hot, giảm giá, giá gốc, đánh giá
-                        const isHot = pi % 2 === 0;
-                        const discount = p.discountPercent || [40,60,11,24,31,35][pi%6];
-                        const priceOld = p.originalPrice || (parseInt(p.price.replace(/\D/g,'')) * 1.3).toFixed(0) + '.000đ';
-                        const priceSale = p.salePrice || p.price;
-                        const rating = (Math.random()*5).toFixed(1);
-                        const reviews = Math.floor(Math.random()*100);
-                        // Mô tả ngắn
-                        const metaArr = [
-                            (pi%2===0?'<i class="fas fa-battery-full"></i> Không dây':'<i class="fas fa-usb"></i> Có dây'),
-                            (pi%3===0?'<i class="fas fa-lightbulb"></i> Led RGB':'<i class="fas fa-bullseye"></i> 1000 DPI')
-                        ];
-                        const meta = metaArr.map(m => `<span class='meta-chip'>${m}</span>`).join('');
-                        row.innerHTML += `
-                        <div class='col-12 col-sm-6 col-md-4 col-lg-5 col-xl-5th'>
-                          <div class='card product-card h-100' style="cursor:pointer;">
-                            <div class='position-relative d-flex flex-column align-items-center'>
-                              <img src='${p.img}' class='card-img-top' alt='${p.name}'>
-                              <div class='w-100 d-flex align-items-center mt-2 mb-1' style='min-height:28px;'>
-                                ${isHot ? `<span class='badge badge-hot me-1'><i class='fas fa-fire'></i> Bán chạy</span>` : ''}
-                                </div>
-                            </div>
-                            <div class='card-body px-2 pt-0'>
-                              <h6 class='card-title text-truncate' title='${p.name}'>${p.name}</h6>
-                              <div class='product-meta mb-2 d-flex flex-wrap justify-content-center'>${meta}</div>
-                              <div class='product-price mb-1 d-flex align-items-center justify-content-center flex-wrap'>
-                                <span class='price-old me-2'>${priceOld}</span>
-                                <span class='price-sale me-2'>${priceSale}</span>
-                                <span class='badge badge-sale'>-${discount}%</span>
-                                    </div>
-                              <div class='product-rating d-flex align-items-center justify-content-center'>
-                                <span class='text-warning me-1'>${rating} <i class='fas fa-star'></i></span>
-                                <span class='text-muted' style='font-size:0.95em;'>(${reviews} đánh giá)</span>
-                                </div>
-                              <button class='btn btn-primary w-100 mt-2' onclick='addToCartDirectly(${JSON.stringify(p)}, event)'><i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng</button>
-                            </div>
-                                    </div>
-                                </div>
-                        `;
-                    });
-                    slide.appendChild(row);
-                    carouselInner.appendChild(slide);
-                }
-                carousel.appendChild(carouselInner);
-                // Carousel controls nếu có nhiều hơn 5 sản phẩm
-                if (catProducts.length > 5) {
-                    const prevBtn = document.createElement('button');
-                    prevBtn.className = 'carousel-control-prev custom-carousel-btn';
-                    prevBtn.type = 'button';
-                    prevBtn.setAttribute('data-bs-target', `#${carouselId}`);
-                    prevBtn.setAttribute('data-bs-slide', 'prev');
-                    prevBtn.innerHTML = `<span style="font-size:2.2rem;font-weight:900;color:#357ab8;">&#60;</span>`;
-                    const nextBtn = document.createElement('button');
-                    nextBtn.className = 'carousel-control-next custom-carousel-btn';
-                    nextBtn.type = 'button';
-                    nextBtn.setAttribute('data-bs-target', `#${carouselId}`);
-                    nextBtn.setAttribute('data-bs-slide', 'next');
-                    nextBtn.innerHTML = `<span style="font-size:2.2rem;font-weight:900;color:#357ab8;">&#62;</span>`;
-                    carousel.appendChild(prevBtn);
-                    carousel.appendChild(nextBtn);
-                }
-                block.appendChild(carousel);
-                container.appendChild(block);
-            });
-        }
+        // Biến toàn cục lưu phiên bản đã chọn
+        let selectedProductVersion = null;
 
         function showProductModal(product) {
-            // Cập nhật thông tin cơ bản
             document.getElementById('productModalLabel').textContent = product.name;
             document.getElementById('modalProductImg').src = product.img;
-            
             // Giá và giảm giá
-            const price = product.salePrice || product.price;
-            const oldPrice = product.originalPrice;
-            const discount = product.discountPercent;
-            
-            document.getElementById('modalProductPrice').textContent = formatPrice(price);
-            if (oldPrice) {
-                document.getElementById('modalProductOldPrice').textContent = formatPrice(oldPrice);
-                document.getElementById('modalProductDiscount').textContent = `-${discount}%`;
-            } else {
-                document.getElementById('modalProductOldPrice').textContent = '';
-                document.getElementById('modalProductDiscount').textContent = '';
-            }
-
+            let selectedVersion = product.versions && product.versions.length > 0 ? product.versions[0] : { price: product.price };
+            document.getElementById('modalProductPrice').textContent = formatPrice(selectedVersion.price);
+            document.getElementById('modalProductOldPrice').textContent = selectedVersion.oldPrice ? formatPrice(selectedVersion.oldPrice) : '';
+            document.getElementById('modalProductDiscount').textContent = selectedVersion.discount ? `-${selectedVersion.discount}%` : '';
             // Phiên bản sản phẩm
-            const versions = product.versions || [
-                { id: 1, name: 'Mặc định', price: price, specs: {} }
-            ];
-            
+            const versions = product.versions || [ { id: 1, name: 'Mặc định', price: product.price } ];
             const versionsContainer = document.getElementById('modalProductVersions');
             versionsContainer.innerHTML = '';
-            
+            selectedProductVersion = selectedVersion; // Mặc định chọn phiên bản đầu tiên
             versions.forEach((version, index) => {
                 const btn = document.createElement('button');
-                btn.className = `version-btn ${index === 0 ? 'active' : ''}`;
-                btn.textContent = version.name;
+                btn.className = `version-btn btn btn-outline-primary btn-sm${index === 0 ? ' active' : ''}`;
+                btn.textContent = `${version.name} (${formatPrice(version.price)})`;
                 btn.onclick = () => selectVersion(version, btn);
                 versionsContainer.appendChild(btn);
             });
-
             // Thông số kỹ thuật
             const specs = product.specs || {
                 'Kết nối': 'USB / Không dây',
@@ -668,10 +545,8 @@
                 'Trọng lượng': '89g',
                 'Bảo hành': '24 tháng'
             };
-
             const specsContainer = document.getElementById('modalProductSpecs');
             specsContainer.innerHTML = '';
-            
             Object.entries(specs).forEach(([key, value]) => {
                 const specItem = document.createElement('div');
                 specItem.className = 'spec-item';
@@ -682,14 +557,12 @@
                 `;
                 specsContainer.appendChild(specItem);
             });
-
             // Mô tả sản phẩm
             document.getElementById('modalProductDesc').innerHTML = product.description || `
                 <p>Sản phẩm chính hãng, bảo hành 24 tháng.</p>
                 <p>Giao hàng toàn quốc, thanh toán khi nhận hàng.</p>
                 <p>Hỗ trợ đổi trả trong 30 ngày nếu sản phẩm lỗi.</p>
             `;
-
             // Badge sản phẩm
             const badge = document.getElementById('modalProductBadge');
             if (product.isHot) {
@@ -698,25 +571,24 @@
             } else {
                 badge.style.display = 'none';
             }
-
             // Hiển thị modal
             const modal = new bootstrap.Modal(document.getElementById('productModal'));
             modal.show();
-
             // Khi mở modal, cập nhật productId, productName, image, price vào input ẩn
             document.getElementById('modalProductId').value = product.id || product.productId || '';
             document.getElementById('modalProductName').value = product.name || '';
             document.getElementById('modalProductImage').value = product.img || '';
-            document.getElementById('modalProductPrice').value = product.salePrice || product.price || '';
+            document.getElementById('modalProductPrice').value = selectedVersion.price || product.price || '';
         }
 
         function selectVersion(version, btn) {
-            // Cập nhật trạng thái active của các nút
             document.querySelectorAll('.version-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
-            // Cập nhật giá
             document.getElementById('modalProductPrice').textContent = formatPrice(version.price);
+            document.getElementById('modalProductOldPrice').textContent = version.oldPrice ? formatPrice(version.oldPrice) : '';
+            document.getElementById('modalProductDiscount').textContent = version.discount ? `-${version.discount}%` : '';
+            document.getElementById('modalProductPrice').value = version.price;
+            selectedProductVersion = version; // Lưu lại phiên bản đã chọn
         }
 
         function formatPrice(price) {
@@ -756,7 +628,16 @@
                     // Lấy dữ liệu sản phẩm từ thuộc tính hoặc tìm theo tên
                     const name = card.querySelector('.card-title')?.innerText || '';
                     const prod = products.find(p=>p.name===name);
-                    if(prod) showProductModal(prod);
+                    if(prod) {
+                        // Thêm các phiên bản mẫu cho sản phẩm
+                        const basePrice = parseInt(prod.price.toString().replace(/[^\d]/g, ''));
+                        prod.versions = [
+                            { id: 1, name: 'Mặc định', price: basePrice, oldPrice: prod.originalPrice || '', discount: prod.discountPercent || '' },
+                            { id: 2, name: 'Phiên bản Pro', price: basePrice + 300000, oldPrice: basePrice + 500000, discount: 10 },
+                            { id: 3, name: 'Phiên bản Wireless', price: basePrice + 600000, oldPrice: basePrice + 800000, discount: 15 }
+                        ];
+                        showProductModal(prod);
+                    }
                 };
             });
         }, 800);
@@ -766,37 +647,154 @@
             setTimeout(()=>{alert('Đã thêm vào giỏ hàng!');}, 200);
         });
 
-        // Thêm hàm JS gửi AJAX thêm vào giỏ hàng và cập nhật số trên icon
-        function addToCartDirectly(product, e) {
-            if (e) e.stopPropagation();
-            // Lấy giá số từ price hoặc salePrice
-            let priceRaw = product.salePrice || product.price || '';
-            let priceNum = 0;
-            if (typeof priceRaw === 'string') {
-                priceNum = parseFloat(priceRaw.replace(/[^\d.]/g, ''));
-            } else {
-                priceNum = priceRaw;
-            }
-            const data = {
-                productId: product.id || product.productId || '',
-                productName: product.name || '',
-                image: product.img || '',
-                price: priceNum,
-                quantity: 1
-            };
-            console.log('Gửi lên /cart/add:', data);
-            fetch('/cart/add', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(data)
-            })
-            .then(res => {
-                // Chỉ cập nhật số trên icon giỏ hàng, không chuyển trang
-                let badge = document.querySelector('.fa-shopping-cart').parentElement.querySelector('.badge');
-                let num = parseInt(badge.textContent) || 0;
-                badge.textContent = num + 1;
-                alert('Đã thêm vào giỏ hàng!');
+        // Sửa hàm addToCart để lấy đúng phiên bản đã chọn
+        function addToCart() {
+            const productId = document.getElementById('modalProductId').value;
+            const productName = document.getElementById('modalProductName').value;
+            const image = document.getElementById('modalProductImage').value;
+            const quantity = document.getElementById('productQuantity').value;
+            // Lấy version đã chọn
+            const version = selectedProductVersion || { id: 1, name: 'Mặc định', price: document.getElementById('modalProductPrice').value };
+            // Gửi lên server hoặc xử lý thêm vào giỏ hàng
+            // Ví dụ: alert để kiểm tra
+            alert(`Đã thêm vào giỏ hàng: ${productName} - ${version.name} - Giá: ${formatPrice(version.price)} - SL: ${quantity}`);
+            // TODO: Gửi AJAX thêm vào giỏ hàng với versionId, versionName, versionPrice nếu cần
+        }
+
+        function renderDiscountProducts() {
+            const discountRow = document.getElementById('discountProductsRow');
+            discountRow.innerHTML = '';
+            // Lấy 6 sản phẩm ưu đãi (ưu tiên mỗi danh mục 1-2 sản phẩm)
+            let saleProducts = [];
+            categories.forEach(cat => {
+                saleProducts = saleProducts.concat(products.filter(p => p.category === cat.key && p.discountPercent >= 20 && p.discountPercent <= 60).slice(0, 2));
             });
+            saleProducts = saleProducts.slice(0, 6);
+            saleProducts.forEach((p, idx) => {
+                const col = document.createElement('div');
+                col.className = 'col-12 col-sm-6 col-lg-4 col-xl-2 d-flex';
+                col.innerHTML = `
+                    <div class='card-sale w-100 position-relative d-flex flex-column' style="cursor:pointer;">
+                        <span class='badge-sale'>-${p.discountPercent}%</span>
+                        <img src='${p.img}' class='card-sale-img' alt='${p.name}'>
+                        <div class='px-3 pb-3 flex-grow-1 d-flex flex-column justify-content-between'>
+                            <div class='mb-1'><span class='product-code'>Mã: SP${1000+idx}</span> <span class='product-status'>Còn hàng</span></div>
+                            <div class='product-name'>${p.name}</div>
+                            <div class='mb-2'><span class='product-price-old'>${p.originalPrice ? p.originalPrice.toLocaleString('vi-VN') + 'đ' : ''}</span> <span class='product-price-sale'>${p.salePrice ? p.salePrice.toLocaleString('vi-VN') + 'đ' : ''}</span></div>
+                        </div>
+                        <button class='cart-btn btn btn-primary mt-2' onclick='addToCartDirectly(${JSON.stringify(p)}, event); event.stopPropagation();'><i class='fas fa-cart-plus'></i> Thêm vào giỏ hàng</button>
+                    </div>
+                `;
+                // Thêm các phiên bản mẫu cho sản phẩm ưu đãi
+                col.querySelector('.card-sale').onclick = function() {
+                    const basePrice = parseInt((p.salePrice || p.price).toString().replace(/[^\d]/g, ''));
+                    p.versions = [
+                        { id: 1, name: 'Mặc định', price: basePrice, oldPrice: p.originalPrice || '', discount: p.discountPercent || '' },
+                        { id: 2, name: 'Phiên bản Pro', price: basePrice + 300000, oldPrice: basePrice + 500000, discount: 10 },
+                        { id: 3, name: 'Phiên bản Wireless', price: basePrice + 600000, oldPrice: basePrice + 800000, discount: 15 }
+                    ];
+                    showProductModal(p);
+                };
+                discountRow.appendChild(col);
+            });
+        }
+
+        function renderProductsByCategory() {
+            const container = document.getElementById('productCategories');
+            container.innerHTML = '';
+            const brands = ['Logitech', 'Razer', 'Asus', 'Corsair', 'Dare-U', 'Rapoo'];
+            categories.forEach((cat, idx) => {
+                const catProducts = products.filter(p => p.category === cat.key);
+                if (catProducts.length === 0) return;
+                // Block danh mục
+                const block = document.createElement('div');
+                block.className = 'best-seller-block my-5';
+                // Tiêu đề + tab thương hiệu
+                const header = document.createElement('div');
+                header.className = 'd-flex align-items-center mb-3 flex-wrap';
+                header.innerHTML = `
+                    <h3 class='section-title mb-0'>
+                      <i class='fas '
+                        + (cat.key === 'banphim' ? 'fa-keyboard' : (cat.key === 'chuot' ? 'fa-mouse' : (cat.key === 'tainghe' ? 'fa-headphones' : 'fa-cubes')))
+                        + ""></i> ${cat.name} bán chạy</h3>
+                    <span class='ms-3 text-danger fw-bold'><i class='fas fa-truck'></i> Giao hàng toàn quốc</span>
+                    <div class='brand-tabs ms-auto'>
+                        <select class="form-select form-select-sm w-auto d-inline-block" onchange="filterByBrand(this)">
+                            <option value="">Xem tất cả</option>
+                            ${brands.map(b => `<option value="${b}">${b}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+                block.appendChild(header);
+                // Carousel
+                const carouselId = `carousel-${cat.key}`;
+                const carousel = document.createElement('div');
+                carousel.id = carouselId;
+                carousel.className = 'carousel slide';
+                carousel.setAttribute('data-bs-ride', 'carousel');
+                // Carousel inner
+                const carouselInner = document.createElement('div');
+                carouselInner.className = 'carousel-inner';
+                // Chia sản phẩm thành các slide, mỗi slide 5 sản phẩm
+                for (let i = 0; i < catProducts.length; i += 5) {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-item' + (i === 0 ? ' active' : '');
+                    const row = document.createElement('div');
+                    row.className = 'row g-5 mx-0';
+                    catProducts.slice(i, i + 5).forEach((p, pi) => {
+                        // Giả lập dữ liệu tag hot, giảm giá, giá gốc, đánh giá
+                        const isHot = pi % 2 === 0;
+                        const discount = p.discountPercent || [40,60,11,24,31,35][pi%6];
+                        const priceOld = p.originalPrice || (parseInt(p.price.replace(/\D/g,'')) * 1.3).toFixed(0) + '.000đ';
+                        const priceSale = p.salePrice || p.price;
+                        const rating = (Math.random()*5).toFixed(1);
+                        const reviews = Math.floor(Math.random()*100);
+                        // Mô tả ngắn
+                        const metaArr = [
+                            (pi%2===0?'<i class="fas fa-battery-full"></i> Không dây':'<i class="fas fa-usb"></i> Có dây'),
+                            (pi%3===0?'<i class="fas fa-lightbulb"></i> Led RGB':'<i class="fas fa-bullseye"></i> 1000 DPI')
+                        ];
+                        const meta = metaArr.map(m => `<span class='meta-chip'>${m}</span>`).join('');
+                        row.innerHTML += `
+                        <div class='col-12 col-sm-6 col-md-4 col-lg-5 col-xl-5th'>
+                          <div class='card product-card h-100'>
+                            <div class='position-relative d-flex flex-column align-items-center'>
+                              <img src='${p.img}' class='card-img-top' alt='${p.name}'>
+                              <div class='w-100 d-flex align-items-center mt-2 mb-1' style='min-height:28px;'>
+                                ${isHot ? `<span class='badge badge-hot me-1'><i class='fas fa-fire'></i> Bán chạy</span>` : ''}
+                                </div>
+                            </div>
+                            <div class='card-body px-2 pt-0'>
+                              <h6 class='card-title text-truncate' title='${p.name}'>${p.name}</h6>
+                              <div class='product-meta mb-2 d-flex flex-wrap justify-content-center'>${meta}</div>
+                              <div class='product-price mb-1 d-flex align-items-center justify-content-center flex-wrap'>
+                                <span class='price-old me-2'>${priceOld}</span>
+                                <span class='price-sale me-2'>${priceSale}</span>
+                                <span class='badge badge-sale'>-${discount}%</span>
+                            </div>
+                              <div class='product-rating d-flex align-items-center justify-content-center'>
+                                <span class='text-warning me-1'>${rating} <i class='fas fa-star'></i></span>
+                                <span class='text-muted' style='font-size:0.95em;'>(${reviews} đánh giá)</span>
+                            </div>
+                              <button class='btn btn-primary w-100 mt-2' onclick='addToCartDirectly(${JSON.stringify(p)}, event)'><i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    });
+                    slide.appendChild(row);
+                    carouselInner.appendChild(slide);
+                }
+                carousel.appendChild(carouselInner);
+                block.appendChild(carousel);
+                container.appendChild(block);
+            });
+        }
+
+        function filterByBrand(select) {
+            const brand = select.value;
+            alert('Bạn chọn hãng: ' + (brand || 'Tất cả'));
+            // TODO: Lọc sản phẩm theo hãng nếu muốn
         }
         </script>
     </section>
@@ -825,21 +823,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Chuột bán chạy dạng slide chuyên nghiệp -->
-            <div class="carousel-inner">
-                <!-- Sản phẩm sẽ được render động bằng JS -->
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#bestSellerCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#bestSellerCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
 
     <!-- Danh sách sản phẩm chia theo danh mục, mỗi danh mục 1 hàng 5 sản phẩm -->
     <section class="py-5">
@@ -1000,7 +983,7 @@
                                     <input type="hidden" id="modalProductName" name="productName" value="" />
                                     <input type="hidden" id="modalProductImage" name="image" value="" />
                                     <input type="hidden" id="modalProductPrice" name="price" value="" />
-                                    <button type="submit" class="btn btn-primary flex-grow-1">
+                                    <button type="button" class="btn btn-primary flex-grow-1" onclick="addToCartDirectlyFromModal()">
                                         <i class="fas fa-cart-plus me-1"></i> Thêm vào giỏ hàng
                                     </button>
                                 </div>
@@ -1057,15 +1040,15 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
           </div>
           <div class="modal-body pt-2">
-            <form autocomplete="off">
+            <form id="loginForm" action="/login" method="post" autocomplete="off">
               <div class="mb-3">
                 <label for="loginEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="loginEmail" placeholder="Nhập email">
+                <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Nhập email">
                 <div class="form-text text-end"><a href="#" style="font-size:0.97em;">Đăng nhập bằng số điện thoại</a></div>
               </div>
               <div class="mb-2 position-relative">
                 <label for="loginPassword" class="form-label">Mật khẩu</label>
-                <input type="password" class="form-control pe-5" id="loginPassword" placeholder="Nhập mật khẩu">
+                <input type="password" class="form-control pe-5" id="loginPassword" name="password" placeholder="Nhập mật khẩu">
                 <span class="position-absolute top-50 end-0 translate-middle-y me-3" style="cursor:pointer;" onclick="togglePassword()"><i class="fas fa-eye-slash" id="togglePassIcon"></i></span>
               </div>
               <div class="mb-2 text-end">
@@ -1077,7 +1060,7 @@
                 <button type="button" class="btn btn-light flex-fill border" style="border-radius:8px;"><i class="fab fa-google text-danger me-2"></i> Google</button>
                 <button type="button" class="btn btn-light flex-fill border" style="border-radius:8px;"><i class="fab fa-facebook text-primary me-2"></i> Facebook</button>
               </div>
-              <div class="text-center" style="font-size:0.98em;">Bạn chưa có tài khoản? <a href="#" class="fw-bold text-primary">Đăng ký ngay!</a></div>
+              <div class="text-center" style="font-size:0.98em;">Bạn chưa có tài khoản? <a href="#" class="fw-bold text-primary" onclick="openRegisterModal(event)">Đăng ký ngay!</a></div>
             </form>
           </div>
         </div>
@@ -1097,6 +1080,110 @@
         icon.classList.add('fa-eye-slash');
       }
     }
+
+    // Đảm bảo hàm này là global
+    function showLoginModal() {
+      const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+      authModal.show();
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Xử lý đăng nhập ở đây
+      console.log('Form submitted');
+    });
+
+    function openRegisterModal(e) {
+      if(e) e.preventDefault();
+      var authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
+      if(authModal) authModal.hide();
+      setTimeout(function() {
+        var regModal = new bootstrap.Modal(document.getElementById('registerModal'));
+        regModal.show();
+      }, 400);
+    }
+
+    function openLoginModal(e) {
+      if(e) e.preventDefault();
+      var regModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+      if(regModal) regModal.hide();
+      setTimeout(function() {
+        var authModal = new bootstrap.Modal(document.getElementById('authModal'));
+        authModal.show();
+      }, 400);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var registerForm = document.getElementById('registerForm');
+      if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          // Xử lý đăng ký ở đây
+          console.log('Register form submitted');
+        });
+      }
+    });
+
+    function addToCartDirectlyFromModal() {
+        const productId = document.getElementById('modalProductId').value;
+        const productName = document.getElementById('modalProductName').value;
+        const image = document.getElementById('modalProductImage').value;
+        const quantity = document.getElementById('productQuantity').value;
+        const version = selectedProductVersion || { id: 1, name: 'Mặc định', price: document.getElementById('modalProductPrice').value };
+        const data = {
+            productId: productId,
+            productName: productName + ' - ' + version.name,
+            image: image,
+            price: version.price,
+            quantity: quantity
+        };
+        fetch('/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data)
+        }).then(res => {
+            let badge = document.querySelector('.fa-shopping-cart').parentElement.querySelector('.badge');
+            let num = parseInt(badge.textContent) || 0;
+            badge.textContent = num + 1;
+            alert('Đã thêm vào giỏ hàng!');
+        });
+    }
     </script>
+    <!-- Nút test modal -->
+    <button onclick="showLoginModal()" style="position:fixed;bottom:10px;right:10px;z-index:9999;">Test Modal</button>
+    <!-- Modal đăng ký tài khoản mới -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4" style="border-radius:18px;box-shadow:0 4px 32px #0002;max-width:400px;margin:auto;">
+          <div class="modal-header border-0 pb-0">
+            <h4 class="modal-title w-100 text-center fw-bold" id="registerModalLabel">TẠO TÀI KHOẢN MỚI</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+          </div>
+          <div class="modal-body pt-2">
+            <form id="registerForm" action="/register" method="post" autocomplete="off">
+              <div class="mb-3">
+                <label for="registerEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="registerEmail" name="email" placeholder="Nhập email" />
+              </div>
+              <div class="mb-3">
+                <label for="registerPassword" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="registerPassword" name="password" placeholder="Nhập mật khẩu" />
+              </div>
+              <div class="mb-3">
+                <label for="registerPassword2" class="form-label">Nhập lại mật khẩu</label>
+                <input type="password" class="form-control" id="registerPassword2" name="password2" placeholder="Nhập lại mật khẩu" />
+              </div>
+              <button type="submit" class="btn btn-primary w-100 py-2 fw-bold mb-2" style="font-size:1.1rem;border-radius:8px;">ĐĂNG KÝ</button>
+              <div class="text-center my-2 text-muted" style="font-size:0.98em;">hoặc đăng ký bằng</div>
+              <div class="d-flex gap-2 mb-3">
+                <button type="button" class="btn btn-light flex-fill border" style="border-radius:8px;"><i class="fab fa-google text-danger me-2"></i> Google</button>
+                <button type="button" class="btn btn-light flex-fill border" style="border-radius:8px;"><i class="fab fa-facebook text-primary me-2"></i> Facebook</button>
+              </div>
+              <div class="text-center" style="font-size:0.98em;">Đã có tài khoản? <a href="#" class="fw-bold text-primary" onclick="openLoginModal(event)">Đăng nhập!</a></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html> 

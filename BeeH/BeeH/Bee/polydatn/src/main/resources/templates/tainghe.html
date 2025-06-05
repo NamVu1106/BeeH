@@ -1,4 +1,3 @@
-<!-- Trang danh mục sản phẩm: Tai nghe -->
 <!DOCTYPE html>
 <html lang="vi" data-bs-theme="dark">
 <head>
@@ -9,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    
     <style>
         :root {
             --primary-color: #4a90e2;
@@ -190,6 +189,96 @@
             text-decoration: none !important;
             outline: none !important;
         }
+        .card, .card-body, .card-img-top {
+            background: #fff !important;
+        }
+        .search-bar .form-control {
+            background: #fff !important;
+        }
+        .card-title {
+            color: #000 !important;
+        }
+        .card-text.price {
+            color: #000 !important;
+        }
+        .input-group-text {
+            background: #fff !important;
+            border: 1.5px solid #000 !important;
+            color: #000 !important;
+        }
+        .input-group-text .fa-search {
+            color: #000 !important;
+        }
+        .form-check-input[type="checkbox"]:checked {
+            background-color: #fff !important;
+            border: 1.5px solid #000 !important;
+            background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8.5L7 11.5L12 5.5' stroke='%2300c853' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+            background-size: 80% 80%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .card {
+            border: 1.5px solid #e0e7ef !important;
+            border-radius: 18px !important;
+            box-shadow: 0 2px 12px 0 rgba(44,62,80,0.07);
+            transition: box-shadow 0.2s;
+            padding-bottom: 16px;
+        }
+        .card:hover {
+            box-shadow: 0 4px 24px 0 rgba(44,62,80,0.13);
+        }
+        .card-img-top {
+            border-top-left-radius: 18px !important;
+            border-top-right-radius: 18px !important;
+        }
+        .card-title {
+            color: #000 !important;
+            font-size: 1.08rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .card-text.price {
+            color: #000 !important;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .card-text.old-price {
+            color: #e53935 !important;
+            text-decoration: line-through;
+            font-size: 0.98rem;
+            margin-bottom: 0.2rem;
+            font-weight: 500;
+        }
+        .badge-sale, .badge.bg-danger {
+            background: #e53935 !important;
+            color: #fff !important;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            padding: 4px 10px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px #e5393533;
+        }
+        .btn-mua-ngay, .btn-cart-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-top: 8px;
+            background: var(--white);
+            color: var(--primary-color);
+            border: 1.5px solid var(--primary-color);
+            box-shadow: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-mua-ngay:hover, .btn-cart-custom:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -274,8 +363,7 @@
             </button>
         </div>
     </nav>
-
-    <!-- Main Content -->
+    <!-- nội dung -->
     <div class="container py-4">
         <div class="row g-4">
             <!-- Sidebar Filters -->
@@ -347,11 +435,11 @@
                     <hr style="border-color: rgba(255,255,255,0.1);">
                     <h5>DANH MỤC KHÁC</h5>
                     <div>
-                        <a href="/" style="color:var(--neon-blue);text-decoration:none;display:block;margin-bottom:6px;">Trang chủ</a>
-                        <a href="/chuot" style="color:var(--neon-blue);text-decoration:none;display:block;margin-bottom:6px;">Chuột</a>
-                        <a href="/ban-phim" style="color:var(--neon-blue);text-decoration:none;display:block;margin-bottom:6px;">Bàn phím</a>
-                        <a href="/tai-nghe" style="color:var(--neon-blue);text-decoration:none;display:block;margin-bottom:6px;">Tai nghe</a>
-                        <a href="/mo-hinh" style="color:var(--neon-blue);text-decoration:none;display:block;">Mô hình</a>
+                        <a href="/" class="footer-link d-block mb-2">Trang chủ</a>
+                        <a href="/chuot" class="footer-link d-block mb-2">Chuột</a>
+                        <a href="/ban-phim" class="footer-link d-block mb-2">Bàn phím</a>
+                        <a href="/tai-nghe" class="footer-link d-block mb-2">Tai nghe</a>
+                        <a href="/mo-hinh" class="footer-link d-block">Mô hình</a>
                     </div>
                 </div>
             </aside>
@@ -360,127 +448,48 @@
             <main class="col-md-9">
                 <div class="d-flex align-items-center mb-4">
                     <h1 class="me-3" style="font-family: 'Orbitron', sans-serif; color: var(--neon-blue);">TAI NGHE</h1>
-                    <span style="color: var(--text-secondary);">(789 sản phẩm)</span>
                 </div>
-
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                    <div class="col">
-                        <div class="card h-100 position-relative">
-                            <span class="badge position-absolute top-0 end-0 m-2" style="background:var(--neon-red);color:#fff;font-weight:700;font-size:0.95rem;z-index:2;box-shadow:0 0 8px var(--neon-red);">HOT</span>
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
+                <div class="row g-4" id="headphoneProducts">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
+                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top rounded-top-4" alt="Tai nghe Sony WH-1000XM4">
                             <div class="card-body">
-                                <div class="product-title">SONY WH-1000XM4</div>
-                                <div class="product-price">6.500.000đ</div>
-                                <div class="text-info" style="color:var(--neon-blue);font-size:0.98rem;">Số lượng: 7</div>
-                                <div class="d-flex justify-content-between align-items-center mt-3 gap-2">
-                                    <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
-                                    <button class="btn btn-outline-success btn-sm" style="border-radius:50%;border:1.5px solid var(--neon-green);color:var(--neon-green);background:transparent;" title="Thêm vào giỏ hàng"><i class="fas fa-shopping-cart"></i></button>
-                                    <button class="btn btn-outline-danger btn-sm" style="border-radius:50%;border:1.5px solid var(--neon-pink);color:var(--neon-pink);background:transparent;" title="Yêu thích"><i class="fas fa-heart"></i></button>
-                                </div>
+                                <h6 class="card-title mb-2">SONY WH-1000XM4</h6>
+                                <p class="card-text price mb-2">6,500,000₫</p>
+                                <span class="badge bg-danger mb-2">Giảm giá</span>
+                                <span class="badge bg-warning text-dark mb-2">Yêu thích</span>
+                                <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
+                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top rounded-top-4" alt="Tai nghe Razer Kraken X">
                             <div class="card-body">
-                                <div class="product-title">RAZER KRAKEN X</div>
-                                <div class="product-price">1.290.000đ</div>
-                                <div class="d-flex justify-content-between align-items-center mt-3 gap-2">
-                                    <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
-                                    <button class="btn btn-outline-success btn-sm" style="border-radius:50%;border:1.5px solid var(--neon-green);color:var(--neon-green);background:transparent;" title="Thêm vào giỏ hàng"><i class="fas fa-shopping-cart"></i></button>
-                                    <button class="btn btn-outline-danger btn-sm" style="border-radius:50%;border:1.5px solid var(--neon-pink);color:var(--neon-pink);background:transparent;" title="Yêu thích"><i class="fas fa-heart"></i></button>
-                                </div>
+                                <h6 class="card-title mb-2">RAZER KRAKEN X</h6>
+                                <p class="card-text price mb-2">1,290,000₫</p>
+                                <span class="badge bg-danger mb-2">Giảm giá</span>
+                                <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
+                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top rounded-top-4" alt="Tai nghe Logitech G733">
                             <div class="card-body">
-                                <div class="product-title">LOGITECH G733</div>
-                                <div class="product-price">2.990.000đ</div>
+                                <h6 class="card-title mb-2">LOGITECH G733</h6>
+                                <p class="card-text price mb-2">2,990,000₫</p>
+                                <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
+                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top rounded-top-4" alt="Tai nghe HyperX Cloud II">
                             <div class="card-body">
-                                <div class="product-title">HYPERX CLOUD II</div>
-                                <div class="product-price">2.390.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
-                            <div class="card-body">
-                                <div class="product-title">SENNHEISER HD 350BT</div>
-                                <div class="product-price">2.100.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
-                            <div class="card-body">
-                                <div class="product-title">APPLE AIRPODS PRO</div>
-                                <div class="product-price">5.990.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
-                            <div class="card-body">
-                                <div class="product-title">JBL TUNE 510BT</div>
-                                <div class="product-price">1.190.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
-                            <div class="card-body">
-                                <div class="product-title">BOSE QC35 II</div>
-                                <div class="product-price">6.900.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
-                            <div class="card-body">
-                                <div class="product-title">SOUNDPEATS TRUEAIR2</div>
-                                <div class="product-price">890.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
-                            <div class="card-body">
-                                <div class="product-title">EDIFIER W800BT</div>
-                                <div class="product-price">1.290.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
-                            <div class="card-body">
-                                <div class="product-title">XIAOMI REDMI BUDS 3</div>
-                                <div class="product-price">690.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._AC_SL1500_.jpg" class="card-img-top" alt="Tai nghe">
-                            <div class="card-body">
-                                <div class="product-title">ANKER SOUNDCORE LIFE Q30</div>
-                                <div class="product-price">1.990.000đ</div>
+                                <h6 class="card-title mb-2">HYPERX CLOUD II</h6>
+                                <p class="card-text price mb-2">2,390,000₫</p>
+                                <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
                             </div>
                         </div>
                     </div>
@@ -524,130 +533,208 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Dark mode toggle
-        const toggleBtn = document.getElementById('toggle-darkmode');
-        const icon = toggleBtn.querySelector('i');
-        function setMode(dark) {
-            if(dark) {
-                document.body.classList.remove('light-mode');
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            } else {
-                document.body.classList.add('light-mode');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            }
-        }
-        // Lưu trạng thái vào localStorage
-        function saveMode(dark) {
-            localStorage.setItem('darkmode', dark ? '1' : '0');
-        }
-        // Đọc trạng thái khi load
-        function loadMode() {
-            const dark = localStorage.getItem('darkmode') !== '0';
-            setMode(dark);
-        }
-        toggleBtn.onclick = function() {
-            const isDark = !document.body.classList.contains('light-mode');
-            setMode(!isDark);
-            saveMode(isDark);
+    function formatPrice(price) {
+        if (!price) return '';
+        return Number(price.toString().replace(/[^\d]/g, '')).toLocaleString('vi-VN') + '₫';
+    }
+    function showProductModal(product) {
+        document.getElementById('productModalLabel').textContent = product.name;
+        document.getElementById('modalProductImg').src = product.img;
+        // Giá và giảm giá
+        let selectedVersion = product.versions && product.versions.length > 0 ? product.versions[0] : { price: product.price };
+        document.getElementById('modalProductPrice').textContent = formatPrice(selectedVersion.price);
+        document.getElementById('modalProductOldPrice').textContent = selectedVersion.oldPrice ? formatPrice(selectedVersion.oldPrice) : '';
+        document.getElementById('modalProductDiscount').textContent = selectedVersion.discount ? `-${selectedVersion.discount}%` : '';
+        // Phiên bản sản phẩm
+        const versions = product.versions || [ { id: 1, name: 'Mặc định', price: product.price } ];
+        const versionsContainer = document.getElementById('modalProductVersions');
+        versionsContainer.innerHTML = '';
+        versions.forEach((version, index) => {
+            const btn = document.createElement('button');
+            btn.className = `version-btn btn btn-outline-primary btn-sm${index === 0 ? ' active' : ''}`;
+            btn.textContent = `${version.name} (${formatPrice(version.price)})`;
+            btn.onclick = () => selectVersion(version, btn);
+            versionsContainer.appendChild(btn);
+        });
+        // Thông số kỹ thuật
+        const specs = product.specs || {
+            'Kết nối': 'Bluetooth 5.0 / Jack 3.5mm',
+            'Driver': '40mm',
+            'Chống ồn': 'Có',
+            'Pin': '30 giờ',
+            'Trọng lượng': '250g',
+            'Bảo hành': '12 tháng'
         };
-        loadMode();
-
-        function renderProductList(products, targetId) {
-            const grid = document.getElementById(targetId);
-            grid.innerHTML = '';
-            if (!products || products.length === 0) {
-                grid.innerHTML = '<div class="col-12 text-center text-muted">Không có sản phẩm phù hợp.</div>';
-                return;
+        const specsContainer = document.getElementById('modalProductSpecs');
+        specsContainer.innerHTML = '';
+        Object.entries(specs).forEach(([key, value]) => {
+            const specItem = document.createElement('div');
+            specItem.className = 'spec-item';
+            specItem.innerHTML = `
+                <i class=\"fas fa-check\"></i>
+                <span class=\"spec-key\">${key}:</span>
+                <span class=\"spec-value\">${value}</span>
+            `;
+            specsContainer.appendChild(specItem);
+        });
+        // Mô tả sản phẩm
+        document.getElementById('modalProductDesc').innerHTML = product.description || `
+            <p>Sản phẩm chính hãng, bảo hành 24 tháng.</p>
+            <p>Giao hàng toàn quốc, thanh toán khi nhận hàng.</p>
+            <p>Hỗ trợ đổi trả trong 30 ngày nếu sản phẩm lỗi.</p>
+        `;
+        // Badge sản phẩm
+        const badge = document.getElementById('modalProductBadge');
+        if (product.isHot || product.yeuThich) {
+            badge.innerHTML = '<i class=\"fas fa-fire\"></i> Bán chạy';
+            badge.style.display = 'block';
+        } else {
+            badge.style.display = 'none';
+        }
+        // Hiển thị modal
+        const modal = new bootstrap.Modal(document.getElementById('productModal'));
+        modal.show();
+    }
+    function selectVersion(version, btn) {
+        document.querySelectorAll('.version-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('modalProductPrice').textContent = formatPrice(version.price);
+        document.getElementById('modalProductOldPrice').textContent = version.oldPrice ? formatPrice(version.oldPrice) : '';
+        document.getElementById('modalProductDiscount').textContent = version.discount ? `-${version.discount}%` : '';
+    }
+    // Gắn sự kiện click cho card sản phẩm tĩnh
+    setTimeout(() => {
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.onclick = function() {
+                // Lấy thông tin từ HTML card
+                const img = card.querySelector('img');
+                const title = card.querySelector('.card-title').textContent;
+                const priceText = card.querySelector('.price').textContent;
+                const badges = card.querySelectorAll('.badge');
+                let price = priceText.replace(/[^\d]/g, '');
+                let originalPrice = '999000'; // Dữ liệu mẫu
+                let discountPercent = '10'; // Dữ liệu mẫu
+                let isHot = false, yeuThich = false;
+                badges.forEach(b => {
+                    if(b.classList.contains('bg-danger')) {
+                        isHot = true;
+                    }
+                    if(b.classList.contains('bg-warning')) {
+                        yeuThich = true;
+                    }
+                });
+                // Dữ liệu mẫu các phiên bản
+                const versions = [
+                    { id: 1, name: 'Mặc định', price: price, oldPrice: originalPrice, discount: discountPercent },
+                    { id: 2, name: 'Phiên bản Pro', price: '1299000', oldPrice: '1499000', discount: '13' },
+                    { id: 3, name: 'Phiên bản Wireless', price: '1599000', oldPrice: '1799000', discount: '11' }
+                ];
+                // Tạo object sản phẩm giống index.html
+                const product = {
+                    name: title,
+                    img: img.src,
+                    price: price,
+                    versions: versions,
+                    specs: undefined,
+                    description: undefined,
+                    isHot: isHot,
+                    yeuThich: yeuThich
+                };
+                showProductModal(product);
+            };
+            // Nút mua ngay cũng mở modal
+            const btn = card.querySelector('.btn-mua-ngay');
+            if(btn) {
+                btn.onclick = function(e) {
+                    e.stopPropagation();
+                    card.onclick();
+                }
             }
-            products.forEach(p => {
-                const col = document.createElement('div');
-                col.className = 'col-12 col-sm-6 col-md-4 col-lg-3 mb-4';
-                col.innerHTML = `
-                    <div class="card h-100 border-0 rounded-4 shadow-sm" style="cursor:pointer;">
-                        <img src="${p.hinhAnh}" class="card-img-top rounded-top-4" alt="${p.ten}">
-                        <div class="card-body">
-                            <h6 class="card-title mb-2">${p.ten}</h6>
-                            <p class="card-text price mb-2">${p.gia ? Number(p.gia).toLocaleString('vi-VN') + '₫' : ''}</p>
-                            ${p.giamGia ? '<span class="badge bg-danger mb-2">Giảm giá</span>' : ''}
-                            ${p.yeuThich ? '<span class="badge bg-warning text-dark mb-2">Yêu thích</span>' : ''}
-                            <button class="btn btn-primary btn-sm btn-mua-ngay" type="button">Mua ngay</button>
+        });
+    }, 300);
+    function addToCart() {
+        alert('Đã thêm sản phẩm vào giỏ hàng!');
+    }
+    function decreaseQuantity() {
+        const input = document.getElementById('productQuantity');
+        if (input.value > 1) input.value = parseInt(input.value) - 1;
+    }
+    function increaseQuantity() {
+        const input = document.getElementById('productQuantity');
+        input.value = parseInt(input.value) + 1;
+    }
+    </script>
+
+    <!-- Modal hiển thị chi tiết sản phẩm -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-white text-dark">
+                <div class="modal-header border-0" style="background:#fff;">
+                    <h5 class="modal-title" id="productModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body" style="background:#fff;">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="position-relative">
+                                <img id="modalProductImg" src="" class="img-fluid rounded mb-3" alt="Ảnh sản phẩm">
+                                <span id="modalProductBadge" class="badge badge-hot position-absolute top-0 start-0 m-2" style="background:#ff3d00;color:#fff;"></span>
+                            </div>
+                            <div class="d-flex gap-2 mb-3">
+                                <button class="btn btn-outline-primary flex-grow-1" onclick="shareProduct()">
+                                    <i class="fas fa-share-alt me-1"></i> Chia sẻ
+                                </button>
+                                <button class="btn btn-outline-danger flex-grow-1" onclick="addToFavorite()">
+                                    <i class="fas fa-heart me-1"></i> Yêu thích
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-7 d-flex flex-column justify-content-between">
+                            <div class="product-info">
+                                <div class="mb-3">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span id="modalProductPrice" class="fw-bold fs-4 text-danger"></span>
+                                        <span id="modalProductOldPrice" class="text-decoration-line-through text-muted"></span>
+                                        <span id="modalProductDiscount" class="badge badge-sale bg-danger"></span>
+                                    </div>
+                                    <div class="text-success mb-2">
+                                        <i class="fas fa-check-circle me-1"></i>
+                                        <span id="modalProductStatus">Còn hàng</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold mb-2">Chọn phiên bản:</h6>
+                                    <div id="modalProductVersions" class="d-flex flex-wrap gap-2"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold mb-2">Thông số kỹ thuật:</h6>
+                                    <div id="modalProductSpecs" class="specs-list"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold mb-2">Mô tả sản phẩm:</h6>
+                                    <div id="modalProductDesc" class="product-desc"></div>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="d-flex align-items-center mb-2 gap-2 flex-nowrap">
+                                    <div class="d-flex align-items-center gap-1" style="min-width:140px;">
+                                        <button class="btn btn-outline-secondary px-3 py-1" type="button" onclick="decreaseQuantity()">-</button>
+                                        <input type="number" class="form-control text-center" id="productQuantity" value="1" min="1" style="width:60px;max-width:80px;display:inline-block;" />
+                                        <button class="btn btn-outline-secondary px-3 py-1" type="button" onclick="increaseQuantity()">+</button>
+                                    </div>
+                                    <button class="btn btn-primary flex-grow-1 ms-2" style="font-weight:600;font-size:1.1rem;min-width:180px;" onclick="addToCart()">
+                                        <i class="fas fa-cart-plus me-1"></i> Thêm vào giỏ hàng
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                `;
-                grid.appendChild(col);
-            });
-        }
-    </script>
-    <!-- Modal hiển thị chi tiết sản phẩm (đặt ngoài <script>) -->
-    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="productModalLabel"></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-5">
-                <div class="position-relative">
-                  <img id="modalProductImg" src="" class="img-fluid rounded mb-3" alt="Ảnh sản phẩm" />
-                  <span id="modalProductBadge" class="badge badge-hot position-absolute top-0 start-0 m-2" style="background:#ff3d00;color:#fff;"></span>
                 </div>
-                <div class="d-flex gap-2 mb-3">
-                  <button class="btn btn-outline-primary flex-grow-1" onclick="shareProduct()">
-                    <i class="fas fa-share-alt me-1"></i> Chia sẻ
-                  </button>
-                  <button class="btn btn-outline-danger flex-grow-1" onclick="addToFavorite()">
-                    <i class="fas fa-heart me-1"></i> Yêu thích
-                  </button>
-                </div>
-              </div>
-              <div class="col-md-7 d-flex flex-column justify-content-between">
-                <div class="product-info">
-                  <div class="mb-3">
-                    <div class="d-flex align-items-center gap-2 mb-2">
-                      <span id="modalProductPrice" class="fw-bold fs-4 text-danger"></span>
-                      <span id="modalProductOldPrice" class="text-decoration-line-through text-muted"></span>
-                      <span id="modalProductDiscount" class="badge badge-sale"></span>
-                    </div>
-                    <div class="text-success mb-2">
-                      <i class="fas fa-check-circle me-1"></i>
-                      <span id="modalProductStatus">Còn hàng</span>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <h6 class="fw-bold mb-2">Chọn phiên bản:</h6>
-                    <div id="modalProductVersions" class="d-flex flex-wrap gap-2"></div>
-                  </div>
-                  <div class="mb-3">
-                    <h6 class="fw-bold mb-2">Thông số kỹ thuật:</h6>
-                    <div id="modalProductSpecs" class="specs-list"></div>
-                  </div>
-                  <div class="mb-3">
-                    <h6 class="fw-bold mb-2">Mô tả sản phẩm:</h6>
-                    <div id="modalProductDesc" class="product-desc"></div>
-                  </div>
-                </div>
-                <div class="mt-auto">
-                  <div class="d-flex align-items-center mb-2 gap-2 flex-nowrap">
-                    <div class="d-flex align-items-center gap-1" style="min-width:140px;">
-                      <button class="btn btn-outline-secondary px-3 py-1" type="button" onclick="decreaseQuantity()">-</button>
-                      <input type="number" class="form-control text-center" id="productQuantity" value="1" min="1" style="width:60px;max-width:80px;display:inline-block;" />
-                      <button class="btn btn-outline-secondary px-3 py-1" type="button" onclick="increaseQuantity()">+</button>
-                    </div>
-                    <button class="btn btn-primary flex-grow-1 ms-2" style="font-weight:600;font-size:1.1rem;min-width:180px;" onclick="addToCart()">
-                      <i class="fas fa-cart-plus me-1"></i> Thêm vào giỏ hàng
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+
     <!-- Modal đăng nhập/đăng ký mới -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -699,4 +786,4 @@
     }
     </script>
 </body>
-</html> 
+</html>

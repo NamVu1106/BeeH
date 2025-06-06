@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý bình luận - Bee Arena Admin</title>
+</head>
+<body>
+    <!-- Content -->
+    <div th:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Quản lý bình luận</h2>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form th:action="@{/admin/comments}" method="get">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="search" 
+                                   th:value="${param.search}" placeholder="Tìm kiếm bình luận...">
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" name="product">
+                                <option value="">Tất cả sản phẩm</option>
+                                <option th:each="product : ${products}"
+                                        th:value="${product.id}"
+                                        th:text="${product.name}"
+                                        th:selected="${param.product != null and param.product[0] == product.id.toString()}">
+                                    Bàn phím cơ
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" name="status">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="pending" th:selected="${param.status != null and param.status[0] == 'pending'}">Chờ duyệt</option>
+                                <option value="approved" th:selected="${param.status != null and param.status[0] == 'approved'}">Đã duyệt</option>
+                                <option value="rejected" th:selected="${param.status != null and param.status[0] == 'rejected'}">Đã từ chối</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">Lọc</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Comments Table -->
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Người dùng</th>
+                            <th>Sản phẩm</th>
+                            <th>Nội dung</th>
+                            <th>Đánh giá</th>
+                            <th>Ngày đăng</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="comment : ${comments}">
+                            <td th:text="${comment.id}">1</td>
+                            <td th:text="${comment.userName}">Nguyễn Văn A</td>
+                            <td th:text="${comment.productName}">Bàn phím cơ Gaming</td>
+                            <td th:text="${comment.content}">Sản phẩm rất tốt, đáng mua!</td>
+                            <td>
+                                <div class="rating">
+                                    <span th:each="i : ${#numbers.sequence(1, 5)}"
+                                          th:class="${i <= comment.rating ? 'text-warning' : 'text-muted'}">
+                                        ★
+                                    </span>
+                                </div>
+                            </td>
+                            <td th:text="${#temporals.format(comment.createdAt, 'dd/MM/yyyy HH:mm')}">15/03/2024 14:30</td>
+                            <td>
+                                <span th:class="${'badge bg-' + comment.statusColor}" 
+                                      th:text="${comment.status}">Chờ duyệt</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-info me-1" 
+                                        th:onclick="'viewComment(' + ${comment.id} + ')'">Chi tiết</button>
+                                <button class="btn btn-sm btn-success me-1" 
+                                        th:if="${comment.status == 'pending'}"
+                                        th:onclick="'approveComment(' + ${comment.id} + ')'">Duyệt</button>
+                                <button class="btn btn-sm btn-danger" 
+                                        th:onclick="'deleteComment(' + ${comment.id} + ')'">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <nav th:if="${totalPages > 1}">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/comments(page=${currentPage - 1})}">Trước</a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+                            th:classappend="${currentPage == i} ? 'active'">
+                            <a class="page-link" th:href="@{/admin/comments(page=${i})}" th:text="${i}">1</a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/comments(page=${currentPage + 1})}">Sau</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div th:fragment="modals">
+        <!-- Comment Detail Modal -->
+        <div class="modal fade" id="commentDetailModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết bình luận</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Người dùng</label>
+                            <p id="commentUserName"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Sản phẩm</label>
+                            <p id="commentProductName"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nội dung</label>
+                            <p id="commentContent"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Đánh giá</label>
+                            <div id="commentRating" class="rating"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ngày đăng</label>
+                            <p id="commentDate"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Trạng thái</label>
+                            <p id="commentStatus"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-success" id="approveBtn">Duyệt</button>
+                        <button type="button" class="btn btn-danger" id="rejectBtn">Từ chối</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <th:block th:fragment="scripts">
+        <script th:inline="javascript">
+            function viewComment(id) {
+                fetch(`/admin/comments/${id}`)
+                    .then(response => response.json())
+                    .then(comment => {
+                        document.getElementById('commentUserName').textContent = comment.userName;
+                        document.getElementById('commentProductName').textContent = comment.productName;
+                        document.getElementById('commentContent').textContent = comment.content;
+                        document.getElementById('commentDate').textContent = 
+                            new Date(comment.createdAt).toLocaleString('vi-VN');
+                        document.getElementById('commentStatus').innerHTML = 
+                            `<span class="badge bg-${comment.statusColor}">${comment.status}</span>`;
+                        
+                        const ratingDiv = document.getElementById('commentRating');
+                        ratingDiv.innerHTML = '';
+                        for (let i = 1; i <= 5; i++) {
+                            const star = document.createElement('span');
+                            star.className = i <= comment.rating ? 'text-warning' : 'text-muted';
+                            star.textContent = '★';
+                            ratingDiv.appendChild(star);
+                        }
+                        
+                        const approveBtn = document.getElementById('approveBtn');
+                        const rejectBtn = document.getElementById('rejectBtn');
+                        
+                        if (comment.status === 'pending') {
+                            approveBtn.style.display = 'inline-block';
+                            rejectBtn.style.display = 'inline-block';
+                            approveBtn.onclick = () => approveComment(comment.id);
+                            rejectBtn.onclick = () => rejectComment(comment.id);
+                        } else {
+                            approveBtn.style.display = 'none';
+                            rejectBtn.style.display = 'none';
+                        }
+                        
+                        new bootstrap.Modal(document.getElementById('commentDetailModal')).show();
+                    });
+            }
+
+            function approveComment(id) {
+                if (confirm('Bạn có chắc chắn muốn duyệt bình luận này?')) {
+                    fetch(`/admin/comments/${id}/approve`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
+
+            function rejectComment(id) {
+                if (confirm('Bạn có chắc chắn muốn từ chối bình luận này?')) {
+                    fetch(`/admin/comments/${id}/reject`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
+
+            function deleteComment(id) {
+                if (confirm('Bạn có chắc chắn muốn xóa bình luận này?')) {
+                    fetch(`/admin/comments/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
+        </script>
+    </th:block>
+</body>
+</html> 

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${sanPham.ten}">Chi tiết sản phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gia-san-pham { color: #e60000; font-size: 2rem; font-weight: bold; }
+        .gia-cu { text-decoration: line-through; color: #888; font-size: 1.1rem; margin-left: 10px; }
+        .giam-phan-tram { color: #e60000; font-weight: bold; margin-left: 10px; }
+        .btn-mua-ngay { background: #e60000; color: #fff; font-weight: bold; font-size: 1.2rem; border-radius: 8px; }
+        .btn-mua-ngay:hover { background: #b80000; }
+        .sp-mua-kem .card { min-width: 180px; }
+        .sp-mua-kem .btn { margin-top: 10px; }
+        .sp-mua-kem .card-img-top { height: 100px; object-fit: contain; }
+        .khuyen-mai { background: #f8f9fa; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+        .showroom { font-size: 0.98rem; }
+        .showroom i { color: #e60000; }
+        .breadcrumb { background: #f8f9fa; border-radius: 8px; }
+        .sp-mua-kem { overflow-x: auto; white-space: nowrap; }
+        .sp-mua-kem .card { display: inline-block; margin-right: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Navbar mới -->
+    <nav class="navbar py-3" style="background:rgba(18,18,18,0.95); box-shadow:0 2px 8px rgba(0,255,255,0.08); border-bottom:1px solid rgba(0,255,255,0.08);">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <div class="d-flex align-items-center me-3">
+                <div style="text-align:center;">
+                    <div style="font-size:2.2rem;line-height:1;">
+                        <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
+                    </div>
+                    <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
+                </div>
+            </div>
+            <!-- Danh mục -->
+            <div class="dropdown me-2">
+                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+                    <i class="fas fa-list me-2"></i> DANH MỤC
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
+                    <li><a class="dropdown-item" href="/chuot">Chuột</a></li>
+                    <li><a class="dropdown-item" href="/ban-phim">Bàn phím</a></li>
+                    <li><a class="dropdown-item" href="/tai-nghe">Tai nghe</a></li>
+                    <li><a class="dropdown-item" href="/mo-hinh">Mô hình</a></li>
+                </ul>
+            </div>
+            <!-- Sản phẩm -->
+            <a href="/san-pham" class="btn d-flex align-items-center px-3 py-2 me-2" style="font-weight:600;">
+                <i class="fas fa-box-open me-2"></i> SẢN PHẨM
+            </a>
+            <!-- Tìm kiếm -->
+            <form class="d-flex flex-grow-1 mx-2" style="max-width:420px;">
+                <div class="input-group search-bar">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input class="form-control" type="search" placeholder="Bạn cần tìm gì?">
+                </div>
+            </form>
+            <!-- Hotline -->
+            <div class="d-flex align-items-center ms-2 me-3">
+                <i class="fas fa-phone-alt me-1" style="color:var(--neon-green);font-size:1.2rem;"></i>
+                <div style="font-size:0.9rem;line-height:1.1;">
+                    <span style="color:var(--text-secondary);">Hotline</span><br>
+                    <span style="color:var(--neon-green);font-weight:600;">0349.296.461</span>
+                </div>
+            </div>
+            <!-- Tư vấn trực tiếp -->
+            <div class="d-flex align-items-center me-3">
+                <i class="fas fa-bolt me-1" style="color:var(--neon-pink);font-size:1.2rem;"></i>
+                <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
+            </div>
+            <!-- Giỏ hàng -->
+            <a href="/cart" class="btn d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+                <span class="position-relative me-2">
+                    <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;" th:text="${cart != null ? cart.items.size() : 0}">0</span>
+                </span>
+                Giỏ hàng
+            </a>
+            <!-- Nút đăng nhập trên navbar -->
+            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
+              <i class="fas fa-user"></i> Đăng nhập
+            </button>
+        </div>
+    </nav>
+
+<div class="container py-3">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/san-pham">Sản phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${sanPham.ten}"></li>
+        </ol>
+    </nav>
+    <div class="row mt-3">
+        <!-- Ảnh và sản phẩm mua kèm -->
+        <div class="col-md-6">
+            <img th:src="${sanPham.hinhAnh}" class="img-fluid rounded border mb-3" alt="Ảnh sản phẩm">
+            <!-- Ảnh nhỏ (nếu có) -->
+            <div class="d-flex mb-3">
+                <img th:each="anh : ${sanPham.dsAnhPhu}" th:src="${anh}" class="img-thumbnail me-2" style="width:60px;height:60px;object-fit:cover;" alt="Ảnh phụ">
+            </div>
+            <div class="sp-mua-kem">
+                <h6>Sản phẩm mua kèm</h6>
+                <div>
+                    <div class="card d-inline-block me-2" style="width: 160px;">
+                        <img src="https://cdn.tgdd.vn/Products/Images/44/303226/Slider/vi-vn-asus-rog-strix-xg27aqv-1.jpg" class="card-img-top" alt="Màn hình">
+                        <div class="card-body p-2">
+                            <div class="card-title" style="font-size:0.98rem;">Mua kèm màn hình</div>
+                            <button class="btn btn-outline-primary btn-sm w-100">Chọn sản phẩm</button>
+                        </div>
+                    </div>
+                    <div class="card d-inline-block me-2" style="width: 160px;">
+                        <img src="https://cdn.tgdd.vn/Products/Images/86/303226/Slider/vi-vn-logitech-g102-1.jpg" class="card-img-top" alt="Chuột">
+                        <div class="card-body p-2">
+                            <div class="card-title" style="font-size:0.98rem;">Mua kèm chuột</div>
+                            <button class="btn btn-outline-primary btn-sm w-100">Chọn sản phẩm</button>
+                        </div>
+                    </div>
+                    <div class="card d-inline-block me-2" style="width: 160px;">
+                        <img src="https://cdn.tgdd.vn/Products/Images/44/303226/Slider/vi-vn-banphim-co-1.jpg" class="card-img-top" alt="Bàn phím">
+                        <div class="card-body p-2">
+                            <div class="card-title" style="font-size:0.98rem;">Mua kèm bàn phím</div>
+                            <button class="btn btn-outline-primary btn-sm w-100">Chọn sản phẩm</button>
+                        </div>
+                    </div>
+                    <div class="card d-inline-block" style="width: 160px;">
+                        <img src="https://cdn.tgdd.vn/Products/Images/44/303226/Slider/vi-vn-cap-usb-1.jpg" class="card-img-top" alt="Phụ kiện">
+                        <div class="card-body p-2">
+                            <div class="card-title" style="font-size:0.98rem;">Mua kèm phụ kiện</div>
+                            <button class="btn btn-outline-primary btn-sm w-100">Chọn sản phẩm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Thông tin sản phẩm -->
+        <div class="col-md-6">
+            <h3 th:text="${sanPham.ten}"></h3>
+            <div class="d-flex align-items-center mb-2">
+                <span class="gia-san-pham" th:text="${#numbers.formatDecimal(sanPham.gia, 0, 'POINT', 0, 'COMMA')} + '₫'"></span>
+                <span class="gia-cu" th:if="${sanPham.giaCu != null}" th:text="${#numbers.formatDecimal(sanPham.giaCu, 0, 'POINT', 0, 'COMMA')} + '₫'"></span>
+                <span class="giam-phan-tram" th:if="${sanPham.giamPhanTram != null}" th:text="'-' + ${sanPham.giamPhanTram} + '%' "></span>
+            </div>
+            <div class="mb-3">
+                <span class="badge bg-danger">Quà tặng khuyến mãi</span>
+                <div class="mt-2">Tặng ngay 1 x Túi chống sốc GearVN 15" trị giá 100.000đ</div>
+            </div>
+            <button class="btn btn-mua-ngay w-100 mb-3">MUA NGAY</button>
+            <ul class="mb-3">
+                <li>Bảo hành chính hãng 24 tháng.</li>
+                <li>Hỗ trợ đổi mới trong 7 ngày.</li>
+                <li>Miễn phí giao hàng toàn quốc.</li>
+            </ul>
+            <div class="mb-3">
+                <span style="color:#e60000;font-weight:bold;">Hỗ trợ trả góp MPOS (Thẻ tín dụng), HDSAISON</span>
+            </div>
+            <div class="khuyen-mai">
+                <h6>Khuyến mãi</h6>
+                <ul class="mb-0">
+                    <li>Giảm ngay 100.000đ khi mua Microsoft Office kèm Laptop.</li>
+                    <li>Giảm 10% (tối đa 200.000đ) khi mua Gaming Gear ASUS kèm với Laptop.</li>
+                </ul>
+            </div>
+            <div class="showroom mb-2">
+                <h6>Showroom HCM</h6>
+                <ul class="mb-0">
+                    <li><i class="fas fa-map-marker-alt"></i> 78-80-82 Hoà Thám, P.12, Q. Tân Bình, TP.HCM</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 905 Kha Vạn Cân, P. Linh Tây, TP. Thủ Đức</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 1081-1083 Trần Hưng Đạo, P.5, Q.5, TP.HCM</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 63 Nguyễn Cửu Vân, P.17, Q.Bình Thạnh, TP.HCM</li>
+                </ul>
+                <h6 class="mt-2">Showroom HN</h6>
+                <ul class="mb-0">
+                    <li><i class="fas fa-map-marker-alt"></i> 162-164 Thái Hà, P. Trung Liệt, Q.Đống Đa, Hà Nội</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

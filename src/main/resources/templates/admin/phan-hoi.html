@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{admin/layout :: main_content}">
+<th:block th:fragment="content">
+    <div class="card p-4 mb-4">
+        <h2 class="mb-4 text-center text-primary fw-bold"><i class="fas fa-comments me-2"></i>Quản lý phản hồi</h2>
+
+        <!-- Bộ lọc -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select">
+                            <option value="">Tất cả</option>
+                            <option value="new">Chưa đọc</option>
+                            <option value="read">Đã đọc</option>
+                            <option value="replied">Đã phản hồi</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Loại phản hồi</label>
+                        <select class="form-select">
+                            <option value="">Tất cả</option>
+                            <option value="support">Hỗ trợ</option>
+                            <option value="feedback">Góp ý</option>
+                            <option value="complaint">Khiếu nại</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tìm kiếm</label>
+                        <input type="text" class="form-control" placeholder="Nhập từ khóa...">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">&nbsp;</label>
+                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search me-2"></i>Tìm kiếm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Danh sách phản hồi -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Người gửi</th>
+                        <th>Email</th>
+                        <th>Loại</th>
+                        <th>Nội dung</th>
+                        <th>Ngày gửi</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nguyenvana@gmail.com</td>
+                        <td><span class="badge bg-info">Hỗ trợ</span></td>
+                        <td>Tôi cần hỗ trợ về sản phẩm...</td>
+                        <td>2024-06-05</td>
+                        <td><span class="badge bg-warning text-dark">Chưa đọc</span></td>
+                        <td>
+                            <button class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Xem</button>
+                            <button class="btn btn-success btn-sm"><i class="fas fa-reply"></i> Phản hồi</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Trần Thị B</td>
+                        <td>tranthib@gmail.com</td>
+                        <td><span class="badge bg-primary">Góp ý</span></td>
+                        <td>Website rất dễ sử dụng...</td>
+                        <td>2024-06-04</td>
+                        <td><span class="badge bg-success">Đã phản hồi</span></td>
+                        <td>
+                            <button class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Xem</button>
+                            <button class="btn btn-success btn-sm"><i class="fas fa-reply"></i> Phản hồi</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Phân trang -->
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Trước</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Sau</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</th:block>
+</html> 

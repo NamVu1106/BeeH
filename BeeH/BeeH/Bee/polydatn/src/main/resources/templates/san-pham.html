@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Sản phẩm - Bee Arena</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <style>
+        body {
+            background: #f7fafd;
+            color: #232347;
+            font-family: 'Inter', sans-serif;
+        }
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(44,44,255,0.06);
+        }
+        .navbar .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #2d2dff !important;
+            font-size: 1.5rem;
+        }
+        .navbar .nav-link {
+            color: #2d2dff !important;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar .nav-link.active, .navbar .nav-link:hover {
+            background: #e0e7ff;
+            color: #fff !important;
+        }
+        .card {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 2px 12px rgba(44,44,255,0.06);
+            border: 1px solid #e0e7ff;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 8px 32px #2d2dff22, 0 0 8px #fff3;
+            transform: translateY(-4px) scale(1.02);
+        }
+        .card-title {
+            color: #2d2dff;
+            font-weight: 600;
+        }
+        .price {
+            color: #ff0033;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .footer {
+            background: #e0e7ff;
+            color: #232347;
+            border-top: 1px solid #d1d5fa;
+            padding: 3rem 0 2rem;
+        }
+        .footer h5 {
+            color: #2d2dff;
+            font-weight: 600;
+        }
+        .footer-link {
+            color: #2d2dff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: #00bfff;
+        }
+        @media (max-width: 768px) {
+            .card-title { font-size: 1rem; }
+        }
+        .card-img-top, .card-product img, .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            border-radius: 1rem 1rem 0 0 !important;
+            background: #181a20;
+            margin: 0 auto;
+            aspect-ratio: 1/1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar mới -->
+    <nav class="navbar py-3">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <div class="d-flex align-items-center me-3">
+                <div style="text-align:center;">
+                    <div style="font-size:2.2rem;line-height:1;">
+                        <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
+                    </div>
+                    <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
+                </div>
+            </div>
+            <!-- Danh mục -->
+            <div class="dropdown me-2">
+                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-list me-2"></i> DANH MỤC
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
+                    <li><a class="dropdown-item" href="/chuot">Chuột</a></li>
+                    <li><a class="dropdown-item" href="/ban-phim">Bàn phím</a></li>
+                    <li><a class="dropdown-item" href="/tai-nghe">Tai nghe</a></li>
+                    <li><a class="dropdown-item" href="/mo-hinh">Mô hình</a></li>
+                </ul>
+            </div>
+            <!-- Tìm kiếm -->
+            <form class="d-flex flex-grow-1 mx-2" style="max-width:420px;">
+                <div class="input-group search-bar">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input class="form-control" type="search" placeholder="Bạn cần tìm gì?">
+                </div>
+            </form>
+            <!-- Hotline -->
+            <div class="d-flex align-items-center ms-2 me-3">
+                <i class="fas fa-phone-alt me-1" style="color:var(--neon-green);font-size:1.2rem;"></i>
+                <div style="font-size:0.9rem;line-height:1.1;">
+                    <span style="color:var(--text-secondary);">Hotline</span><br>
+                    <span style="color:var(--neon-green);font-weight:600;">0349.296.461</span>
+                </div>
+            </div>
+            <!-- Tư vấn trực tiếp -->
+            <div class="d-flex align-items-center me-3">
+                <i class="fas fa-bolt me-1" style="color:var(--neon-pink);font-size:1.2rem;"></i>
+                <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
+            </div>
+            <!-- Giỏ hàng -->
+            <a href="/cart" class="btn d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+                <span class="position-relative me-2">
+                    <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;" th:text="${cart != null ? cart.items.size() : 0}">0</span>
+                </span>
+                Giỏ hàng
+            </a>
+            <!-- Nút đăng nhập trên navbar -->
+            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
+              <i class="fas fa-user"></i> Đăng nhập
+            </button>
+        </div>
+    </nav>
+    <section class="container py-5">
+        <h2 class="mb-4" style="color: var(--neon-blue); font-family: 'Orbitron', sans-serif;">Sản phẩm đang giảm giá</h2>
+        <div class="row g-4" id="discountProducts"></div>
+    </section>
+    <section class="container py-5">
+        <h2 class="mb-4" style="color: var(--neon-blue); font-family: 'Orbitron', sans-serif;">Sản phẩm được yêu thích</h2>
+        <div class="row g-4" id="favoriteProducts"></div>
+    </section>
+    <section class="container py-5">
+        <h2 class="mb-4" style="color: var(--neon-blue); font-family: 'Orbitron', sans-serif;">Tất cả sản phẩm</h2>
+        <div class="row g-4" id="allProducts"></div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="fw-bold"><i class="fas fa-bee me-2"></i>Bee Arena</h5>
+                    <p>Chuyên cung cấp phụ kiện công nghệ chất lượng cao với giá cả phải chăng.</p>
+                    <div class="mt-3">
+                        <a href="#" class="me-3" style="color: var(--neon-blue);"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="me-3" style="color: var(--neon-blue);"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="me-3" style="color: var(--neon-blue);"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" style="color: var(--neon-blue);"><i class="fab fa-youtube fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="fw-bold">Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="footer-link"><i class="fas fa-chevron-right me-2"></i>Trang chủ</a></li>
+                        <li><a href="/san-pham" class="footer-link"><i class="fas fa-chevron-right me-2"></i>Sản phẩm</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right me-2"></i>Khuyến mãi</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right me-2"></i>Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Liên hệ</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i>0123.456.789</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i>contact@beearena.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Đường ABC, Quận XYZ, TP.HCM</li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center" style="color: var(--text-secondary);">
+                &copy; 2024 Bee Arena. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Sản phẩm mẫu (có thể import từ file index.html nếu dùng chung)
+    const sampleProducts = [
+        {id:1,ten:"Bàn phím cơ Gaming",gia:1999000,hinhAnh:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",giamGia:true,yeuThich:true},
+        {id:2,ten:"Chuột Gaming RGB",gia:899000,hinhAnh:"https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80",giamGia:true},
+        {id:3,ten:"Tai nghe Gaming",gia:1499000,hinhAnh:"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",yeuThich:true},
+        {id:4,ten:"RAM DDR4 16GB",gia:2499000,hinhAnh:"https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80"},
+        {id:5,ten:"Ổ cứng SSD 512GB",gia:1299000,hinhAnh:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",giamGia:true},
+        {id:6,ten:"Màn hình 24 inch",gia:2999000,hinhAnh:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",yeuThich:true},
+        {id:7,ten:"Loa Bluetooth",gia:799000,hinhAnh:"https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80"},
+        {id:8,ten:"Webcam HD",gia:499000,hinhAnh:"https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=600&q=80"},
+        {id:9,ten:"Card màn hình GTX 1660",gia:5499000,hinhAnh:"https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80",giamGia:true},
+        {id:10,ten:"Tai nghe Bluetooth",gia:599000,hinhAnh:"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",yeuThich:true}
+    ];
+    function renderProductList(products, targetId) {
+        const grid = document.getElementById(targetId);
+        grid.innerHTML = '';
+        if (!products || products.length === 0) {
+            grid.innerHTML = '<div class="col-12 text-center text-muted">Không có sản phẩm phù hợp.</div>';
+            return;
+        }
+        products.forEach(p => {
+            const col = document.createElement('div');
+            col.className = 'col-12 col-sm-6 col-md-4 col-lg-3 mb-4';
+            col.innerHTML = `
+                <div class="card h-100 border-0 rounded-4 shadow-sm">
+                    <img src="${p.hinhAnh}" class="card-img-top rounded-top-4" alt="${p.ten}">
+                    <div class="card-body">
+                        <h6 class="card-title mb-2">
+                            ${p.ten}
+                        </h6>
+                        <p class="card-text price mb-2">${p.gia ? Number(p.gia).toLocaleString('vi-VN') + '₫' : ''}</p>
+                        ${p.giamGia ? '<span class="badge bg-danger mb-2">Giảm giá</span>' : ''}
+                        ${p.yeuThich ? '<span class="badge bg-warning text-dark mb-2">Yêu thích</span>' : ''}
+                        <a href="#" class="btn btn-primary btn-sm">Mua ngay</a>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(col);
+        });
+    }
+    renderProductList(sampleProducts, 'discountProducts');
+    renderProductList(sampleProducts, 'favoriteProducts');
+    renderProductList(sampleProducts, 'allProducts');

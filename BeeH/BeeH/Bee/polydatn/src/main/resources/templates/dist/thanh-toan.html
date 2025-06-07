@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<h2>Thông tin thanh toán</h2>
+<form th:action="@{/cart/checkout}" method="post">
+    <label>Họ tên người nhận:</label>
+    <input type="text" name="customerName" required placeholder="Nhập họ tên"/><br/>
+    <label>Địa chỉ:</label>
+    <input type="text" name="address" required placeholder="Nhập địa chỉ"/><br/>
+    <label>Số điện thoại:</label>
+    <input type="text" name="phone" required placeholder="Nhập số điện thoại"/><br/>
+    <button type="submit">Xác nhận đặt hàng</button>
+</form>
+</body>
+</html> 

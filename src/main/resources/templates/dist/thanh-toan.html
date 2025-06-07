@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+</head>
+<body>
+    <!-- Navbar mới -->
+    <nav class="navbar py-3">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <div class="d-flex align-items-center me-3">
+                <div style="text-align:center;">
+                    <div style="font-size:2.2rem;line-height:1;">
+                        <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
+                    </div>
+                    <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
+                </div>
+            </div>
+            <!-- Danh mục -->
+            <div class="dropdown me-2">
+                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-list me-2"></i> DANH MỤC
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
+                    <li><a class="dropdown-item" href="/chuot">Chuột</a></li>
+                    <li><a class="dropdown-item" href="/ban-phim">Bàn phím</a></li>
+                    <li><a class="dropdown-item" href="/tai-nghe">Tai nghe</a></li>
+                    <li><a class="dropdown-item" href="/mo-hinh">Mô hình</a></li>
+                </ul>
+            </div>
+            <!-- Sản phẩm -->
+            <a href="/san-pham" class="btn d-flex align-items-center px-3 py-2 me-2" style="font-weight:600;">
+                <i class="fas fa-box-open me-2"></i> SẢN PHẨM
+            </a>
+            <!-- Tìm kiếm -->
+            <form class="d-flex flex-grow-1 mx-2" style="max-width:420px;">
+                <div class="input-group search-bar">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input class="form-control" type="search" placeholder="Bạn cần tìm gì?">
+                </div>
+            </form>
+            <!-- Hotline -->
+            <div class="d-flex align-items-center ms-2 me-3">
+                <i class="fas fa-phone-alt me-1" style="color:var(--neon-green);font-size:1.2rem;"></i>
+                <div style="font-size:0.9rem;line-height:1.1;">
+                    <span style="color:var(--text-secondary);">Hotline</span><br>
+                    <span style="color:var(--neon-green);font-weight:600;">0349.296.461</span>
+                </div>
+            </div>
+            <!-- Tư vấn trực tiếp -->
+            <div class="d-flex align-items-center me-3">
+                <i class="fas fa-bolt me-1" style="color:var(--neon-pink);font-size:1.2rem;"></i>
+                <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
+            </div>
+            <!-- Giỏ hàng -->
+            <a href="/cart" class="btn d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+                <span class="position-relative me-2">
+                    <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;" th:text="${cart != null ? cart.items.size() : 0}">0</span>
+                </span>
+                Giỏ hàng
+            </a>
+            <!-- Nút đăng nhập trên navbar -->
+            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
+              <i class="fas fa-user"></i> Đăng nhập
+            </button>
+        </div>
+    </nav>
+
+<h2>Thông tin thanh toán</h2>
+<form th:action="@{/cart/checkout}" method="post">
+    <label>Họ tên người nhận:</label>
+    <input type="text" name="customerName" required placeholder="Nhập họ tên"/><br/>
+    <label>Địa chỉ:</label>
+    <input type="text" name="address" required placeholder="Nhập địa chỉ"/><br/>
+    <label>Số điện thoại:</label>
+    <input type="text" name="phone" required placeholder="Nhập số điện thoại"/><br/>
+    <button type="submit">Xác nhận đặt hàng</button>
+</form>
+</body>
+</html> 

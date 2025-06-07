@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard - Bee Arena Admin</title>
+</head>
+<body>
+    <!-- Content -->
+    <div th:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Dashboard</h2>
+            <div class="user-info">
+                <span class="me-3" th:text="${#authentication.name}">Admin</span>
+                <a th:href="@{/logout}" class="btn btn-outline-danger btn-sm">Đăng xuất</a>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Tổng đơn hàng</h5>
+                        <h2 class="card-text" th:text="${totalOrders}">150</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Doanh thu</h5>
+                        <h2 class="card-text" th:text="${totalRevenue}">15.5M</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Người dùng</h5>
+                        <h2 class="card-text" th:text="${totalUsers}">1,250</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Sản phẩm</h5>
+                        <h2 class="card-text" th:text="${totalProducts}">85</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Đơn hàng gần đây</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order : ${recentOrders}">
+                            <td th:text="${'#' + order.id}">#12345</td>
+                            <td th:text="${order.customerName}">Nguyễn Văn A</td>
+                            <td th:text="${order.productName}">Bàn phím cơ</td>
+                            <td th:text="${#numbers.formatCurrency(order.totalAmount)}">2,500,000đ</td>
+                            <td>
+                                <span th:class="${'badge bg-' + order.statusColor}" 
+                                      th:text="${order.status}">Hoàn thành</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/admin/orders/{id}(id=${order.id})}" 
+                                   class="btn btn-sm btn-info">Chi tiết</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div th:fragment="modals">
+        <!-- Add any modals here -->
+    </div>
+
+    <!-- Scripts -->
+    <th:block th:fragment="scripts">
+        <!-- Add any additional scripts here -->
+    </th:block>
+</body>
+</html> 

@@ -1,0 +1,46 @@
+<th:block th:fragment="content">
+    <div class="card p-4 mb-4">
+        <h2 class="mb-4 text-center text-primary fw-bold"><i class="fas fa-file-alt me-2"></i>Quản lý nội dung</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tiêu đề</th>
+                        <th>Loại nội dung</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Giới thiệu Bee Arena</td>
+                        <td>Trang chủ</td>
+                        <td>2024-06-05</td>
+                        <td><span class="badge bg-success">Hiển thị</span></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Sửa</button>
+                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Xóa</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Chính sách bảo hành</td>
+                        <td>Footer</td>
+                        <td>2024-06-03</td>
+                        <td><span class="badge bg-secondary">Ẩn</span></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Sửa</button>
+                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Xóa</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-end">
+            <button class="btn btn-success"><i class="fas fa-plus"></i> Thêm nội dung mới</button>
+        </div>
+    </div>
+</th:block> 

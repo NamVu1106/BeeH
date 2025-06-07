@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <style>
+        /* Đặt font cho toàn bộ trang */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(44,44,255,0.06);
+        }
+        .navbar .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #2d2dff !important;
+            font-size: 1.5rem;
+        }
+        .navbar .nav-link {
+            color: #2d2dff !important;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar .nav-link.active, .navbar .nav-link:hover {
+            background: #e0e7ff;
+            color: #fff !important;
+        }
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active,
+        .navbar .dropdown-item:hover,
+        .navbar .btn:hover,
+        .navbar .btn:focus {
+          color: #111 !important;
+          background: none !important;
+          box-shadow: none !important;
+        }
+        .navbar .dropdown-menu {
+          background: #fff !important;
+        }
+        .navbar .dropdown-item {
+          color: #111 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar chuyên nghiệp, icon và chữ màu đen, không hiệu ứng hover -->
+    <nav class="navbar navbar-expand-lg py-3 shadow-sm">
+      <div class="container-fluid d-flex align-items-center justify-content-between" style="min-height:64px;">
+        <!-- Logo và menu bên trái -->
+        <div class="d-flex align-items-center flex-shrink-0" style="height:64px;">
+          <a class="navbar-brand d-flex align-items-center me-3" href="/" style="color:#111 !important;">
+            <i class="fas fa-circle me-2" style="font-size:1.7rem;color:#111;"></i>
+            <span class="fw-bold fs-4" style="letter-spacing:1px;color:#111;">ARENA</span>
+          </a>
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+              <!-- <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li> -->
+              <li class="nav-item"><a class="nav-link" href="/san-pham" style="color:#111 !important;">Sản phẩm</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="danhMucDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#111 !important;">Danh mục</a>
+                <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
+                  <li><a class="dropdown-item" href="/chuot" style="color:#111 !important;">Chuột</a></li>
+                  <li><a class="dropdown-item" href="/ban-phim" style="color:#111 !important;">Bàn phím</a></li>
+                  <li><a class="dropdown-item" href="/tai-nghe" style="color:#111 !important;">Tai nghe</a></li>
+                  <li><a class="dropdown-item" href="/mo-hinh" style="color:#111 !important;">Mô hình</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Search bar giữa, thẳng hàng, hai icon sát search bar -->
+        <div class="d-flex align-items-center flex-grow-1 justify-content-center" style="min-width:0;">
+          <form class="d-flex flex-grow-1 align-items-center" style="max-width:400px;min-width:220px;">
+            <div class="input-group w-100">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="fas fa-search" style="color:#111;font-size:1.1rem;"></i>
+              </span>
+              <input class="form-control border-start-0" type="search" placeholder="Tìm kiếm sản phẩm..." style="background:#fff;color:#111;" />
+            </div>
+          </form>
+          <span class="d-flex align-items-center gap-3 me-5 ms-5">
+            <i class="fas fa-phone" style="color:#111;font-size:1.25rem;cursor:pointer;" title="Hotline: 0349.296.461"></i>
+            <i class="fas fa-bolt" style="color:#111;font-size:1.25rem;cursor:pointer;" title="Tư vấn trực tiếp"></i>
+          </span>
+        </div>
+        <!-- Nhóm icon còn lại bên phải, cách xa hơn nữa về trái -->
+        <div class="d-none d-lg-flex align-items-center gap-3 flex-shrink-0" style="height:64px;z-index:3;">
+          <a href="/cart" class="btn btn-outline-primary position-relative p-0 d-flex align-items-center justify-content-center" style="width:36px;height:36px;border-radius:50%;border-color:#111 !important;">
+            <i class="fas fa-shopping-cart" style="font-size:1.2rem;color:#111;"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" th:text="${cart != null ? cart.items.size() : 0}" style="font-size:0.7rem;">0</span>
+          </a>
+          <div class="dropdown">
+            <button id="profileBtn" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width:36px;height:36px;color:#111;border-color:#111 !important;">
+              <i class="far fa-user" style="font-size:1.15rem;color:#111;"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
+              <!-- Nội dung sẽ được JS render tùy trạng thái đăng nhập -->
+            </ul>
+          </div>
+        </div>
+        <!-- Toggle button for mobile (luôn nằm trên cùng) -->
+        <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation" style="color:#111;border-color:#111 !important;">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- Kết thúc Navbar chuyên nghiệp, icon và chữ màu đen, không hiệu ứng hover -->
+
+<h2>Thông tin thanh toán</h2>
+<form th:action="@{/cart/checkout}" method="post">
+    <label>Họ tên người nhận:</label>
+    <input type="text" name="customerName" required placeholder="Nhập họ tên"/><br/>
+    <label>Địa chỉ:</label>
+    <input type="text" name="address" required placeholder="Nhập địa chỉ"/><br/>
+    <label>Số điện thoại:</label>
+    <input type="text" name="phone" required placeholder="Nhập số điện thoại"/><br/>
+    <button type="submit">Xác nhận đặt hàng</button>
+</form>
+</body>
+</html> 

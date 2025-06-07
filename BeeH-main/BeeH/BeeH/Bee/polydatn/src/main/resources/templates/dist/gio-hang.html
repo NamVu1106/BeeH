@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <style>
+        body { background: #f7fafd; }
+        .cart-container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 32px #0001; padding: 32px 28px; }
+        .cart-title { font-size: 2rem; font-weight: 700; color: #1a237e; margin-bottom: 24px; }
+        .cart-table th, .cart-table td { vertical-align: middle; text-align: center; }
+        .cart-table th { background: #f1f3f6; color: #1a237e; font-weight: 600; }
+        .cart-table img { width: 72px; height: 72px; object-fit: cover; border-radius: 12px; }
+        .cart-table .product-name { font-weight: 600; color: #212b36; }
+        .cart-table .product-code { color: #888; font-size: 0.97em; }
+        .cart-table .btn { min-width: 32px; }
+        .cart-table .btn-remove { color: #e53935; background: none; border: none; font-size: 1.2em; }
+        .cart-table .btn-remove:hover { color: #b71c1c; }
+        .cart-summary { background: #f9fafb; border-radius: 12px; padding: 24px 18px; margin-top: 32px; }
+        .cart-summary h5 { font-weight: 700; color: #1a237e; margin-bottom: 18px; }
+        .cart-summary label { font-weight: 500; }
+        .cart-summary input, .cart-summary textarea, .cart-summary select { border-radius: 8px; }
+        .cart-summary .form-control:focus { box-shadow: 0 0 0 2px #90caf9; border-color: #42a5f5; }
+        .cart-summary .voucher-group { display: flex; gap: 8px; margin-bottom: 12px; }
+        .cart-summary .voucher-group input { flex: 1; }
+        .cart-summary .voucher-group button { white-space: nowrap; }
+        .cart-summary .total-label { font-weight: 600; color: #1a237e; }
+        .cart-summary .total-value { font-size: 1.3em; font-weight: 700; color: #e53935; }
+        .cart-summary .btn-checkout { font-size: 1.1em; font-weight: 700; padding: 12px 0; border-radius: 10px; }
+        @media (max-width: 900px) { .cart-container { padding: 18px 4px; } }
+        .header-link, .footer-link, .header-link:visited {
+            color: #637381 !important;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .header-link:hover, .footer-link:hover {
+            color: #4a90e2 !important;
+        }
+        .navbar .btn-light {
+            background: #fff !important;
+            color: #212b36 !important;
+            border: 1px solid #e3e8ee;
+            box-shadow: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar .btn-light:hover, .navbar .btn-light:focus {
+            background: #f4f6f8 !important;
+            color: #4a90e2 !important;
+        }
+        .navbar .btn-light .fa-shopping-cart,
+        .navbar .btn-light .fa-list {
+            color: #212b36 !important;
+            transition: color 0.2s;
+        }
+        .navbar .btn-light:hover .fa-shopping-cart,
+        .navbar .btn-light:hover .fa-list {
+            color: #4a90e2 !important;
+        }
+        .navbar .btn-outline-primary {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header bar trên cùng -->
+    <div class="header-top py-1" style="background:var(--bg-navy); color:var(--neon-blue); font-size:0.98rem; font-weight:500; border-bottom:1px solid rgba(0,255,255,0.08);">
+        <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap">
+            <div class="d-flex align-items-center flex-wrap">
+                <span class="badge me-2 d-flex align-items-center" style="border-radius:16px; font-weight:500; background:rgba(0,255,255,0.08); color:var(--neon-blue);">
+                    <i class="fas fa-map-marker-alt me-1" style="color:var(--neon-green);"></i> Địa chỉ liên hệ
+                </span>
+                <span class="badge me-3 d-flex align-items-center" style="border-radius:16px; font-weight:500; background:rgba(157,0,255,0.08); color:var(--neon-purple);">
+                    <i class="fas fa-headphones-alt me-1" style="color:var(--neon-pink);"></i> Hotline trực tuyến
+                </span>
+                <a href="#" class="header-link me-2 ms-1" title="Shopee"><i class="fab fa-shopify"></i> Shopee</a>
+                <a href="#" class="header-link me-2" title="Lazada"><i class="fab fa-shopify"></i> Lazada</a>
+                <a href="#" class="header-link me-2" title="Instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#" class="header-link me-2" title="Tiktok"><i class="fab fa-tiktok"></i> Tiktok</a>
+                <a href="#" class="header-link me-2" title="Youtube"><i class="fab fa-youtube"></i> Youtube</a>
+                <a href="#" class="header-link me-2" title="Facebook"><i class="fab fa-facebook"></i> Facebook</a>
+            </div>
+            <div class="d-flex align-items-center flex-wrap">
+                <a href="#" class="header-link me-3 d-flex align-items-center"><i class="fas fa-bullhorn me-1"></i> Tin tức</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar mới -->
+    <nav class="navbar py-3">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <div class="d-flex align-items-center me-3">
+                <div style="text-align:center;">
+                    <div style="font-size:2.2rem;line-height:1;">
+                        <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
+                    </div>
+                    <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
+                </div>
+            </div>
+            <!-- Danh mục -->
+            <div class="dropdown me-2">
+                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-list me-2"></i> DANH MỤC
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
+                    <li><a class="dropdown-item" href="/chuot">Chuột</a></li>
+                    <li><a class="dropdown-item" href="/ban-phim">Bàn phím</a></li>
+                    <li><a class="dropdown-item" href="/tai-nghe">Tai nghe</a></li>
+                    <li><a class="dropdown-item" href="/mo-hinh">Mô hình</a></li>
+                </ul>
+            </div>
+            <!-- Tìm kiếm -->
+            <form class="d-flex flex-grow-1 mx-2" style="max-width:420px;">
+                <div class="input-group search-bar">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input class="form-control" type="search" placeholder="Bạn cần tìm gì?">
+                </div>
+            </form>
+            <!-- Hotline -->
+            <div class="d-flex align-items-center ms-2 me-3">
+                <i class="fas fa-phone-alt me-1" style="color:var(--neon-green);font-size:1.2rem;"></i>
+                <div style="font-size:0.9rem;line-height:1.1;">
+                    <span style="color:var(--text-secondary);">Hotline</span><br>
+                    <span style="color:var(--neon-green);font-weight:600;">0349.296.461</span>
+                </div>
+            </div>
+            <!-- Tư vấn trực tiếp -->
+            <div class="d-flex align-items-center me-3">
+                <i class="fas fa-bolt me-1" style="color:var(--neon-pink);font-size:1.2rem;"></i>
+                <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
+            </div>
+            <!-- Giỏ hàng -->
+            <a href="/cart" class="btn d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;font-weight:600;background:var(--neon-blue);color:#232347;box-shadow:0 0 8px var(--neon-blue);border:none;">
+                <span class="position-relative me-2">
+                    <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;" th:text="${cart != null ? cart.items.size() : 0}">0</span>
+                </span>
+                Giỏ hàng
+            </a>
+            <!-- Nút đăng nhập trên navbar -->
+            <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
+              <i class="fas fa-user"></i> Đăng nhập
+            </button>
+        </div>
+    </nav>
+
+<div class="cart-container">
+    <div class="cart-title">THÔNG TIN GIỎ HÀNG</div>
+    <form th:action="@{/cart/update}" method="post">
+        <table class="table cart-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Số tiền</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${cart.items}">
+                    <td class="d-flex align-items-center gap-3">
+                        <img th:src="@{${item.image}}" alt="Ảnh sản phẩm" />
+                        <div>
+                            <div class="product-name" th:text="${item.productName}"></div>
+                            <div class="product-code" th:text="'Mã: SP' + ${item.productId}"></div>
+                        </div>
+                    </td>
+                    <td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+                    <td>
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                            <form th:action="@{/cart/update}" method="post" style="display:inline;">
+                                <input type="hidden" name="productId" th:value="${item.productId}" />
+                                <input type="hidden" name="quantity" th:value="${item.quantity - 1}" />
+                                <button type="submit" class="btn btn-outline-secondary" th:disabled="${item.quantity == 1}">-</button>
+                            </form>
+                            <label for="quantity-[[${item.productId}]]" class="visually-hidden">Số lượng</label>
+                            <input type="text" th:id="'quantity-' + ${item.productId}" th:value="${item.quantity}" class="form-control text-center" style="width:48px;" readonly />
+                            <form th:action="@{/cart/update}" method="post" style="display:inline;">
+                                <input type="hidden" name="productId" th:value="${item.productId}" />
+                                <input type="hidden" name="quantity" th:value="${item.quantity + 1}" />
+                                <button type="submit" class="btn btn-outline-secondary">+</button>
+                            </form>
+                        </div>
+                    </td>
+                    <td th:text="${#numbers.formatDecimal(item.price * item.quantity, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+                    <td>
+                        <form th:action="@{/cart/remove}" method="post" style="display:inline;">
+                            <input type="hidden" name="productId" th:value="${item.productId}" />
+                            <button type="submit" class="btn btn-remove" title="Xóa sản phẩm"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${cart.items.size() == 0}"><td colspan="5" class="text-center text-muted">Giỏ hàng trống</td></tr>
+            </tbody>
+        </table>
+    </form>
+    <div class="cart-summary mt-4">
+        <form th:action="@{/cart/checkout}" method="post">
+            <h5>ĐỊA CHỈ NHẬN HÀNG</h5>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="customerName" class="form-label">Họ và tên</label>
+                    <input type="text" id="customerName" name="customerName" class="form-control" placeholder="Họ và tên" required />
+                </div>
+                <div class="col-md-6">
+                    <label for="phone" class="form-label">Số điện thoại</label>
+                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Số điện thoại" required />
+                </div>
+                <div class="col-md-12">
+                    <label for="address" class="form-label">Địa chỉ nhận hàng</label>
+                    <input type="text" id="address" name="address" class="form-control" placeholder="Địa chỉ nhận hàng" required />
+                </div>
+                <div class="col-md-12">
+                    <label for="note" class="form-label">Ghi chú cho shop (nếu có)</label>
+                    <textarea id="note" name="note" class="form-control" placeholder="Ghi chú cho shop (nếu có)" rows="2"></textarea>
+                </div>
+            </div>
+            <h5 class="mt-4">HÌNH THỨC THANH TOÁN</h5>
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="COD" checked />
+                    <label class="form-check-label" for="cod">Thanh toán khi nhận hàng (COD)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="bank" value="BANK" />
+                    <label class="form-check-label" for="bank">Chuyển khoản ngân hàng</label>
+                </div>
+            </div>
+            <div class="voucher-group mb-3">
+                <label for="voucher" class="form-label visually-hidden">Mã Voucher (nếu có)</label>
+                <input type="text" id="voucher" class="form-control" name="voucher" placeholder="Mã Voucher (nếu có)" />
+                <button type="button" class="btn btn-outline-primary">Nhập mã voucher</button>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="total-label">Tổng tiền hàng (<span th:text="${cart.items.size()}"></span> sản phẩm):</span>
+                <span class="total-value" th:text="${#numbers.formatDecimal(cart.total, 0, 'COMMA', 0, 'POINT')} + ' đ'"></span>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success w-100 btn-checkout">ĐẶT MUA NGAY</button>
+                <form th:action="@{/cart/clear}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger w-100 btn-checkout" onclick="return confirm('Bạn có chắc muốn xóa toàn bộ giỏ hàng?')">Xóa giỏ hàng</button>
+                </form>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Font Awesome -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<!-- Modal đăng nhập/đăng ký mới -->
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4" style="border-radius:18px;box-shadow:0 4px 32px #0002;max-width:400px;margin:auto;">
+      <div class="modal-header border-0 pb-0">
+        <h4 class="modal-title w-100 text-center fw-bold" id="authModalLabel">ĐĂNG NHẬP HOẶC TẠO TÀI KHOẢN</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body pt-2">
+        <form autocomplete="off">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="Nhập email">
+            <div class="form-text text-end"><a href="#" style="font-size:0.97em;">Đăng nhập bằng số điện thoại</a></div>
+          </div>
+          <div class="mb-2 position-relative">
+            <label for="loginPassword" class="form-label">Mật khẩu</label>
+            <input type="password" class="form-control pe-5" id="loginPassword" placeholder="Nhập mật khẩu">
+            <span class="position-absolute top-50 end-0 translate-middle-y me-3" style="cursor:pointer;" onclick="togglePassword()"><i class="fas fa-eye-slash" id="togglePassIcon"></i></span>
+          </div>
+          <div class="mb-2 text-end">
+            <a href="#" style="font-size:0.97em;">Quên mật khẩu email?</a>
+          </div>
+          <button type="submit" class="btn btn-danger w-100 py-2 fw-bold mb-2" style="font-size:1.1rem;border-radius:8px;">ĐĂNG NHẬP</button>
+          <div class="text-center my-2 text-muted" style="font-size:0.98em;">hoặc đăng nhập bằng</div>
+          <div class="d-flex gap-2 mb-3">
+            <button type="button" class="btn btn-light flex-fill border" style="border-radius:8px;"><i class="fab fa-google text-danger me-2"></i> Google</button>
+            <button type="button" class="btn btn-light flex-fill border" style="border-radius:8px;"><i class="fab fa-facebook text-primary me-2"></i> Facebook</button>
+          </div>
+          <div class="text-center" style="font-size:0.98em;">Bạn chưa có tài khoản? <a href="#" class="fw-bold text-primary">Đăng ký ngay!</a></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function togglePassword() {
+  const input = document.getElementById('loginPassword');
+  const icon = document.getElementById('togglePassIcon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  } else {
+    input.type = 'password';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  }
+}
+</script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

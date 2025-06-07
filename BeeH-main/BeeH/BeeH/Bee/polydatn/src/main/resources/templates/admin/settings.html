@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cấu hình - Bee Arena Admin</title>
+</head>
+<body>
+    <!-- Content -->
+    <div th:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Cấu hình hệ thống</h2>
+        </div>
+
+        <!-- Settings Tabs -->
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="settingsTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab">
+                            <i class="fas fa-cog me-2"></i>Cấu hình chung
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="email-tab" data-bs-toggle="tab" href="#email" role="tab">
+                            <i class="fas fa-envelope me-2"></i>Cấu hình email
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="payment-tab" data-bs-toggle="tab" href="#payment" role="tab">
+                            <i class="fas fa-credit-card me-2"></i>Cấu hình thanh toán
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="social-tab" data-bs-toggle="tab" href="#social" role="tab">
+                            <i class="fas fa-share-alt me-2"></i>Mạng xã hội
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content mt-4" id="settingsTabContent">
+                    <!-- General Settings -->
+                    <div class="tab-pane fade show active" id="general" role="tabpanel">
+                        <form th:action="@{/admin/settings/general}" method="post" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tên website</label>
+                                        <input type="text" class="form-control" name="siteName" 
+                                               th:value="${settings.siteName}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Mô tả website</label>
+                                        <textarea class="form-control" name="siteDescription" rows="3" 
+                                                  th:text="${settings.siteDescription}"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Logo website</label>
+                                        <input type="file" class="form-control" name="siteLogo" accept="image/*">
+                                        <div class="mt-2">
+                                            <img th:src="${settings.siteLogo}" alt="Logo" style="max-height: 50px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Email liên hệ</label>
+                                        <input type="email" class="form-control" name="contactEmail" 
+                                               th:value="${settings.contactEmail}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Số điện thoại liên hệ</label>
+                                        <input type="tel" class="form-control" name="contactPhone" 
+                                               th:value="${settings.contactPhone}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Địa chỉ</label>
+                                        <textarea class="form-control" name="contactAddress" rows="3" 
+                                                  th:text="${settings.contactAddress}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary">Lưu cấu hình</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Email Settings -->
+                    <div class="tab-pane fade" id="email" role="tabpanel">
+                        <form th:action="@{/admin/settings/email}" method="post" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">SMTP Host</label>
+                                        <input type="text" class="form-control" name="smtpHost" 
+                                               th:value="${settings.smtpHost}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">SMTP Port</label>
+                                        <input type="number" class="form-control" name="smtpPort" 
+                                               th:value="${settings.smtpPort}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">SMTP Username</label>
+                                        <input type="text" class="form-control" name="smtpUsername" 
+                                               th:value="${settings.smtpUsername}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">SMTP Password</label>
+                                        <input type="password" class="form-control" name="smtpPassword" 
+                                               th:value="${settings.smtpPassword}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email gửi</label>
+                                        <input type="email" class="form-control" name="smtpFromEmail" 
+                                               th:value="${settings.smtpFromEmail}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tên người gửi</label>
+                                        <input type="text" class="form-control" name="smtpFromName" 
+                                               th:value="${settings.smtpFromName}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-info me-2" onclick="testEmailSettings()">
+                                    Kiểm tra cấu hình
+                                </button>
+                                <button type="submit" class="btn btn-primary">Lưu cấu hình</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Payment Settings -->
+                    <div class="tab-pane fade" id="payment" role="tabpanel">
+                        <form th:action="@{/admin/settings/payment}" method="post" class="needs-validation" novalidate>
+                            <!-- VNPay Settings -->
+                            <h5 class="mb-3">Cấu hình VNPay</h5>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">VNPay TmnCode</label>
+                                        <input type="text" class="form-control" name="vnpayTmnCode" 
+                                               th:value="${settings.vnpayTmnCode}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">VNPay Hash Secret</label>
+                                        <input type="text" class="form-control" name="vnpayHashSecret" 
+                                               th:value="${settings.vnpayHashSecret}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">VNPay URL</label>
+                                        <input type="url" class="form-control" name="vnpayUrl" 
+                                               th:value="${settings.vnpayUrl}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">VNPay Return URL</label>
+                                        <input type="url" class="form-control" name="vnpayReturnUrl" 
+                                               th:value="${settings.vnpayReturnUrl}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Momo Settings -->
+                            <h5 class="mb-3">Cấu hình Momo</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Momo Partner Code</label>
+                                        <input type="text" class="form-control" name="momoPartnerCode" 
+                                               th:value="${settings.momoPartnerCode}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Momo Access Key</label>
+                                        <input type="text" class="form-control" name="momoAccessKey" 
+                                               th:value="${settings.momoAccessKey}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Momo Secret Key</label>
+                                        <input type="text" class="form-control" name="momoSecretKey" 
+                                               th:value="${settings.momoSecretKey}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Momo Return URL</label>
+                                        <input type="url" class="form-control" name="momoReturnUrl" 
+                                               th:value="${settings.momoReturnUrl}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end mt-4">
+                                <button type="submit" class="btn btn-primary">Lưu cấu hình</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Social Media Settings -->
+                    <div class="tab-pane fade" id="social" role="tabpanel">
+                        <form th:action="@{/admin/settings/social}" method="post" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Facebook URL</label>
+                                        <input type="url" class="form-control" name="facebookUrl" 
+                                               th:value="${settings.facebookUrl}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Instagram URL</label>
+                                        <input type="url" class="form-control" name="instagramUrl" 
+                                               th:value="${settings.instagramUrl}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Twitter URL</label>
+                                        <input type="url" class="form-control" name="twitterUrl" 
+                                               th:value="${settings.twitterUrl}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">YouTube URL</label>
+                                        <input type="url" class="form-control" name="youtubeUrl" 
+                                               th:value="${settings.youtubeUrl}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary">Lưu cấu hình</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <th:block th:fragment="scripts">
+        <script th:inline="javascript">
+            function testEmailSettings() {
+                const form = document.querySelector('#email form');
+                const formData = new FormData(form);
+                
+                fetch('/admin/settings/email/test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Gửi email kiểm tra thành công!');
+                    } else {
+                        alert('Có lỗi xảy ra: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('Có lỗi xảy ra khi kiểm tra cấu hình email.');
+                });
+            }
+
+            // Form validation
+            (function() {
+                'use strict';
+                const forms = document.querySelectorAll('.needs-validation');
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            })();
+        </script>
+    </th:block>
+</body>
+</html> 

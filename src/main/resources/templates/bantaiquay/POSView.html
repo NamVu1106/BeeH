@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bee Arena - POS System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #5c6ac4;
+            --accent-color: #50b83c;
+            --text-color: #212b36;
+            --text-light: #637381;
+            --light-bg: #f4f6f8;
+            --white: #ffffff;
+            --border-color: #dfe3e8;
+            --success-color: #50b83c;
+            --warning-color: #ffb82e;
+            --danger-color: #de3618;
+        }
+        body {
+            background: var(--light-bg);
+            color: var(--text-color);
+            font-family: 'Montserrat', 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        .pos-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+            padding: 20px;
+            height: calc(100vh - 60px);
+        }
+        .product-grid {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .cart-panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        .category-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--light-bg);
+            color: var(--text-color);
+            border: none;
+            white-space: nowrap;
+        }
+        .category-tab.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        .product-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .product-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(74,144,226,0.1);
+        }
+        .product-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-summary {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Bee Arena POS</a>
+            <div class="d-flex align-items-center">
+                <span class="me-3">Nhân viên: <strong id="ten-nhan-vien">Chưa đăng nhập</strong></span>
+                <button class="btn btn-outline-danger">Đăng xuất</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pos-container">
+        <div class="product-grid">
+            <div class="search-bar d-flex gap-2">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." class="form-control">
+                <button id="searchBtn" class="btn btn-primary" type="button"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </div>
+            <div class="category-tabs">
+                <button class="category-tab active">Tất cả</button>
+                <button class="category-tab">Bàn phím</button>
+                <button class="category-tab">Chuột</button>
+                <button class="category-tab">Tai nghe</button>
+                <button class="category-tab">Mô hình</button>
+            </div>
+            <div class="product-list-table mb-4" style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Giá bán</th>
+                            <th>Số lượng</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <!-- Sản phẩm sẽ được load ở đây -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="cart-panel">
+            <h4 class="mb-4">Đơn hàng hiện tại</h4>
+            <div class="cart-items">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="cart-summary">
+                <div class="mb-2">
+                    <label for="discountCode" class="form-label">Mã giảm giá:</label>
+                    <div class="input-group mb-2">
+                        <input type="text" id="discountCode" class="form-control" placeholder="Nhập mã giảm giá">
+                        <button id="applyDiscountBtn" class="btn btn-outline-primary">Áp dụng</button>
+                    </div>
+                    <div id="discountMsg" class="text-success small"></div>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Tạm tính:</span>
+                    <span id="cartSubtotal">0đ</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Giảm giá:</span>
+                    <span id="cartDiscount">0đ</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Tổng cộng:</strong>
+                    <strong class="text-danger" id="cartTotal">0đ</strong>
+                </div>
+                <button class="btn btn-primary w-100 mb-2">Thanh toán</button>
+                <button class="btn btn-outline-secondary w-100" id="cancelOrderBtn">Hủy đơn</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal chi tiết sản phẩm -->
+    <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productDetailModalLabel">Chi tiết sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img id="modalProductImg" src="" class="img-fluid rounded" alt="Ảnh sản phẩm">
+                        </div>
+                        <div class="col-md-7">
+                            <h4 id="modalProductName"></h4>
+                            <div id="modalProductDesc" class="mb-2 text-secondary"></div>
+                            <div class="mb-2"><b>Giá:</b> <span id="modalProductPrice" class="text-danger fw-bold"></span></div>
+                            <div class="mb-2" id="modalProductVersions"></div>
+                            <div class="mb-2" id="modalProductColors"></div>
+                            <button id="addToCartBtn" class="btn btn-success mt-2">Thêm vào giỏ hàng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    let allCategories = [];
+    let cart = [];
+    let discount = null;
+
+    // Hiển thị tên nhân viên
+    function showNhanVien() {
+        const user = JSON.parse(localStorage.getItem('user')) || {};
+        const nvSpan = document.getElementById('ten-nhan-vien');
+        if (nvSpan) {
+            nvSpan.textContent = user.hoTen || user.ten || user.email || 'Chưa đăng nhập';
+        }
+    }
+
+    // Load sản phẩm ban đầu
+    async function loadProducts() {
+        const res = await fetch('/api/employee/san-pham');
+        const products = await res.json();
+        renderProducts(products);
+        renderCategoryTabs(products);
+    }
+
+    // Render sản phẩm ra bảng
+    function renderProducts(products) {
+        const tbody = document.getElementById('productTableBody');
+        tbody.innerHTML = products.map((p, idx) => `
+            <tr>
+                <td><img src="${p.anh || 'https://via.placeholder.com/60'}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;"></td>
+                <td>${p.ten || ''}</td>
+                <td>${p.tenDanhMuc || ''}</td>
+                <td class="text-danger fw-bold">${p.gia ? p.gia.toLocaleString() + 'đ' : ''}</td>
+                <td>${p.soLuong || 0}</td>
+                <td><button class="btn btn-sm btn-success" data-idx="${idx}" onclick="showProductDetail(${p.id || p.maSP})">Chọn</button></td>
+            </tr>
+        `).join('');
+    }
+
+    // Tìm kiếm sản phẩm
+    async function searchProducts(keyword) {
+        if (!keyword) {
+            loadProducts();
+            return;
+        }
+        const res = await fetch('/api/employee/san-pham/tim-kiem?keyword=' + encodeURIComponent(keyword));
+        const products = await res.json();
+        renderProducts(products);
+    }
+
+    function getCartRequest() {
+        return {
+            items: cart.map(item => ({
+                productId: item.id,
+                version: item.version,
+                color: item.color,
+                quantity: item.quantity
+            })),
+            discountCode: document.getElementById('discountCode').value.trim()
+        };
+    }
+
+    async function updateCartSummary() {
+        const req = getCartRequest();
+        try {
+            const res = await fetch('/api/employee/cart/calculate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(req)
+            });
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById('cartSubtotal').textContent = data.subtotal.toLocaleString() + 'đ';
+                document.getElementById('cartDiscount').textContent = data.discountAmount ? '-' + data.discountAmount.toLocaleString() + 'đ' : '0đ';
+                document.getElementById('cartTotal').textContent = data.total.toLocaleString() + 'đ';
+                document.getElementById('discountMsg').textContent = data.discountMsg || '';
+            } else {
+                document.getElementById('cartSubtotal').textContent = '0đ';
+                document.getElementById('cartDiscount').textContent = '0đ';
+                document.getElementById('cartTotal').textContent = '0đ';
+                document.getElementById('discountMsg').textContent = 'Có lỗi khi tính toán giỏ hàng!';
+            }
+        } catch {
+            document.getElementById('cartSubtotal').textContent = '0đ';
+            document.getElementById('cartDiscount').textContent = '0đ';
+            document.getElementById('cartTotal').textContent = '0đ';
+            document.getElementById('discountMsg').textContent = 'Có lỗi khi tính toán giỏ hàng!';
+        }
+    }
+
+    function renderCart() {
+        const cartDiv = document.querySelector('.cart-items');
+        if (!cartDiv) return;
+        if (cart.length === 0) {
+            cartDiv.innerHTML = '<div class="text-center text-secondary">Chưa có sản phẩm nào trong giỏ hàng.</div>';
+        } else {
+            cartDiv.innerHTML = cart.map((item, idx) => `
+                <div class="cart-item">
+                    <img src="${item.anh || 'https://via.placeholder.com/60'}" style="width:48px;height:48px;object-fit:cover;border-radius:8px;margin-right:10px;">
+                    <div class="flex-grow-1">
+                        <div><b>${item.ten}</b></div>
+                        ${item.version ? `<div>Phiên bản: ${item.version}</div>` : ''}
+                        ${item.color ? `<div>Màu sắc: ${item.color}</div>` : ''}
+                        <div>Giá: <span class="text-danger">${item.gia ? item.gia.toLocaleString() + 'đ' : ''}</span></div>
+                    </div>
+                    <div class="d-flex flex-column align-items-end ms-2">
+                        <input type="number" min="1" value="${item.quantity}" style="width:50px;" onchange="updateCartQty(${idx}, this.value)">
+                        <button class="btn btn-sm btn-outline-danger mt-1" onclick="removeCartItem(${idx})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        updateCartSummary();
+    }
+
+    function addToCart(product) {
+        let version = '';
+        let color = '';
+        if (document.getElementById('modalVersionSelect')) {
+            version = document.getElementById('modalVersionSelect').value;
+        }
+        if (document.getElementById('modalColorSelect')) {
+            color = document.getElementById('modalColorSelect').value;
+        }
+        let idx = cart.findIndex(item => item.id === (product.id || product.maSP) && item.version === version && item.color === color);
+        if (idx >= 0) {
+            cart[idx].quantity++;
+        } else {
+            cart.push({
+                id: product.id || product.maSP,
+                ten: product.ten || product.tenSP,
+                gia: product.gia,
+                anh: product.anh || product.hinhAnh,
+                version,
+                color,
+                quantity: 1
+            });
+        }
+        renderCart();
+    }
+
+    function updateCartQty(idx, qty) {
+        qty = parseInt(qty);
+        if (qty > 0) {
+            cart[idx].quantity = qty;
+        }
+        renderCart();
+    }
+
+    function removeCartItem(idx) {
+        cart.splice(idx, 1);
+        renderCart();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        showNhanVien();
+        loadProducts();
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                searchProducts(e.target.value.trim());
+            });
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') searchProducts(searchInput.value.trim());
+            });
+        }
+        if (searchBtn) {
+            searchBtn.addEventListener('click', function() {
+                searchProducts(searchInput.value.trim());
+            });
+        }
+        renderCart();
+        document.getElementById('applyDiscountBtn').onclick = function() {
+            renderCart();
+        };
+        document.getElementById('cancelOrderBtn').onclick = function() {
+            if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')) {
+                cart = [];
+                renderCart();
+                document.getElementById('discountCode').value = '';
+                document.getElementById('discountMsg').textContent = '';
+            }
+        };
+    });
+
+    // Lọc theo danh mục
+    function renderCategoryTabs(products) {
+        const categories = Array.from(new Set(products.map(p => p.tenDanhMuc).filter(Boolean)));
+        allCategories = categories;
+        const tabs = document.querySelector('.category-tabs');
+        tabs.innerHTML = `<button class="category-tab active" data-cat="">Tất cả</button>` +
+            categories.map(cat => `<button class="category-tab" data-cat="${cat}">${cat}</button>`).join('');
+        tabs.querySelectorAll('.category-tab').forEach(btn => {
+            btn.onclick = async function() {
+                tabs.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const cat = btn.getAttribute('data-cat');
+                if (!cat) {
+                    loadProducts();
+                } else {
+                    const res = await fetch('/api/employee/san-pham/danh-muc/' + encodeURIComponent(cat));
+                    const products = await res.json();
+                    renderProducts(products);
+                }
+            }
+        });
+    }
+
+    async function showProductDetail(productId) {
+        // Gọi API lấy chi tiết sản phẩm
+        const res = await fetch(`/api/employee/san-pham/${productId}`);
+        const p = await res.json();
+        document.getElementById('modalProductImg').src = p.anh || p.hinhAnh || 'https://via.placeholder.com/200';
+        document.getElementById('modalProductName').textContent = p.ten || p.tenSP || '';
+        document.getElementById('modalProductDesc').textContent = p.moTa || '';
+        document.getElementById('modalProductPrice').textContent = p.gia ? p.gia.toLocaleString() + 'đ' : '';
+        // Hiển thị phiên bản nếu có
+        let versionsHtml = '';
+        if (p.phienBanList && p.phienBanList.length) {
+            versionsHtml = '<label>Phiên bản:</label> <select id="modalVersionSelect" class="form-select mb-2">' +
+                p.phienBanList.map(v => `<option value="${v}">${v}</option>`).join('') + '</select>';
+        }
+        document.getElementById('modalProductVersions').innerHTML = versionsHtml;
+        // Hiển thị màu sắc nếu có
+        let colorsHtml = '';
+        if (p.mauSacList && p.mauSacList.length) {
+            colorsHtml = '<label>Màu sắc:</label> <select id="modalColorSelect" class="form-select mb-2">' +
+                p.mauSacList.map(c => `<option value="${c}">${c}</option>`).join('') + '</select>';
+        }
+        document.getElementById('modalProductColors').innerHTML = colorsHtml;
+        // Sự kiện thêm vào giỏ hàng
+        document.getElementById('addToCartBtn').onclick = function() {
+            addToCart(p);
+            var modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('productDetailModal'));
+            modal.hide();
+        };
+        var modal = new bootstrap.Modal(document.getElementById('productDetailModal'));
+        modal.show();
+    }
+    </script>
+</body>
+</html> 

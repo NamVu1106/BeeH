@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sản phẩm - Admin TechX</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block sidebar p-0 d-flex flex-column">
+      <div>
+        <div class="navbar-brand px-3 mb-4 position-relative">
+          Admin TechX
+        </div>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="sanpham.html"><i class="bi bi-box"></i> Sản phẩm</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="donhang.html"><i class="bi bi-card-list"></i> Đơn hàng</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="nguoidung.html"><i class="bi bi-people"></i> Người dùng</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="khohang.html"><i class="bi bi-archive"></i> Kho hàng</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="khuyenmai.html"><i class="bi bi-percent"></i> Khuyến mãi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="baocao.html"><i class="bi bi-bar-chart"></i> Báo cáo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="noidung.html"><i class="bi bi-file-earmark-text"></i> Nội dung</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="caidat.html"><i class="bi bi-gear"></i> Cài đặt</a>
+          </li>
+        </ul>
+      </div>
+      <div class="p-3 mt-auto">
+        <button class="btn btn-danger w-100 logout-btn">Đăng xuất</button>
+      </div>
+    </nav>
+    <main class="col-md-10 ms-sm-auto px-4">
+      <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3">
+        <h2 class="dashboard-header">Sản phẩm</h2>
+        <div class="d-flex align-items-center" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#adminProfileModal">
+          <span class="me-2 fw-semibold" style="color: #b0c4d4;">Admin</span>
+          <i class="bi bi-person-circle" style="font-size: 2rem; color: #1de9b6;"></i>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5>Quản lý sản phẩm</h5>
+          <button class="btn btn-info text-dark" data-bs-toggle="modal" data-bs-target="#editProductModal">+ Thêm sản phẩm</button>
+        </div>
+        <table class="table table-dark table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Ảnh</th>
+              <th>Tên sản phẩm</th>
+              <th>Giá</th>
+              <th>Số lượng</th>
+              <th>Danh mục</th>
+              <th>Trạng thái</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img src="surface.jpg" alt="Chuột Surface" style="width:40px; border-radius:8px"></td>
+              <td>Chuột Không Dây Microsoft Surface</td>
+              <td>890.000₫</td>
+              <td>30</td>
+              <td>Chuột</td>
+              <td><span class="badge bg-success">Còn hàng</span></td>
+              <td>
+                <button class="btn btn-warning btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteProductModal"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td><img src="g502.jpg" alt="Logitech G502" style="width:40px; border-radius:8px"></td>
+              <td>Chuột Gaming Logitech G502 HERO</td>
+              <td>1.290.000₫</td>
+              <td>50</td>
+              <td>Chuột</td>
+              <td><span class="badge bg-success">Còn hàng</span></td>
+              <td>
+                <button class="btn btn-warning btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteProductModal"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+            <!-- Thêm các sản phẩm khác nếu muốn -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Modal Quản lý tài khoản Admin -->
+<div class="modal fade" id="adminProfileModal" tabindex="-1" aria-labelledby="adminProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal-dark">
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-info" id="adminProfileModalLabel">Tài khoản Admin</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs mb-3" id="profileTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab">Thông tin</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" type="button" role="tab">Đổi mật khẩu</button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <!-- Tab Thông tin -->
+          <div class="tab-pane fade show active" id="info" role="tabpanel">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Họ tên</label>
+                <input type="text" class="form-control" value="Admin">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" value="admin@email.com">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Số điện thoại</label>
+                <input type="text" class="form-control" value="0123456789">
+              </div>
+              <button type="button" class="btn btn-info text-dark w-100">Cập nhật thông tin</button>
+            </form>
+          </div>
+          <!-- Tab Đổi mật khẩu -->
+          <div class="tab-pane fade" id="password" role="tabpanel">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Mật khẩu cũ</label>
+                <input type="password" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Mật khẩu mới</label>
+                <input type="password" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Xác nhận mật khẩu mới</label>
+                <input type="password" class="form-control">
+              </div>
+              <button type="button" class="btn btn-info text-dark w-100">Đổi mật khẩu</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Sửa Sản Phẩm -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal-dark">
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-info" id="editProductModalLabel">Sửa sản phẩm</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Tên sản phẩm</label>
+            <input type="text" class="form-control" value="Chuột Không Dây Microsoft Surface">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Giá</label>
+            <input type="number" class="form-control" value="890000">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Hình ảnh (URL)</label>
+            <input type="text" class="form-control" value="surface.jpg">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea class="form-control" rows="2">Chuột không dây cao cấp cho Surface và các máy tính Windows</textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Số lượng</label>
+            <input type="number" class="form-control" value="30">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Danh mục</label>
+            <select class="form-select">
+              <option>-- Chọn danh mục --</option>
+              <option selected>Chuột</option>
+              <option>Bàn phím</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Trạng thái</label>
+            <select class="form-select">
+              <option selected>Còn hàng</option>
+              <option>Hết hàng</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-info text-dark">Cập nhật</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Xóa Sản Phẩm -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal-dark">
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-danger" id="deleteProductModalLabel">Xóa sản phẩm</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

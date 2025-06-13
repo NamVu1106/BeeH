@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="vi" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Tin tức - Bee Arena</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <style>
+        body {
+            background: #fff;
+            color: #111;
+            font-family: 'Inter', sans-serif;
+        }
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(44,44,255,0.06);
+        }
+        .navbar .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #2d2dff !important;
+            font-size: 1.5rem;
+        }
+        .navbar .nav-link {
+            color: #2d2dff !important;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar .nav-link.active, .navbar .nav-link:hover {
+            background: #e0e7ff;
+            color: #fff !important;
+        }
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active,
+        .navbar .dropdown-item:hover,
+        .navbar .btn:hover,
+        .navbar .btn:focus {
+          color: #111 !important;
+          background: none !important;
+          box-shadow: none !important;
+        }
+        .navbar .dropdown-menu {
+          background: #fff !important;
+        }
+        .navbar .dropdown-item {
+          color: #111 !important;
+        }
+        .card {
+            background: #fff;
+            color: #111;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px #0001;
+            border-radius: 14px;
+        }
+        .card-title {
+            color: #111;
+            font-weight: 600;
+        }
+        .card-text {
+            color: #222;
+        }
+        .btn-outline-primary {
+            color: #111;
+            border-color: #2d2dff;
+        }
+        .btn-outline-primary:hover {
+            background: #2d2dff;
+            color: #fff;
+            border-color: #2d2dff;
+        }
+        .footer {
+            background: #f5f5f5;
+            color: #111;
+            border-top: 1px solid #e0e0e0;
+            padding: 3rem 0 2rem;
+        }
+        .footer h5 {
+            color: #2d2dff;
+            font-weight: 600;
+        }
+        .footer-link {
+            color: #2d2dff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: #00bfff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar chuyên nghiệp, icon và chữ màu đen, không hiệu ứng hover -->
+    <nav class="navbar navbar-expand-lg py-3 shadow-sm">
+      <div class="container-fluid d-flex align-items-center justify-content-between" style="min-height:64px;">
+        <!-- Logo và menu bên trái -->
+        <div class="d-flex align-items-center flex-shrink-0" style="height:64px;">
+          <a class="navbar-brand d-flex align-items-center me-3" href="/" style="color:#111 !important;">
+            <i class="fas fa-circle me-2" style="font-size:1.7rem;color:#111;"></i>
+            <span class="fw-bold fs-4" style="letter-spacing:1px;color:#111;">ARENA</span>
+          </a>
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+              <!-- <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li> -->
+              <li class="nav-item"><a class="nav-link" href="/san-pham" style="color:#111 !important;">Sản phẩm</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="danhMucDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#111 !important;">Danh mục</a>
+                <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
+                  <li><a class="dropdown-item" href="/chuot" style="color:#111 !important;">Chuột</a></li>
+                  <li><a class="dropdown-item" href="/ban-phim" style="color:#111 !important;">Bàn phím</a></li>
+                  <li><a class="dropdown-item" href="/tai-nghe" style="color:#111 !important;">Tai nghe</a></li>
+                  <li><a class="dropdown-item" href="/mo-hinh" style="color:#111 !important;">Mô hình</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Search bar giữa, thẳng hàng, hai icon sát search bar -->
+        <div class="d-flex align-items-center flex-grow-1 justify-content-center" style="min-width:0;">
+          <form class="d-flex flex-grow-1 align-items-center" style="max-width:400px;min-width:220px;">
+            <div class="input-group w-100">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="fas fa-search" style="color:#111;font-size:1.1rem;"></i>
+              </span>
+              <input class="form-control border-start-0" type="search" placeholder="Tìm kiếm sản phẩm..." style="background:#fff;color:#111;" />
+            </div>
+          </form>
+          <span class="d-flex align-items-center gap-3 me-5 ms-5">
+            <i class="fas fa-phone" style="color:#111;font-size:1.25rem;cursor:pointer;" title="Hotline: 0349.296.461"></i>
+            <i class="fas fa-bolt" style="color:#111;font-size:1.25rem;cursor:pointer;" title="Tư vấn trực tiếp"></i>
+          </span>
+        </div>
+        <!-- Nhóm icon còn lại bên phải, cách xa hơn nữa về trái -->
+        <div class="d-none d-lg-flex align-items-center gap-3 flex-shrink-0" style="height:64px;z-index:3;">
+          <a href="/cart" class="btn btn-outline-primary position-relative p-0 d-flex align-items-center justify-content-center" style="width:36px;height:36px;border-radius:50%;border-color:#111 !important;">
+            <i class="fas fa-shopping-cart" style="font-size:1.2rem;color:#111;"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" th:text="${cart != null ? cart.items.size() : 0}" style="font-size:0.7rem;">0</span>
+          </a>
+          <div class="dropdown">
+            <button id="profileBtn" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width:36px;height:36px;color:#111;border-color:#111 !important;">
+              <i class="far fa-user" style="font-size:1.15rem;color:#111;"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
+              <!-- Nội dung sẽ được JS render tùy trạng thái đăng nhập -->
+            </ul>
+          </div>
+        </div>
+        <!-- Toggle button for mobile (luôn nằm trên cùng) -->
+        <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation" style="color:#111;border-color:#111 !important;">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- Kết thúc Navbar chuyên nghiệp, icon và chữ màu đen, không hiệu ứng hover -->
+    <section class="container py-5">
+        <h1 class="text-center mb-4" style="color: var(--neon-blue); font-family: 'Orbitron', sans-serif;">Tin tức</h1>
+        <div class="row g-4">
+            <!-- Bài viết 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Chuột Gaming Rapoo VT9 Pro">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Đánh giá Chuột Gaming Rapoo VT9 Pro: Giá rẻ nhưng chất lượng?</h5>
+                        <p class="card-text flex-grow-1">Rapoo VT9 Pro là mẫu chuột gaming tầm trung nổi bật với cảm biến chính xác, thiết kế nhẹ và giá thành hợp lý. Liệu sản phẩm này có thực sự "ngon-bổ-rẻ" như lời đồn?</p>
+                        <a href="#" class="btn btn-outline-primary mt-2">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Bài viết 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Bàn phím cơ Akko 3087 V2">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Review Bàn phím cơ Akko 3087 V2: Trải nghiệm gõ phím tuyệt vời</h5>
+                        <p class="card-text flex-grow-1">Akko 3087 V2 là lựa chọn hàng đầu cho dân văn phòng và game thủ với cảm giác gõ êm, layout chuẩn và thiết kế đẹp mắt. Cùng khám phá chi tiết sản phẩm này!</p>
+                        <a href="#" class="btn btn-outline-primary mt-2">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Bài viết 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Tai nghe Sony WH-1000XM4">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Sony WH-1000XM4: Tai nghe chống ồn tốt nhất phân khúc?</h5>
+                        <p class="card-text flex-grow-1">Sony WH-1000XM4 nổi bật với khả năng chống ồn chủ động, chất âm tuyệt vời và thời lượng pin ấn tượng. Đây có phải là lựa chọn số 1 cho dân công nghệ?</p>
+                        <a href="#" class="btn btn-outline-primary mt-2">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Bài viết 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Mô hình Gundam RX-78-2">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Khám phá mô hình Gundam RX-78-2: Đỉnh cao của nghệ thuật lắp ráp</h5>
+                        <p class="card-text flex-grow-1">Gundam RX-78-2 là mẫu mô hình huyền thoại với thiết kế chi tiết, chất liệu cao cấp và khả năng tạo dáng đa dạng. Phù hợp cho cả người mới lẫn dân sưu tầm lâu năm.</p>
+                        <a href="#" class="btn btn-outline-primary mt-2">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Bài viết 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Bàn phím cơ Leopold FC750R">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Leopold FC750R: Bàn phím cơ cao cấp cho dân văn phòng</h5>
+                        <p class="card-text flex-grow-1">Leopold FC750R nổi bật với build chắc chắn, switch chất lượng và trải nghiệm gõ cực kỳ thoải mái. Sản phẩm này có xứng đáng với mức giá cao?</p>
+                        <a href="#" class="btn btn-outline-primary mt-2">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Bài viết 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Chuột Gaming Logitech G502">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Logitech G502 Hero: Chuột gaming quốc dân có gì hot?</h5>
+                        <p class="card-text flex-grow-1">Logitech G502 Hero là mẫu chuột gaming được ưa chuộng nhất với cảm biến HERO, nhiều nút bấm lập trình và thiết kế công thái học. Cùng xem chi tiết đánh giá!</p>
+                        <a href="#" class="btn btn-outline-primary mt-2">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="fw-bold"><i class="fas fa-bee me-2"></i>Bee Arena</h5>
+                    <p>Chuyên cung cấp phụ kiện công nghệ chất lượng cao với giá cả phải chăng.</p>
+                    <div class="mt-3">
+                        <a href="#" class="me-3" style="color: var(--neon-blue);"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="me-3" style="color: var(--neon-blue);"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="me-3" style="color: var(--neon-blue);"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" style="color: var(--neon-blue);"><i class="fab fa-youtube fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="fw-bold">Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="footer-link"><i class="fas fa-chevron-right me-2"></i>Trang chủ</a></li>
+                        <li><a href="/san-pham" class="footer-link"><i class="fas fa-chevron-right me-2"></i>Sản phẩm</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right me-2"></i>Khuyến mãi</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right me-2"></i>Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Liên hệ</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i>0123.456.789</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i>contact@beearena.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Đường ABC, Quận XYZ, TP.HCM</li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center" style="color: var(--text-secondary);">
+                &copy; 2024 Bee Arena. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dark mode toggle
+        const toggleBtn = document.getElementById('toggle-darkmode');
+        const icon = toggleBtn.querySelector('i');
+        function setMode(dark) {
+            if(dark) {
+                document.body.classList.remove('light-mode');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                document.body.classList.add('light-mode');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+        // Lưu trạng thái vào localStorage
+        function saveMode(dark) {
+            localStorage.setItem('darkmode', dark ? '1' : '0');
+        }
+        // Đọc trạng thái khi load
+        function loadMode() {
+            const dark = localStorage.getItem('darkmode') !== '0';
+            setMode(dark);
+        }
+        toggleBtn.onclick = function() {
+            const isDark = !document.body.classList.contains('light-mode');
+            setMode(!isDark);
+            saveMode(isDark);
+        };
+        loadMode();
+    </script>
+</body>
+</html> 

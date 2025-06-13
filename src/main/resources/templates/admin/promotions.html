@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý khuyến mãi - Bee Arena Admin</title>
+</head>
+<body>
+    <!-- Content -->
+    <div th:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Quản lý khuyến mãi</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPromotionModal">
+                <i class="fas fa-plus"></i> Thêm khuyến mãi
+            </button>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form th:action="@{/admin/promotions}" method="get" class="row g-3">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="search" 
+                               th:value="${param.search}" placeholder="Tìm kiếm...">
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" name="type">
+                            <option value="">Tất cả loại</option>
+                            <option value="PERCENTAGE" th:selected="${param.type != null and param.type[0] == 'PERCENTAGE'}">
+                                Giảm theo phần trăm
+                            </option>
+                            <option value="FIXED" th:selected="${param.type != null and param.type[0] == 'FIXED'}">
+                                Giảm theo số tiền
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" name="status">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="active" th:selected="${param.status != null and param.status[0] == 'active'}">
+                                Đang diễn ra
+                            </option>
+                            <option value="upcoming" th:selected="${param.status != null and param.status[0] == 'upcoming'}">
+                                Sắp diễn ra
+                            </option>
+                            <option value="ended" th:selected="${param.status != null and param.status[0] == 'ended'}">
+                                Đã kết thúc
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="date" class="form-control" name="startDate" 
+                                   th:value="${param.startDate}">
+                            <span class="input-group-text">đến</span>
+                            <input type="date" class="form-control" name="endDate" 
+                                   th:value="${param.endDate}">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Promotions Table -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên khuyến mãi</th>
+                                <th>Loại</th>
+                                <th>Giá trị</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="promotion : ${promotions}">
+                                <td th:text="${promotion.id}">1</td>
+                                <td th:text="${promotion.name}">Khuyến mãi tháng 3</td>
+                                <td>
+                                    <span th:class="${'badge bg-' + (promotion.type == 'PERCENTAGE' ? 'info' : 'warning')}"
+                                          th:text="${promotion.type == 'PERCENTAGE' ? 'Giảm theo %' : 'Giảm theo tiền'}">
+                                        Giảm theo %
+                                    </span>
+                                </td>
+                                <td th:text="${promotion.type == 'PERCENTAGE' ? promotion.value + '%' : #numbers.formatCurrency(promotion.value)}">
+                                    20%
+                                </td>
+                                <td>
+                                    <div th:text="${#temporals.format(promotion.startDate, 'dd/MM/yyyy')}">01/03/2024</div>
+                                    <div th:text="${#temporals.format(promotion.endDate, 'dd/MM/yyyy')}">31/03/2024</div>
+                                </td>
+                                <td>
+                                    <span th:class="${'badge bg-' + promotion.statusColor}"
+                                          th:text="${promotion.statusText}">Đang diễn ra</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-info" 
+                                                th:onclick="'editPromotion(' + ${promotion.id} + ')'">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" 
+                                                th:onclick="'deletePromotion(' + ${promotion.id} + ')'">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav th:if="${totalPages > 1}" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/promotions(page=${currentPage - 1}, size=${pageSize}, search=${param.search}, type=${param.type}, status=${param.status}, startDate=${param.startDate}, endDate=${param.endDate})}">
+                                Trước
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                            th:classappend="${currentPage == i} ? 'active'">
+                            <a class="page-link" th:href="@{/admin/promotions(page=${i}, size=${pageSize}, search=${param.search}, type=${param.type}, status=${param.status}, startDate=${param.startDate}, endDate=${param.endDate})}"
+                               th:text="${i + 1}">1</a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/promotions(page=${currentPage + 1}, size=${pageSize}, search=${param.search}, type=${param.type}, status=${param.status}, startDate=${param.startDate}, endDate=${param.endDate})}">
+                                Sau
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Add Promotion Modal -->
+        <div class="modal fade" id="addPromotionModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm khuyến mãi mới</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form th:action="@{/admin/promotions}" method="post">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Tên khuyến mãi</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Loại khuyến mãi</label>
+                                <select class="form-select" name="type" required>
+                                    <option value="PERCENTAGE">Giảm theo phần trăm</option>
+                                    <option value="FIXED">Giảm theo số tiền</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Giá trị</label>
+                                <input type="number" class="form-control" name="value" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Thời gian bắt đầu</label>
+                                <input type="datetime-local" class="form-control" name="startDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Thời gian kết thúc</label>
+                                <input type="datetime-local" class="form-control" name="endDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mô tả</label>
+                                <textarea class="form-control" name="description" rows="3"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Điều kiện áp dụng</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Đơn hàng từ</span>
+                                    <input type="number" class="form-control" name="minOrderValue">
+                                    <span class="input-group-text">đ</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Promotion Modal -->
+        <div class="modal fade" id="editPromotionModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh sửa khuyến mãi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form th:action="@{/admin/promotions/{id}(id=${promotion.id})}" method="post" id="editPromotionForm">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Tên khuyến mãi</label>
+                                <input type="text" class="form-control" name="name" id="editName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Loại khuyến mãi</label>
+                                <select class="form-select" name="type" id="editType" required>
+                                    <option value="PERCENTAGE">Giảm theo phần trăm</option>
+                                    <option value="FIXED">Giảm theo số tiền</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Giá trị</label>
+                                <input type="number" class="form-control" name="value" id="editValue" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Thời gian bắt đầu</label>
+                                <input type="datetime-local" class="form-control" name="startDate" id="editStartDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Thời gian kết thúc</label>
+                                <input type="datetime-local" class="form-control" name="endDate" id="editEndDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mô tả</label>
+                                <textarea class="form-control" name="description" id="editDescription" rows="3"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Điều kiện áp dụng</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Đơn hàng từ</span>
+                                    <input type="number" class="form-control" name="minOrderValue" id="editMinOrderValue">
+                                    <span class="input-group-text">đ</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <th:block th:fragment="scripts">
+        <script th:inline="javascript">
+            function editPromotion(promotionId) {
+                fetch(`/admin/promotions/${promotionId}`)
+                    .then(response => response.json())
+                    .then(promotion => {
+                        document.getElementById('editName').value = promotion.name;
+                        document.getElementById('editType').value = promotion.type;
+                        document.getElementById('editValue').value = promotion.value;
+                        document.getElementById('editStartDate').value = promotion.startDate;
+                        document.getElementById('editEndDate').value = promotion.endDate;
+                        document.getElementById('editDescription').value = promotion.description;
+                        document.getElementById('editMinOrderValue').value = promotion.minOrderValue;
+                        document.getElementById('editPromotionForm').action = `/admin/promotions/${promotionId}`;
+                        new bootstrap.Modal(document.getElementById('editPromotionModal')).show();
+                    });
+            }
+
+            function deletePromotion(promotionId) {
+                if (confirm('Bạn có chắc chắn muốn xóa khuyến mãi này?')) {
+                    fetch(`/admin/promotions/${promotionId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            window.location.reload();
+                        } else {
+                            alert('Có lỗi xảy ra khi xóa khuyến mãi.');
+                        }
+                    });
+                }
+            }
+        </script>
+    </th:block>
+</body>
+</html> 

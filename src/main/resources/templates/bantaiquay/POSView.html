@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bee Arena - POS System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #5c6ac4;
+            --accent-color: #50b83c;
+            --text-color: #212b36;
+            --text-light: #637381;
+            --light-bg: #f4f6f8;
+            --white: #ffffff;
+            --border-color: #dfe3e8;
+            --success-color: #50b83c;
+            --warning-color: #ffb82e;
+            --danger-color: #de3618;
+        }
+        body {
+            background: var(--light-bg);
+            color: var(--text-color);
+            font-family: 'Montserrat', 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        .pos-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+            padding: 20px;
+            height: calc(100vh - 60px);
+        }
+        .product-grid {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .cart-panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        .category-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--light-bg);
+            color: var(--text-color);
+            border: none;
+            white-space: nowrap;
+        }
+        .category-tab.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        .product-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .product-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(74,144,226,0.1);
+        }
+        .product-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-summary {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Bee Arena POS</a>
+            <div class="d-flex align-items-center">
+                <span class="me-3">Nhân viên: <strong id="ten-nhan-vien">Chưa đăng nhập</strong></span>
+                <button class="btn btn-outline-danger">Đăng xuất</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pos-container">
+        <div class="product-grid">
+            <form class="search-bar d-flex gap-2" th:action="@{/pos}" method="get">
+                <input type="text" id="searchInput" name="keyword" placeholder="Tìm kiếm sản phẩm..." class="form-control" th:value="${param.keyword}">
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </form>
+            <div class="category-tabs mb-3">
+                <a class="category-tab" th:classappend="${#strings.isEmpty(param.danhMuc)} ? 'active' : ''" th:href="@{/pos}">Tất cả</a>
+                <a class="category-tab" th:each="dm : ${danhMucList}" th:classappend="${param.danhMuc == dm.maDM} ? 'active' : ''" th:href="@{/pos(danhMuc=${dm.maDM})}" th:text="${dm.tenDM}"></a>
+            </div>
+            <div class="product-list-table mb-4" style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Giá bán</th>
+                            <th>Số lượng</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <tr th:each="sp : ${sanPhamList}">
+                            <td><img th:src="${sp.hinhAnh != null ? sp.hinhAnh : 'https://via.placeholder.com/60'}" th:alt="${sp.tenSP}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;"></td>
+                            <td th:text="${sp.tenSP}"></td>
+                            <td th:text="${sp.danhMuc != null ? sp.danhMuc.tenDM : ''}"></td>
+                            <td class="text-danger fw-bold" th:text="${#numbers.formatDecimal(sp.gia, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                            <td th:text="${sp.soLuong}"></td>
+                            <td>
+                                <form th:action="@{/pos/add}" method="post" style="display:inline">
+                                    <input type="hidden" name="productId" th:value="${sp.maSP}" />
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <button class="btn btn-sm btn-success" title="Chọn sản phẩm" type="submit">Chọn</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="cart-panel">
+            <h4 class="mb-4">Đơn hàng hiện tại</h4>
+            <div class="cart-items">
+                <div th:if="${cart.items.size() == 0}" class="text-center text-secondary">Chưa có sản phẩm nào trong giỏ hàng.</div>
+                <div th:each="item : ${cart.items}" class="cart-item d-flex align-items-center mb-2">
+                    <img th:src="${item.image != null ? item.image : 'https://via.placeholder.com/60'}" th:alt="${item.productName}" style="width:48px;height:48px;object-fit:cover;border-radius:8px;margin-right:10px;">
+                    <div class="flex-grow-1">
+                        <div><b th:text="${item.productName}"></b></div>
+                        <div th:text="'Danh mục: ' + ${item.category}"></div>
+                        <div>Giá: <span class="text-danger" th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span></div>
+                    </div>
+                    <form th:action="@{/pos/update}" method="post" class="d-flex flex-column align-items-end ms-2">
+                        <input type="hidden" name="productId" th:value="${item.productId}" />
+                        <input type="number" min="1" name="quantity" th:value="${item.quantity}" style="width:50px;" />
+                        <button class="btn btn-sm btn-outline-primary mt-1" type="submit">Cập nhật</button>
+                    </form>
+                    <form th:action="@{/pos/remove}" method="post" style="margin-left:8px;">
+                        <input type="hidden" name="productId" th:value="${item.productId}" />
+                        <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fas fa-trash"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="cart-summary mt-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Tổng cộng:</span>
+                    <span class="text-danger fw-bold" th:text="${#numbers.formatDecimal(cart.total, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
+                </div>
+                <form th:action="@{/pos/checkout}" method="post">
+                    <button class="btn btn-primary w-100 mb-2" type="submit" th:disabled="${cart.items.size() == 0}">Thanh toán</button>
+                </form>
+                <form th:action="@{/pos/clear}" method="post">
+                    <button class="btn btn-outline-secondary w-100" type="submit" th:disabled="${cart.items.size() == 0}">Hủy đơn</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal chi tiết sản phẩm -->
+    <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productDetailModalLabel">Chi tiết sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img id="modalProductImg" src="" class="img-fluid rounded" alt="Ảnh sản phẩm">
+                        </div>
+                        <div class="col-md-7">
+                            <h4 id="modalProductName"></h4>
+                            <div id="modalProductDesc" class="mb-2 text-secondary"></div>
+                            <div class="mb-2"><b>Giá:</b> <span id="modalProductPrice" class="text-danger fw-bold"></span></div>
+                            <div class="mb-2" id="modalProductVersions"></div>
+                            <div class="mb-2" id="modalProductColors"></div>
+                            <button id="addToCartBtn" class="btn btn-success mt-2">Thêm vào giỏ hàng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

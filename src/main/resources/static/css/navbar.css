@@ -1,0 +1,40 @@
+/* navbar.css - Navbar chuẩn nền trắng cho toàn bộ website */
+:root {
+  --neon-blue: #969292;
+  --neon-pink: #ffffff;
+  --neon-green: #ffffff;
+  --text-secondary: #8fa0d8;
+}
+.navbar {
+  background: #fff !important;
+  box-shadow: 0 2px 12px rgb(255, 255, 255);
+  border-bottom: 1.5px solid #e0e7ff;
+}
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .btn {
+  color: var(--neon-blue) !important;
+  font-weight: 600;
+}
+.navbar .nav-link.active,
+.navbar .nav-link:hover,
+.navbar .btn:hover {
+  color: var(--neon-pink) !important;
+  background: #e0e7ff;
+}
+.navbar .dropdown-menu {
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgb(255, 255, 255);
+}
+.navbar .dropdown-item {
+  color: #ffffff;
+  font-weight: 500;
+}
+.navbar .dropdown-item:hover {
+  background: #e0e7ff;
+  color: var(--neon-blue);
+}
+.navbar .btn-outline-primary {
+  border-radius: 8px;
+  font-weight: 600;
+} 

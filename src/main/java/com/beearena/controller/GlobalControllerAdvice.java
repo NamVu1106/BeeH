@@ -1,6 +1,6 @@
 package com.beearena.controller;
 
-import com.beearena.entity.Cart;
+import com.beearena.model.Cart;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;

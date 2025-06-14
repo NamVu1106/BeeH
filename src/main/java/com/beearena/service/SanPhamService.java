@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -21,16 +22,21 @@ public class SanPhamService {
     }
 
     public Optional<SanPham> laySanPhamTheoId(Long id) {
-        return sanPhamRepository.findById(id != null ? id.intValue() : null);
+        if (id == null) {
+            return Optional.empty();
+        }
+        try {
+            return sanPhamRepository.findById(id.intValue());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
-    public List<SanPham> timSanPhamTheoTen(String ten) {
-        return sanPhamRepository.findByTenSPContaining(ten);
+    public List<SanPham> timSanPhamTheoTen(String keyword) {
+        return sanPhamRepository.findByTenSPContainingIgnoreCase(keyword);
     }
 
-    public List<SanPham> laySanPhamTheoDanhMuc(Long maDM) {
-        return sanPhamRepository.findByDanhMuc_MaDM(maDM);
-    }
+    
 
     public List<SanPham> laySanPhamDangHoatDong() {
         return sanPhamRepository.findByTrangThai(true);
@@ -41,7 +47,13 @@ public class SanPhamService {
     }
 
     public void xoaSanPham(Long id) {
-        sanPhamRepository.deleteById(id != null ? id.intValue() : null);
+        if (id != null) {
+            try {
+                sanPhamRepository.deleteById(id.intValue());
+            } catch (Exception e) {
+                // Log error or handle exception
+            }
+        }
     }
 
     public Page<SanPham> timKiemNangCao(String keyword, Integer maDM, BigDecimal giaTu, BigDecimal giaDen, Integer danhGiaTu, String nhan, Pageable pageable) {
@@ -60,5 +72,80 @@ public class SanPhamService {
         }
         // Bổ sung các điều kiện khác nếu có (danhGiaTu, nhan...)
         return sanPhamRepository.findAll(spec, pageable);
+    }
+
+    public int countSanPhamSapHet() {
+        // TODO: implement logic
+        return 0;
+    }
+
+    public List<Map<String, Object>> getSanPhamBanChay() {
+        // TODO: implement logic
+        return List.of();
+    }
+
+    public List<SanPham> getAllSanPham() {
+        return sanPhamRepository.findAll();
+    }
+
+    public Map<String, Object> getChiTietSanPham(Long id) {
+        // TODO: implement logic
+        return Map.of();
+    }
+
+    public void nhapHang(Long id, int soLuong) {
+        // TODO: implement logic
+    }
+
+    public List<SanPham> timSanPhamKhongDau(String keyword) {
+        return sanPhamRepository.searchIgnoreAccent(keyword);
+    }
+
+    public List<SanPham> timSanPhamCoDau(String keyword) {
+        return sanPhamRepository.searchWithAccent(keyword);
+    }
+
+    public org.springframework.data.domain.Page<SanPham> locSanPham(int page, int pageSize, String keyword, Long danhMucId, Boolean trangThai, Long giaTu, Long giaDen) {
+        org.springframework.data.jpa.domain.Specification<SanPham> spec = (root, query, cb) -> {
+            java.util.List<jakarta.persistence.criteria.Predicate> predicates = new java.util.ArrayList<>();
+            if (keyword != null && !keyword.isEmpty()) {
+                predicates.add(cb.like(cb.lower(root.get("tenSP")), "%" + keyword.toLowerCase() + "%"));
+            }
+            if (danhMucId != null) {
+                predicates.add(cb.equal(root.get("danhMuc").get("maDM"), danhMucId));
+            }
+            if (trangThai != null) {
+                predicates.add(cb.equal(root.get("trangThai"), trangThai));
+            }
+            if (giaTu != null) {
+                predicates.add(cb.ge(root.get("gia"), new java.math.BigDecimal(giaTu)));
+            }
+            if (giaDen != null) {
+                predicates.add(cb.le(root.get("gia"), new java.math.BigDecimal(giaDen)));
+            }
+            return cb.and(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
+        };
+        return sanPhamRepository.findAll(spec, org.springframework.data.domain.PageRequest.of(page, pageSize));
+    }
+
+    public long demTatCaSanPham() {
+        return sanPhamRepository.count();
+    }
+
+    public long demSanPhamHienThi() {
+        return sanPhamRepository.count((root, query, cb) -> cb.equal(root.get("trangThai"), true));
+    }
+
+    public long demSanPhamAn() {
+        return sanPhamRepository.count((root, query, cb) -> cb.equal(root.get("trangThai"), false));
+    }
+
+    public long tongSoLuongTonKho() {
+        return sanPhamRepository.sumSoLuongTonKho();
+    }
+
+    public java.math.BigDecimal tongGiaTriTonKho() {
+        java.math.BigDecimal result = sanPhamRepository.sumGiaTriTonKho();
+        return result != null ? result : java.math.BigDecimal.ZERO;
     }
 } 

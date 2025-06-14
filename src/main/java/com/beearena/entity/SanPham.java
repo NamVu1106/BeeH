@@ -3,6 +3,8 @@ package com.beearena.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "SanPham")
@@ -42,8 +44,13 @@ public class SanPham {
     private String mauSac;
 
     @ManyToOne
-    @JoinColumn(name = "MaDM", insertable = false, updatable = false)
+    @JoinColumn(name = "MaDM")
     private DanhMuc danhMuc;
+
+    @Transient
+    private List<String> phienBanList;
+    @Transient
+    private List<String> mauSacList;
 
     // Getters and setters
     public Integer getMaSP() { return maSP; }

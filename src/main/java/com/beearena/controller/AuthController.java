@@ -40,11 +40,13 @@ public class AuthController {
         if (userOpt.isPresent() && userOpt.get().getMatKhau().equals(password)) {
             NguoiDung user = userOpt.get();
             boolean isAdmin = user.getVaiTro() == VaiTro.QUAN_TRI;
+            boolean isNhanVien = user.getVaiTro().toString().equalsIgnoreCase("NHAN_VIEN");
             return Map.of(
                 "success", true,
-                "message", isAdmin ? "Đăng nhập admin thành công!" : "Đăng nhập thành công!",
+                "message", isAdmin ? "Đăng nhập admin thành công!" : (isNhanVien ? "Đăng nhập nhân viên thành công!" : "Đăng nhập thành công!"),
                 "user", user,
-                "isAdmin", isAdmin
+                "isAdmin", isAdmin,
+                "isNhanVien", isNhanVien
             );
         }
         return Map.of("success", false, "message", "Sai email hoặc mật khẩu!");

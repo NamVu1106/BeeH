@@ -40,10 +40,7 @@ public class SanPhamController {
         return sanPhamService.timSanPhamTheoTen(ten);
     }
 
-    @GetMapping("/danh-muc/{maDM}")
-    public List<SanPham> laySanPhamTheoDanhMuc(@PathVariable Long maDM) {
-        return sanPhamService.laySanPhamTheoDanhMuc(maDM);
-    }
+  
 
     @GetMapping("/dang-hoat-dong")
     public List<SanPham> laySanPhamDangHoatDong() {
@@ -109,30 +106,13 @@ public class SanPhamController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "25") int size
     ) {
-        return sanPhamService.layTatCaSanPham(PageRequest.of(page, size)).map(sanPhamMapper::chuyenDoiSangDTO);
+        return sanPhamService.layTatCaSanPham(PageRequest.of(page, size)).map(sanPhamMapper::toDTO);
     }
 
     @GetMapping("/dto/{id}")
     public ResponseEntity<SanPhamDTO> laySanPhamDTOTheoId(@PathVariable Long id) {
         return sanPhamService.laySanPhamTheoId(id)
-                .map(sanPham -> ResponseEntity.ok(sanPhamMapper.chuyenDoiSangDTO(sanPham)))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping("/dto")
-    public SanPhamDTO themSanPhamDTO(@RequestBody SanPhamDTO sanPhamDTO) {
-        SanPham entity = sanPhamMapper.chuyenDoiSangEntity(sanPhamDTO);
-        return sanPhamMapper.chuyenDoiSangDTO(sanPhamService.luuSanPham(entity));
-    }
-
-    @PutMapping("/dto/{id}")
-    public ResponseEntity<SanPhamDTO> capNhatSanPhamDTO(@PathVariable Long id, @RequestBody SanPhamDTO sanPhamDTO) {
-        return sanPhamService.laySanPhamTheoId(id)
-                .map(existingSanPham -> {
-                    sanPhamDTO.setId(id);
-                    SanPham entity = sanPhamMapper.chuyenDoiSangEntity(sanPhamDTO);
-                    return ResponseEntity.ok(sanPhamMapper.chuyenDoiSangDTO(sanPhamService.luuSanPham(entity)));
-                })
+                .map(sanPham -> ResponseEntity.ok(sanPhamMapper.toDTO(sanPham)))
                 .orElse(ResponseEntity.notFound().build());
     }
 } 

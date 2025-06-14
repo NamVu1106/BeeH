@@ -27,9 +27,39 @@
             min-height: 100vh;
         }
         .navbar {
-            background: var(--white) !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border-bottom: 1px solid var(--border-color);
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(44,44,255,0.06);
+        }
+        .navbar .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #2d2dff !important;
+            font-size: 1.5rem;
+        }
+        .navbar .nav-link {
+            color: #2d2dff !important;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar .nav-link.active, .navbar .nav-link:hover {
+            background: #e0e7ff;
+            color: #fff !important;
+        }
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active,
+        .navbar .dropdown-item:hover,
+        .navbar .btn:hover,
+        .navbar .btn:focus {
+          color: #111 !important;
+          background: none !important;
+          box-shadow: none !important;
+        }
+        .navbar .dropdown-menu {
+          background: #fff !important;
+        }
+        .navbar .dropdown-item {
+          color: #111 !important;
         }
         .logo {
             font-weight: 700;
@@ -212,73 +242,68 @@
         </div>
     </div>
 
-    <!-- Navbar mới -->
-    <nav class="navbar py-3">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-            <!-- Logo -->
-            <div class="d-flex align-items-center me-3">
-                <a href="/" style="text-align:center;display:block;text-decoration:none;">
-                    <div style="font-size:2.2rem;line-height:1;">
-                        <i class="fas fa-biohazard fa-spin" style="color:var(--neon-blue);"></i>
-                    </div>
-                    <div style="font-weight:700;font-size:1.2rem;color:var(--neon-blue);letter-spacing:1px;">BEE-ARENA</div>
-                </a>
-            </div>
-            <!-- Danh mục -->
-            <div class="dropdown me-2">
-                <button class="btn d-flex align-items-center px-3 py-2 dropdown-toggle" type="button" id="danhMucDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-list me-2"></i> DANH MỤC
-                </button>
+    <!-- Navbar chuyên nghiệp, icon và chữ màu đen, không hiệu ứng hover -->
+    <nav class="navbar navbar-expand-lg py-3 shadow-sm">
+      <div class="container-fluid d-flex align-items-center justify-content-between" style="min-height:64px;">
+        <!-- Logo và menu bên trái -->
+        <div class="d-flex align-items-center flex-shrink-0" style="height:64px;">
+          <a class="navbar-brand d-flex align-items-center me-3" href="/" style="color:#111 !important;">
+            <i class="fas fa-circle me-2" style="font-size:1.7rem;color:#111;"></i>
+            <span class="fw-bold fs-4" style="letter-spacing:1px;color:#111;">ARENA</span>
+          </a>
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+              <!-- <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li> -->
+              <li class="nav-item"><a class="nav-link" href="/san-pham" style="color:#111 !important;">Sản phẩm</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="danhMucDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#111 !important;">Danh mục</a>
                 <ul class="dropdown-menu" aria-labelledby="danhMucDropdown">
-                    <li><a class="dropdown-item" href="/chuot">Chuột</a></li>
-                    <li><a class="dropdown-item" href="/ban-phim">Bàn phím</a></li>
-                    <li><a class="dropdown-item" href="/tai-nghe">Tai nghe</a></li>
-                    <li><a class="dropdown-item" href="/mo-hinh">Mô hình</a></li>
+                  <li><a class="dropdown-item" href="/chuot" style="color:#111 !important;">Chuột</a></li>
+                  <li><a class="dropdown-item" href="/ban-phim" style="color:#111 !important;">Bàn phím</a></li>
+                  <li><a class="dropdown-item" href="/tai-nghe" style="color:#111 !important;">Tai nghe</a></li>
+                  <li><a class="dropdown-item" href="/mo-hinh" style="color:#111 !important;">Mô hình</a></li>
                 </ul>
-            </div>
-            <!-- Sản phẩm -->
-            <a href="/san-pham" class="btn d-flex align-items-center px-3 py-2 me-2" style="font-weight:600;">
-                <i class="fas fa-box-open me-2"></i> SẢN PHẨM
-            </a>
-            <!-- Tìm kiếm -->
-            <form class="d-flex flex-grow-1 mx-2" style="max-width:420px;">
-                <div class="input-group search-bar">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    <input class="form-control" type="search" placeholder="Bạn cần tìm gì?">
-                </div>
-            </form>
-            <!-- Hotline -->
-            <div class="d-flex align-items-center ms-2 me-3">
-                <i class="fas fa-phone-alt me-1" style="color:var(--neon-green);font-size:1.2rem;"></i>
-                <div style="font-size:0.9rem;line-height:1.1;">
-                    <span style="color:var(--text-secondary);">Hotline</span><br>
-                    <span style="color:var(--neon-green);font-weight:600;">0349.296.461</span>
-                </div>
-            </div>
-            <!-- Tư vấn trực tiếp -->
-            <div class="d-flex align-items-center me-3">
-                <i class="fas fa-bolt me-1" style="color:var(--neon-pink);font-size:1.2rem;"></i>
-                <span style="color:var(--neon-pink);font-weight:500;">Tư vấn trực tiếp</span>
-            </div>
-            <!-- Giỏ hàng -->
-            <a href="/cart" class="btn btn-cart-custom d-flex align-items-center position-relative px-3 py-2 me-2" style="border-radius:8px;">
-                <span class="position-relative me-2">
-                    <i class="fas fa-shopping-cart" style="font-size:1.3rem;"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="font-size:0.8rem;background:var(--neon-green);color:#232347;">0</span>
-                </span>
-                Giỏ hàng
-            </a>
-            <!-- Thay nút đăng nhập bằng icon profile + dropdown -->
-            <div class="dropdown ms-2">
-              <button id="profileBtn" class="btn btn-outline-primary d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:50%;width:44px;height:44px;padding:0;justify-content:center;">
-                <i class="fas fa-user-circle fa-2x"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
-                <!-- Nội dung sẽ được JS render tùy trạng thái đăng nhập -->
-              </ul>
-            </div>
+              </li>
+            </ul>
+          </div>
         </div>
+        <!-- Search bar giữa, thẳng hàng, hai icon sát search bar -->
+        <div class="d-flex align-items-center flex-grow-1 justify-content-center" style="min-width:0;">
+          <form class="d-flex flex-grow-1 align-items-center" style="max-width:400px;min-width:220px;">
+            <div class="input-group w-100">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="fas fa-search" style="color:#111;font-size:1.1rem;"></i>
+              </span>
+              <input class="form-control border-start-0" type="search" placeholder="Tìm kiếm sản phẩm..." style="background:#fff;color:#111;" />
+            </div>
+          </form>
+          <span class="d-flex align-items-center gap-3 me-5 ms-5">
+            <i class="fas fa-phone" style="color:#111;font-size:1.25rem;cursor:pointer;" title="Hotline: 0349.296.461"></i>
+            <i class="fas fa-bolt" style="color:#111;font-size:1.25rem;cursor:pointer;" title="Tư vấn trực tiếp"></i>
+          </span>
+        </div>
+        <!-- Nhóm icon còn lại bên phải, cách xa hơn nữa về trái -->
+        <div class="d-none d-lg-flex align-items-center gap-3 flex-shrink-0" style="height:64px;z-index:3;">
+          <a href="/cart" class="btn btn-outline-primary position-relative p-0 d-flex align-items-center justify-content-center" style="width:36px;height:36px;border-radius:50%;border-color:#111 !important;">
+            <i class="fas fa-shopping-cart" style="font-size:1.2rem;color:#111;"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" th:text="${cart != null ? cart.items.size() : 0}" style="font-size:0.7rem;">0</span>
+          </a>
+          <div class="dropdown">
+            <button id="profileBtn" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width:36px;height:36px;color:#111;border-color:#111 !important;">
+              <i class="far fa-user" style="font-size:1.15rem;color:#111;"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
+              <!-- Nội dung sẽ được JS render tùy trạng thái đăng nhập -->
+            </ul>
+          </div>
+        </div>
+        <!-- Toggle button for mobile (luôn nằm trên cùng) -->
+        <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation" style="color:#111;border-color:#111 !important;">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
     </nav>
+    <!-- Kết thúc Navbar chuyên nghiệp, icon và chữ màu đen, không hiệu ứng hover -->
 
 <div class="cart-container">
     <div class="cart-title">THÔNG TIN GIỎ HÀNG</div>

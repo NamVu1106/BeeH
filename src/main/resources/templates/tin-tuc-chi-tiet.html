@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${articleTitle}">Chi tiết bài viết - Bee Arena</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: #fff; color: #111; font-family: 'Inter', sans-serif; }
+        .article-img { width: 100%; max-height: 350px; object-fit: cover; border-radius: 16px; }
+        .article-title { font-family: 'Orbitron', sans-serif; color: #2d2dff; font-weight: 700; margin-top: 1.5rem; }
+        .article-content { font-size: 1.1rem; line-height: 1.7; margin: 1.5rem 0; }
+        .rating-box { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .like-btn, .dislike-btn { border: none; background: none; font-size: 1.6rem; cursor: pointer; color: #2d2dff; transition: color 0.2s; }
+        .like-btn.liked, .dislike-btn.disliked { color: #e53935; }
+        .like-count, .dislike-count { font-size: 1.1rem; min-width: 32px; display: inline-block; text-align: center; }
+        .comments-section { background: #f5f5f5; border-radius: 12px; padding: 2rem 1.5rem; margin-top: 2rem; }
+        .comment { border-bottom: 1px solid #e0e0e0; padding: 1rem 0; }
+        .comment:last-child { border-bottom: none; }
+        .comment-author { font-weight: 600; color: #2d2dff; }
+        .comment-date { color: #888; font-size: 0.98rem; margin-left: 8px; }
+        .comment-content { margin-top: 0.3rem; }
+        .comment-form textarea { resize: none; min-height: 60px; }
+        .comment-form .btn { margin-top: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <a href="/tin-tuc" class="btn btn-link mb-3"><i class="fas fa-arrow-left me-2"></i>Quay lại Tin tức</a>
+        <img th:src="${articleImg}" class="article-img mb-3" alt="Ảnh bài viết">
+        <h1 class="article-title" th:text="${articleTitle}">Tiêu đề bài viết</h1>
+        <div class="article-content">
+            <p th:text="${articleContent}">Nội dung bài viết...</p>
+            <ul>
+                <li><b>Ưu điểm:</b> <span th:text="${articlePros}">Ưu điểm...</span></li>
+                <li><b>Nhược điểm:</b> <span th:text="${articleCons}">Nhược điểm...</span></li>
+            </ul>
+        </div>
+        <!-- Đánh giá like/dislike -->
+        <div class="rating-box">
+            <button class="like-btn" id="likeBtn"><i class="fas fa-thumbs-up"></i></button>
+            <span class="like-count" id="likeCount" th:text="${likeCount}">0</span>
+            <button class="dislike-btn" id="dislikeBtn"><i class="fas fa-thumbs-down"></i></button>
+            <span class="dislike-count" id="dislikeCount" th:text="${dislikeCount}">0</span>
+            <span class="ms-3">Bạn thấy bài viết này hữu ích?</span>
+        </div>
+        <!-- Bình luận -->
+        <div class="comments-section">
+            <h4 class="mb-3">Bình luận</h4>
+            <div id="commentsList">
+                <div th:each="c : ${comments}" class="comment">
+                    <span class="comment-author" th:text="${c.author}">Tên</span>
+                    <span class="comment-date" th:text="'- ' + ${c.date}">- Ngày</span>
+                    <div class="comment-content" th:text="${c.content}">Nội dung bình luận</div>
+                </div>
+            </div>
+            <form class="comment-form mt-4" id="commentForm">
+                <label for="commentInput" class="form-label">Viết bình luận của bạn:</label>
+                <textarea class="form-control" id="commentInput" placeholder="Nhập bình luận..."></textarea>
+                <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        // Like/Dislike demo
+        let liked = false, disliked = false;
+        const likeBtn = document.getElementById('likeBtn');
+        const dislikeBtn = document.getElementById('dislikeBtn');
+        const likeCount = document.getElementById('likeCount');
+        const dislikeCount = document.getElementById('dislikeCount');
+        likeBtn.onclick = function() {
+            if (!liked) { likeBtn.classList.add('liked'); likeCount.textContent = +likeCount.textContent + 1; liked = true; }
+            else { likeBtn.classList.remove('liked'); likeCount.textContent = +likeCount.textContent - 1; liked = false; }
+            if (disliked) { dislikeBtn.classList.remove('disliked'); dislikeCount.textContent = +dislikeCount.textContent - 1; disliked = false; }
+        };
+        dislikeBtn.onclick = function() {
+            if (!disliked) { dislikeBtn.classList.add('disliked'); dislikeCount.textContent = +dislikeCount.textContent + 1; disliked = true; }
+            else { dislikeBtn.classList.remove('disliked'); dislikeCount.textContent = +dislikeCount.textContent - 1; disliked = false; }
+            if (liked) { likeBtn.classList.remove('liked'); likeCount.textContent = +likeCount.textContent - 1; liked = false; }
+        };
+        // Bình luận demo
+        document.getElementById('commentForm').onsubmit = function(e) {
+            e.preventDefault();
+            const val = document.getElementById('commentInput').value.trim();
+            if(val) {
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('vi-VN');
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.innerHTML = `<span class="comment-author">Bạn</span> <span class="comment-date">- ${dateStr}</span><div class="comment-content">${val}</div>`;
+                document.getElementById('commentsList').prepend(commentDiv);
+                document.getElementById('commentInput').value = '';
+            }
+        };
+    </script>
+</body>
+</html> 

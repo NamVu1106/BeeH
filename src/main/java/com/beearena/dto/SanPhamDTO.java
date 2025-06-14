@@ -2,18 +2,16 @@ package com.beearena.dto;
 
 import lombok.Data;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class SanPhamDTO {
-    private Long id;
+    private Integer id;
     private String ten;
-    private String moTa;
     private BigDecimal gia;
-    private String hinhAnh;
     private Integer soLuong;
-    private String thuongHieu;
-    private Long danhMucId;
+    private String hinhAnh;
     private String tenDanhMuc;
-    private boolean conHang;
-    private String mauSac;
+    private List<String> phienBanList;
+    private List<String> mauSacList;
 } 

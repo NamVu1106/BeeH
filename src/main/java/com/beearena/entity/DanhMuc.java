@@ -3,7 +3,6 @@ package com.beearena.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
@@ -28,7 +27,4 @@ public class DanhMuc {
 
     @Column(name = "TrangThai")
     private boolean trangThai;
-
-    @OneToMany(mappedBy = "danhMuc")
-    private List<SanPham> danhSachSanPham;
 } 

@@ -47,4 +47,8 @@ public class NguoiDungService {
         }
         return Optional.empty();
     }
+
+    public java.util.List<NguoiDung> layNguoiDungTheoVaiTro(com.beearena.entity.VaiTro vaiTro) {
+        return nguoiDungRepository.findByVaiTro(vaiTro);
+    }
 } 

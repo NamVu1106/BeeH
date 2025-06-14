@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm - Bee Arena Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #f9f9f9; }
+        .header-admin { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 16px 32px; position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; }
+        .header-admin .logo { font-weight: bold; font-size: 1.5rem; color: #007bff; }
+        .header-admin .user-info { font-size: 1rem; color: #333; }
+        .sidebar { min-height: 90vh; background: #007bff; color: white; border-radius: 18px; margin: 24px 0; }
+        .sidebar .nav-link { color: white; padding: 12px 24px; margin: 6px 0; border-radius: 8px; font-size: 1.08rem; transition: background 0.3s; }
+        .sidebar .nav-link:hover { background: rgba(255,255,255,0.15); }
+        .sidebar .nav-link.active { background: #fff; color: #007bff; font-weight: bold; }
+        .main-content { padding: 40px 20px; }
+        .title-row { margin-bottom: 20px; }
+        .title-row h2 { font-size: 2rem; color: #007bff; }
+        .card { margin-top: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); border-radius: 16px; }
+        .table { background: #fff; border-radius: 12px; }
+        .table th, .table td { vertical-align: middle; text-align: center; padding: 0.5rem 0.3rem; font-size: 0.98rem; }
+        .table th { background: #f1f1f1; color: #007bff; font-size: 1rem; }
+        .table-bordered { border: none; }
+        .table-bordered th, .table-bordered td { border: none; border-bottom: 1px solid #e0e0e0; }
+        .btn { border-radius: 6px; font-size: 0.95rem; padding: 0.3rem 0.5rem; }
+        .btn-sm { padding: 0.2rem 0.4rem; font-size: 0.92rem; }
+        .action-btns .btn { margin-right: 0.15rem; }
+        .badge { font-size: 1rem; padding: 0.5em 0.8em; border-radius: 8px; }
+        .add-btn { min-width: 200px; font-weight: 600; }
+        .table-responsive { max-height: 520px; overflow-y: auto; }
+        .table thead th { position: sticky; top: 0; z-index: 2; background: #f1f1f1; }
+        @media (max-width: 991px) {
+            .sidebar { min-height: auto; margin: 12px 0; }
+            .main-content { padding: 16px; }
+            .table-responsive { max-height: 350px; }
+            .table th, .table td { font-size: 0.93rem; }
+        }
+        @media (max-width: 767px) {
+            .sidebar { border-radius: 0; }
+            .header-admin { flex-direction: column; align-items: flex-start; padding: 12px; }
+            .title-row h2 { font-size: 1.5rem; }
+            .table th, .table td { font-size: 0.9rem; padding: 0.35rem 0.15rem; }
+            .action-btns .btn { margin-bottom: 0.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-admin">
+        <span class="logo"><i class="fas fa-crown me-2"></i>Bee Arena Admin</span>
+        <span class="user-info"><i class="fas fa-user-circle me-1"></i> Xin chào, Admin!</span>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="d-flex flex-column p-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/bang-dieu-khien}"><i class="fas fa-home me-2"></i> Bảng điều khiển</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/admin/quan-ly-san-pham}"><i class="fas fa-box me-2"></i> Quản lý sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/quan-ly-don-hang}"><i class="fas fa-shopping-cart me-2"></i> Quản lý đơn hàng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/quan-ly-nguoi-dung}"><i class="fas fa-users me-2"></i> Quản lý người dùng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/quan-ly-nhan-vien}"><i class="fas fa-user-tie me-2"></i> Quản lý nhân viên</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/quan-ly-danh-muc}"><i class="fas fa-tags me-2"></i> Quản lý danh mục</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/thong-ke}"><i class="fas fa-chart-bar me-2"></i> Thống kê</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/quan-ly-bai-viet}"><i class="fas fa-newspaper me-2"></i> Quản lý bài viết</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/quan-ly-noi-dung}"><i class="fas fa-file-alt me-2"></i> Quản lý nội dung</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/quan-ly-danh-gia}"><i class="fas fa-star me-2"></i> Quản lý đánh giá</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="title-row d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="text-primary fw-bold mb-0"><i class="fas fa-box me-2"></i>Quản lý sản phẩm</h2>
+                    <a th:href="@{/admin/san-pham/them}" class="btn btn-success add-btn"><i class="fas fa-plus"></i> Thêm sản phẩm mới</a>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <div class="card text-bg-primary text-center">
+                            <div class="card-body p-2">
+                                <div class="fw-bold">Tổng sản phẩm</div>
+                                <div class="fs-4" th:text="${tongSanPham}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card text-bg-success text-center">
+                            <div class="card-body p-2">
+                                <div class="fw-bold">Đang hiển thị</div>
+                                <div class="fs-4" th:text="${sanPhamHienThi}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card text-bg-secondary text-center">
+                            <div class="card-body p-2">
+                                <div class="fw-bold">Đang ẩn</div>
+                                <div class="fs-4" th:text="${sanPhamAn}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-bg-warning text-center">
+                            <div class="card-body p-2">
+                                <div class="fw-bold">Tổng SL tồn kho</div>
+                                <div class="fs-4" th:text="${tongSoLuongTonKho}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-bg-danger text-center">
+                            <div class="card-body p-2">
+                                <div class="fw-bold">Tổng giá trị tồn kho</div>
+                                <div class="fs-4" th:text="${#numbers.formatDecimal(tongGiaTriTonKho, 0, 'COMMA', 0, 'POINT')} + 'đ'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form method="get" th:action="@{/admin/quan-ly-san-pham}" class="row g-2 mb-3">
+                    <div class="col-md-3">
+                        <input type="text" name="keyword" class="form-control" placeholder="Tìm theo tên..." th:value="${keyword}">
+                    </div>
+                    <div class="col-md-3">
+                        <select name="danhMucId" class="form-select">
+                            <option value="">Tất cả danh mục</option>
+                            <option th:each="dm : ${danhMucList}" th:value="${dm.maDM}" th:text="${dm.tenDM}" th:selected="${dm.maDM == danhMucId}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select name="trangThai" class="form-select">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="true" th:selected="${trangThai == true}">Hiển thị</option>
+                            <option value="false" th:selected="${trangThai == false}">Ẩn</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" name="giaTu" class="form-control" placeholder="Giá từ" th:value="${giaTu}">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" name="giaDen" class="form-control" placeholder="Giá đến" th:value="${giaDen}">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-primary w-100">Lọc</button>
+                    </div>
+                </form>
+                <div class="card p-4 mb-4">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Danh mục</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="sp : ${sanPhamList}">
+                                    <td th:text="${sp.maSP}"></td>
+                                    <td th:text="${sp.tenSP}"></td>
+                                    <td th:text="${#numbers.formatDecimal(sp.gia, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                                    <td th:text="${sp.danhMuc != null ? sp.danhMuc.tenDM : 'Không có'}"></td>
+                                    <td>
+                                        <span th:classappend="${sp.trangThai} ? 'badge bg-success' : 'badge bg-secondary'"
+                                              th:text="${sp.trangThai} ? 'Hiển thị' : 'Ẩn'"></span>
+                                    </td>
+                                    <td class="action-btns">
+                                        <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" th:data-bs-target="'#chiTietModal' + ${sp.maSP}" title="Chi tiết"><i class="fas fa-info-circle"></i></a>
+                                        <a th:href="@{'/admin/san-pham/sua/' + ${sp.maSP}}" class="btn btn-primary btn-sm" title="Sửa"><i class="fas fa-edit"></i></a>
+                                        <a th:href="@{'/admin/san-pham/xoa/' + ${sp.maSP}}" class="btn btn-danger btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- PHÂN TRANG -->
+                <div class="pagination justify-content-center">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/quan-ly-san-pham(page=${currentPage - 1})}">Trước</a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                            th:classappend="${i == currentPage} ? 'active'">
+                            <a class="page-link" th:href="@{/admin/quan-ly-san-pham(page=${i})}" th:text="${i + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/quan-ly-san-pham(page=${currentPage + 1})}">Sau</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal chi tiết sản phẩm -->
+    <div class="modal fade" th:each="sp : ${sanPhamList}" th:id="'chiTietModal' + ${sp.maSP}" tabindex="-1" aria-labelledby="chiTietModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chiTietModalLabel">Chi tiết sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3 mb-md-0">
+                            <img th:src="${sp.hinhAnh != null ? sp.hinhAnh : 'https://via.placeholder.com/200x200?text=No+Image'}" class="img-fluid rounded border" style="max-height:200px;" alt="Hình sản phẩm">
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table table-borderless">
+                                <tr><th>ID:</th><td th:text="${sp.maSP}"></td></tr>
+                                <tr><th>Tên sản phẩm:</th><td th:text="${sp.tenSP}"></td></tr>
+                                <tr><th>Giá:</th><td th:text="${#numbers.formatDecimal(sp.gia, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td></tr>
+                                <tr><th>Danh mục:</th><td th:text="${sp.danhMuc != null ? sp.danhMuc.tenDM : 'Không có'}"></td></tr>
+                                <tr><th>Trạng thái:</th><td th:text="${sp.trangThai} ? 'Hiển thị' : 'Ẩn'"></td></tr>
+                                <tr><th>Mô tả:</th><td th:text="${sp.moTa != null ? sp.moTa : 'Không có'}"></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
